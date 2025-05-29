@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Pelayan extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pelayan';
+    protected $primaryKey = 'id_pelayan';
+    protected $keyType = 'string';
+    public $timestamps = false;
+
+    protected $fillable = ['id_pelayan', 'id_jemaat', 'hak_akses_pelayan'];
+
+    // In app/Models/Pelayan.php
+
+    public static function generateNextId()
+    {
+        $tgl_daftar = now();
+        $datePart = $tgl_daftar->format('dmy');
+        $prefix = "PL{$datePart}";
+
+        $lastPelayan = self::where('id_pelayan', 'like', "{$prefix}%")
+            ->orderByDesc('id_pelayan')
+            ->first();
+
+        if ($lastPelayan) {
+            $lastId = $lastPelayan->id_pelayan;
+            $suffix = substr($lastId, strlen($prefix));
+            $letter = substr($suffix, 0, 1);
+            $number = intval(substr($suffix, 1));
+            if ($number < 9) {
+                $number++;
+            } else {
+                $number = 1;
+                $letter = chr(ord($letter) + 1);
+            }
+        } else {
+            $letter = 'A';
+            $number = 1;
+        }
+
+        $newSuffix = "{$letter}{$number}";
+        return "{$prefix}{$newSuffix}";
+    }
+
+    public function jemaat(): BelongsTo
+    {
+        return $this->belongsTo(Jemaat::class, 'id_jemaat', 'id_jemaat');
+    }
+
+    public function riwayat()
+    {
+        return $this->hasMany(Riwayat::class, 'id_pelayan', 'id_pelayan_creator');
+    }
+}
