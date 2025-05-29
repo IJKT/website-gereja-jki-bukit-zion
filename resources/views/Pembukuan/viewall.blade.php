@@ -63,13 +63,22 @@
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
                                             @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
                                     </a>
+                                    {{-- 
+                                    TODO: buat view buat verifikasi pembukuan
+                                    --}}
+                                    {{-- <a href="/pembukuan/verifikasi/{{ $_pembukuan['id_pembukuan'] }}">
+                                        <button
+                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
+                                            @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
+                                    </a> --}}
                                 </td>
                             </tr>
+
                             <script>
                                 function showAlert{{ $_pembukuan['id_pembukuan'] }}() {
                                     Swal.fire({
                                         title: 'DESKRIPSI',
-                                        html: `<strong>Deskripsi:</strong> {{ $_pembukuan->deskripsi_pembukuan }}<br>
+                                        html: `<strong>Deskripsi:</strong> {{ $_pembukuan->deskripsi_pembukuan }}<br> 
                                         <strong>Komentar:</strong> {{ empty($_pembukuan->catatan_pembukuan) ? 'Tidak ada komentar' : $_pembukuan['catatan_pembukuan'] }}`,
                                         icon: 'info',
                                         confirmButtonText: 'OK'
@@ -80,15 +89,17 @@
                     </tbody>
                 </table>
                 <?php
-                $total_pemasukan = 0;
-                $total_pengeluaran = 0;
-                foreach ($pembukuan as $_pembukuan) {
-                    if ($_pembukuan['verifikasi_pembukuan'] == 1 && $_pembukuan['jenis_pembukuan'] == 'Uang Masuk') {
-                        $total_pemasukan += $_pembukuan['nominal_pembukuan'];
-                    } elseif ($_pembukuan['verifikasi_pembukuan'] == 1 && $_pembukuan['jenis_pembukuan'] == 'Uang Keluar') {
-                        $total_pengeluaran += $_pembukuan['nominal_pembukuan'];
-                    }
-                }
+                $result = \DB::table('pembukuan')
+                    ->selectRaw(
+                        "
+                        SUM(CASE WHEN jenis_pembukuan = 'Uang Masuk' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pemasukan,
+                        SUM(CASE WHEN jenis_pembukuan = 'Uang Keluar' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pengeluaran
+                    ",
+                    )
+                    ->first();
+                
+                $total_pemasukan = $result->total_pemasukan;
+                $total_pengeluaran = $result->total_pengeluaran;
                 ?>
                 <div class="mt-2 flex justify-between">
                     <div class="flex font-semibold">Pemasukan:
@@ -103,6 +114,11 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-2">
+                <div>
+                    {{ $pembukuan->links() }}
+                </div>
+            </div>
         </div>
 
         <!-- Button -->
@@ -110,7 +126,7 @@
             <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                 UNDUH
             </button>
-            <a href="#">
+            <a href=pembukuan/tambah>
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

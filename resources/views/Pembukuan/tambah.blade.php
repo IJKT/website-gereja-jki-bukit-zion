@@ -2,39 +2,35 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
     <div class="flex-1 bg-white p-10">
-        <form id="pembukuanForm" action="{{ route('Pembukuan.update', $pembukuan) }}" method="POST">
+        <form id="pembukuanForm" action="{{ route('Pembukuan.add') }}" method="POST">
             @csrf
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
                 <div class="grid grid-cols-2 gap-x-10 gap-y-2">
                     <div>
                         <label class="block font-semibold mb-1">ID PEMBUKUAN</label>
-                        <input type="text" name="id_pembukuan" value="{{ $pembukuan->id_pembukuan }}"
-                            class="w-full p-2 rounded bg-gray-100" disabled>
+                        <input type="text" name="id_pembukuan" value="{{ $id_pembukuan }}"
+                            class="w-full p-2 rounded bg-gray-100" readonly>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">NOMINAL</label>
-                        <input type="text" name="nominal_pembukuan" id="nominal_pembukuan"
-                            value="{{ number_format($pembukuan->nominal_pembukuan, 0, ',', ',') }}" autocomplete="off"
-                            inputmode="numeric" pattern="[0-9,]*" class="w-full p-2 rounded bg-white" required>
+                        <input type="text" name="nominal_pembukuan" id="nominal_pembukuan" autocomplete="off"
+                            placeholder="Masukkan Nominal" inputmode="numeric" pattern="[0-9,]*"
+                            class="w-full p-2 rounded bg-white" required>
                         <span id="nominal-error" class="text-red-500 text-xs hidden">Hanya angka yang
                             diperbolehkan.</span>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TANGGAL</label>
                         <input type="date" name="tgl_pembukuan" class="w-full p-2 rounded bg-white"
-                            value="{{ \Carbon\Carbon::parse($pembukuan->tgl_pembukuan)->format('Y-m-d') }}"
-                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
+                            placeholder="Masukkan tanggal pembukuan" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                            required>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TIPE</label>
                         <select name="jenis_pembukuan" class="w-full p-2 rounded bg-white">
-                            <option value="Uang Masuk"
-                                {{ $pembukuan->jenis_pembukuan == 'Uang Masuk' ? 'selected' : '' }}>
-                                Uang Masuk</option>
-                            <option value="Uang Keluar"
-                                {{ $pembukuan->jenis_pembukuan == 'Uang Keluar' ? 'selected' : '' }}>Uang Keluar
-                            </option>
+                            <option value="Uang Masuk">Uang Masuk</option>
+                            <option value="Uang Keluar">Uang Keluar</option>
                         </select>
                     </div>
                 </div>
@@ -42,7 +38,7 @@
                 <div>
                     <label class="block font-semibold mb-1">DESKRIPSI</label>
                     <textarea class="w-full p-2 rounded bg-white resize-y min-h-[80px] max-h-[50vh]" name="deskripsi_pembukuan"
-                        style="height: 120px;" required>{{ $pembukuan->deskripsi_pembukuan }}</textarea>
+                        style="height: 120px;" required></textarea>
                 </div>
             </div>
 

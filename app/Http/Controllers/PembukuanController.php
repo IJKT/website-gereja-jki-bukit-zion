@@ -32,26 +32,24 @@ class PembukuanController extends Controller
         );
     }
 
-    // TODO: tambah function
-    // public function tambah(): View
-    // {
-    //     $id_pembukuan = Pembukuan::generateNextId();
+    public function tambah(): View
+    {
+        $id_pembukuan = Pembukuan::generateNextId();
 
-    //     return view(
-    //         'Pembukuan.tambah',
-    //         [
-    //             'title' => 'Tambah Data Pembukuan',
-    //             'id_pelayan' => $id_pembukuan
-    //         ]
-    //     );
-    // }
+        return view(
+            'Pembukuan.tambah',
+            [
+                'title' => 'Tambah Data Pembukuan',
+                'id_pembukuan' => $id_pembukuan
+            ]
+        );
+    }
 
-    //TODO: add funtion
     public function add(Request $request)
     {
         $pembukuan = new Pembukuan();
         // TODO: nanti ditambah cara bikin id pembukuannya
-        // $pembukuan->id_pembukuan = $id_pembukuan;
+        $pembukuan->id_pembukuan = $request->id_pembukuan;
         $pembukuan->jenis_pembukuan = $request->jenis_pembukuan;
         $pembukuan->nominal_pembukuan = $request->nominal_pembukuan;
         $pembukuan->tgl_pembukuan = $request->tgl_pembukuan;
@@ -59,6 +57,30 @@ class PembukuanController extends Controller
         $pembukuan->save();
 
         return redirect()->route('Pembukuan.viewall');
+
+        // // Validate input
+        // $validated = $request->validate([
+        //     'id_pembukuan'   => ['required', 'string'],
+        //     'nominal_pembukuan'   => ['required', 'string'],
+        //     'tgl_pembukuan'   => ['required', 'date'],
+        //     'jenis_pembukuan'     => ['required', 'in:Uang Masuk,Uang Keluar'],
+        //     'deskripsi_pembukuan' => ['nullable', 'string'],
+        // ]);
+
+        // // Remove commas from nominal_pembukuan and convert to integer
+        // $nominal = (int) str_replace(',', '', $validated['nominal_pembukuan']);
+
+        // // Update the Pembukuan record
+        // Pembukuan::create([
+        //     'id_pembukuan'   => $validated['id_pembukuan'],
+        //     'nominal_pembukuan'   => $nominal,
+        //     'jenis_pembukuan'     => $validated['jenis_pembukuan'],
+        //     'tgl_pembukuan'     => $validated['tgl_pembukuan'],
+        //     'deskripsi_pembukuan' => $validated['deskripsi_pembukuan']
+        // ]);
+
+        // // Redirect back with a success message
+        // return redirect()->route('Pembukuan.viewall');
     }
 
     //TODO: update function
@@ -67,24 +89,24 @@ class PembukuanController extends Controller
         // Validate input
         $validated = $request->validate([
             'nominal_pembukuan'   => ['required', 'string'],
+            'tgl_pembukuan'   => ['required', 'date'],
             'jenis_pembukuan'     => ['required', 'in:Uang Masuk,Uang Keluar'],
             'deskripsi_pembukuan' => ['nullable', 'string'],
         ]);
 
         // Remove commas from nominal_pembukuan and convert to integer
         $nominal = (int) str_replace(',', '', $validated['nominal_pembukuan']);
-        // @dd([$nominal, $validated['jenis_pembukuan'], $validated['deskripsi_pembukuan']]);
 
         // Update the Pembukuan record
         $pembukuan->update([
             'nominal_pembukuan'   => $nominal,
             'jenis_pembukuan'     => $validated['jenis_pembukuan'],
+            'tgl_pembukuan'     => $validated['tgl_pembukuan'],
             'deskripsi_pembukuan' => $validated['deskripsi_pembukuan'],
+            'verifikasi_pembukuan' => 0,
         ]);
 
         // Redirect back with a success message
-        return redirect()
-            ->route('Pembukuan.viewall')
-            ->with('success', 'Data pembukuan berhasil diupdate.');
+        return redirect()->route('Pembukuan.viewall');
     }
 }

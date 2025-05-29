@@ -67,9 +67,11 @@ Route::prefix('manajemen/pelayan')
     ->name('Manajemen.Pelayan')
     ->group(
         function () {
-            route::get('', [PelayanController::class, 'viewall']);
-            route::get('tambah', [PelayanController::class, 'tambah']);
+            route::get('', [PelayanController::class, 'viewall'])->name('.viewall');
+            // route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
             route::get('{pelayan}', [PelayanController::class, 'ubah']);
+            // Route::put('add', [PelayanController::class, 'add'])->name('.add');
+            // Route::put('update/{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
         }
     );
 
@@ -77,9 +79,20 @@ Route::prefix('manajemen/jemaat')
     ->name('Manajemen.Jemaat')
     ->group(
         function () {
-            route::get('', [JemaatController::class, 'viewall']);
-            // route::get('tambah', [JemaatController::class, 'tambah']);
-            route::get('{jemaat}', [JemaatController::class, 'ubah']);
+            // MANAJEMEN JEMAAT
+            route::get('', [JemaatController::class, 'viewall'])->name('.viewall');
+            // route::get('tambah', [JemaatController::class, 'tambah'])->name('.tambah');
+            route::get('{jemaat}', [JemaatController::class, 'ubah'])->name('.ubah');
+            // Route::put('add', [JemaatController::class, 'add'])->name('.add');
+            // Route::put('update/{jemaat}', [JemaatController::class, 'update'])->name('.update');
+
+            //TODO: bentuk buat view pengajuan jemaat
+            //MANAJEMEN PENGAJUAN JEMAAT
+            // route::get('pengajuan', [JemaatController::class, 'pengajuanViewall'])->name('.pengajuanViewall');
+            // route::get('pengajuan/tambah', [JemaatController::class, 'pengajuanTambah'])->name('.pengajuanTambah');
+            // route::get('pengajuan/{jemaat}', [JemaatController::class, 'pengajuanUbah'])->name('.pengajuanUbah');
+            // Route::put('pengajuan/add', [JemaatController::class, 'pengajuanAdd'])->name('.pengajuanAdd');
+            // Route::put('pengajuan/update/{jemaat}', [JemaatController::class, 'pengajuanUpdate'])->name('.pengajuanUpdate');
         }
     );
 
@@ -98,9 +111,11 @@ Route::prefix('pembukuan')
     ->group(
         function () {
             route::get('', [PembukuanController::class, 'viewall'])->name('.viewall');
-            // route::get('tambah', [JemaatController::class, 'tambah']);
+            route::get('tambah', [PembukuanController::class, 'tambah'])->name('.tambah');
             route::get('{pembukuan}', [PembukuanController::class, 'ubah'])->name('.ubah');
+            Route::put('add', [PembukuanController::class, 'add'])->name('.add');
             Route::put('update/{pembukuan}', [PembukuanController::class, 'update'])->name('.update');
+            // Route::put('verify/{pembukuan}', [PembukuanController::class, 'update'])->name('.verify');
         }
     );
 

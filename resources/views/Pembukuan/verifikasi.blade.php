@@ -1,3 +1,7 @@
+{{-- 
+TODO: menambahkan cara untuk memverifikasi data yang sudah dibuat oleh bendahara
+--}}
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -24,7 +28,7 @@
                         <label class="block font-semibold mb-1">TANGGAL</label>
                         <input type="date" name="tgl_pembukuan" class="w-full p-2 rounded bg-white"
                             value="{{ \Carbon\Carbon::parse($pembukuan->tgl_pembukuan)->format('Y-m-d') }}"
-                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
+                            max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TIPE</label>
@@ -42,7 +46,7 @@
                 <div>
                     <label class="block font-semibold mb-1">DESKRIPSI</label>
                     <textarea class="w-full p-2 rounded bg-white resize-y min-h-[80px] max-h-[50vh]" name="deskripsi_pembukuan"
-                        style="height: 120px;" required>{{ $pembukuan->deskripsi_pembukuan }}</textarea>
+                        style="height: 120px;">{{ $pembukuan->deskripsi_pembukuan }}</textarea>
                 </div>
             </div>
 
@@ -54,9 +58,17 @@
                         BATAL
                     </button>
                 </a>
-                <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-                    class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+                <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
+                    onclick="showAlertSave()">
                     SIMPAN
+                </button>
+                <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
+                    onclick="showAlertDecline()">
+                    TOLAK
+                </button>
+                <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
+                    onclick="showAlertDecline()">
+                    VERIFIKASI
                 </button>
             </div>
         </form>
@@ -66,19 +78,6 @@
     {{-- untuk ngehilangin koma pas udah submit --}}
     @stack('scripts')
     <script>
-        // Function to check if all required fields are filled
-        function checkRequiredFields() {
-            const form = document.getElementById('pembukuanForm');
-            const requiredFields = form.querySelectorAll('[required]');
-            let allFilled = true;
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    allFilled = false;
-                }
-            });
-            document.getElementById('simpanBtn').disabled = !allFilled;
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             const input = document.getElementById('nominal_pembukuan');
             const error = document.getElementById('nominal-error');
@@ -110,16 +109,6 @@
             form.addEventListener('submit', function() {
                 input.value = input.value.replace(/,/g, '');
             });
-        });
-
-        // Attach event listeners to required fields
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('pembukuanForm');
-            const requiredFields = form.querySelectorAll('[required]');
-            requiredFields.forEach(field => {
-                field.addEventListener('input', checkRequiredFields);
-            });
-            checkRequiredFields(); // Initial check
         });
 
         function showAlertSave() {
