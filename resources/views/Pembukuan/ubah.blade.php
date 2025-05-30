@@ -6,6 +6,7 @@
             @csrf
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
+                <h2 class="font-bold mb-4">UBAH DATA PEMBUKUAN</h2>
                 <div class="grid grid-cols-2 gap-x-10 gap-y-2">
                     <div>
                         <label class="block font-semibold mb-1">ID PEMBUKUAN</label>
@@ -45,21 +46,20 @@
                         style="height: 120px;" required>{{ $pembukuan->deskripsi_pembukuan }}</textarea>
                 </div>
             </div>
-
-            <!-- Button -->
-            <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-                <a href="/pembukuan">
-                    <button type="button"
-                        class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
-                        BATAL
-                    </button>
-                </a>
-                <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-                    class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
-                    SIMPAN
-                </button>
-            </div>
         </form>
+
+        <!-- Button -->
+        <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
+            <a href="/pembukuan">
+                <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                    BATAL
+                </button>
+            </a>
+            <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
+                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+                SIMPAN
+            </button>
+        </div>
     </div>
     </div>
 

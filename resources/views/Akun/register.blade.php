@@ -18,8 +18,6 @@
             style="z-index: -1;">
 
         {{-- register form --}}
-        {{-- 
-        TODO: jadiin indonesia --}}
         <div class="h-screen w-6/11 bg-[#D9D9D9] shadow-md rounded-r-lg p-12 flex flex-col justify-center">
             <div class="items-center justify-center">
                 <img src="pics/logo_pic.png" class="w-[70px] h-[70px] mx-auto">
@@ -31,33 +29,33 @@
                     {{-- left side --}}
                     <div class="flex flex-col w-1/2 space-y-2">
                         <label for="username" class="font-semibold mb-1">Username</label>
-                        <input type="text" name="username" id="username" placeholder="Insert your username"
+                        <input type="text" name="username" id="username" placeholder="Masukkan Username Anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('Username is required')"
+                            oninvalid="this.setCustomValidity('Username belum diisi')"
                             oninput="this.setCustomValidity('')">
 
                         <label for="username" class="font-semibold mb-1">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Insert your password"
+                        <input type="password" name="password" id="password" placeholder="Masukkan Password Anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('Password is required')"
+                            oninvalid="this.setCustomValidity('Password belum diisi')"
                             oninput="this.setCustomValidity('')">
 
-                        <label for="fullname" class="font-semibold mb-1">Full Name</label>
-                        <input type="text" name="fullname" id="fullname" placeholder="Insert your full name"
+                        <label for="fullname" class="font-semibold mb-1">Nama Lengkap</label>
+                        <input type="text" name="fullname" id="fullname" placeholder="masukkan Nama Lengkap Anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('Full name is required')"
+                            oninvalid="this.setCustomValidity('Nama lengkap belum diisi')"
                             oninput="this.setCustomValidity('')">
 
                         <label for="nik" class="font-semibold mb-1">NIK
                         </label>
-                        <input type="number" name="nik" id="nik" placeholder="Insert your NIK"
+                        <input type="number" name="nik" id="nik" placeholder="Masukkan NIK anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('NIK is required')" oninput="this.setCustomValidity('')">
+                            oninvalid="this.setCustomValidity('NIK belum diisi')" oninput="this.setCustomValidity('')">
 
                         <div>
-                            <label class="font-semibold mb-2 block">Place & Date Of Birth</label>
+                            <label class="font-semibold mb-2 block">Tempat & Tanggal Lahir</label>
                             <div class="flex justify-between gap-[10px]">
-                                <input type="text" name="birthcity" id="birthcity" placeholder="Birth city"
+                                <input type="text" name="birthcity" id="birthcity" placeholder="Kota lahir"
                                     class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]">
                                 <input type="date" name="birthdate" id="birthdate"
                                     class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]"
@@ -69,53 +67,43 @@
                     {{-- right side --}}
                     <div class="flex flex-col w-1/2 space-y-2">
                         <label for="email" class="font-semibold mb-1">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Insert your email"
+                        <input type="email" name="email" id="email" placeholder="Masukkan email anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('Email is required')"
+                            oninvalid="this.setCustomValidity('Email belum diisi')"
                             oninput="this.setCustomValidity('')">
 
-                        <label for="username" class="font-semibold mb-1">Confirm Password</label>
-                        <input type="password" name="confpassword" id="confpassword" placeholder="Confirm your password"
+                        <label for="username" class="font-semibold mb-1">Konfirmasi Password</label>
+                        <input type="password" name="confpassword" id="confpassword"
+                            placeholder="Konfirmasi password anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('Password confirmation is required')"
+                            oninvalid="this.setCustomValidity('Konfirmasi password belum diisi')"
                             oninput="this.setCustomValidity('')">
 
-                        <label for="homeaddress" class="font-semibold mb-1">Home Address</label>
-                        <input type="text" name="homeaddress" id="homeaddress" placeholder="Insert your home address"
+                        <label for="homeaddress" class="font-semibold mb-1">Alamat</label>
+                        <input type="text" name="homeaddress" id="homeaddress" placeholder="Masukkan alamat anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('Home address is required')"
+                            oninvalid="this.setCustomValidity('Alamat belum diisi')"
                             oninput="this.setCustomValidity('')">
                         {{-- onchange="if(!this.value) {window.open('www.google.com/maps', '_blank');}"> --}}
 
-                        <label for="phone" class="font-semibold mb-1">Phone Number</label>
-                        <input type="number" name="phone" id="phone" placeholder="Insert your phone number"
+                        <label for="phone" class="font-semibold mb-1">No Telepon</label>
+                        <input type="number" name="phone" id="phone" placeholder="Masukkan nomor telepon anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            oninvalid="this.setCustomValidity('Phone number is required')"
+                            oninvalid="this.setCustomValidity('Nomor telepon belum diisi')"
                             oninput="this.setCustomValidity('')">
 
-                        {{-- <div>
-                            <label class="font-semibold mb-2 block">Gender</label>
-                            <div class="flex justify-between gap-[10px]">
-                                <input type="text" name="birthcity" id="birthcity" placeholder="Birth city"
-                                    class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]">
-                                <input type="date" name="birthdate" id="birthdate"
-                                    class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]"
-                                    max="{{ date('Y-m-d') }}">
-                            </div>
-                        </div> --}}
-
                         <div class="mb-4" x-data="{ gender: '' }">
-                            <label class="font-semibold block mb-4">Gender</label>
+                            <label class="font-semibold block mb-4">Jenis Kelamin</label>
                             <div class="flex items-center space-x-6">
                                 <label class="flex items-center space-x-2">
-                                    <input type="radio" name="gender" @click="gender = 'male'"
+                                    <input type="radio" name="gender" @click="gender = 'Pria'"
                                         @click=class="form-radio text-[#215773]">
-                                    <span :class="gender == 'male' ? 'font-semibold' : 'font-normal'">Male</span>
+                                    <span :class="gender == 'Pria' ? 'font-semibold' : 'font-normal'">Pria</span>
                                 </label>
                                 <label class="flex items-center space-x-2">
-                                    <input type="radio" name="gender" @click="gender = 'female'"
+                                    <input type="radio" name="gender" @click="gender = 'Wanita'"
                                         class="form-radio text-[#215773]">
-                                    <span :class="gender == 'female' ? 'font-semibold' : 'font-normal'">Female</span>
+                                    <span :class="gender == 'Wanita' ? 'font-semibold' : 'font-normal'">Wanita</span>
                                 </label>
                             </div>
                         </div>

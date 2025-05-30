@@ -68,10 +68,12 @@ Route::prefix('manajemen/pelayan')
     ->group(
         function () {
             route::get('', [PelayanController::class, 'viewall'])->name('.viewall');
-            // route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
-            route::get('{pelayan}', [PelayanController::class, 'ubah']);
-            // Route::put('add', [PelayanController::class, 'add'])->name('.add');
-            // Route::put('update/{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
+            route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
+            route::get('search', [PelayanController::class, 'search'])->name('.search');
+            route::get('{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
+            Route::put('add', [PelayanController::class, 'add'])->name('.add');
+            Route::put('update/{pelayan}', [PelayanController::class, 'update'])->name('.update');
+            Route::put('status/{pelayan}', [PelayanController::class, 'status'])->name('.status');
         }
     );
 

@@ -44,8 +44,10 @@
                                         JADWAL
                                     @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'RF')
                                         RANGKUMAN
+                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'PL')
+                                        PELAYAN
                                         {{-- 
-                                        TODO: tambahin fitur log yang lainS
+                                        TODO: tambahin fitur log yang lain
                                         --}}
                                     @endif
                                     - ({{ $_riwayat['id_tabel_ubah'] }})

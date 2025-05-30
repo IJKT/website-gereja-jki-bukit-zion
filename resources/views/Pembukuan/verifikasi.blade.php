@@ -10,6 +10,7 @@ TODO: menambahkan cara untuk memverifikasi data yang sudah dibuat oleh bendahara
             @csrf
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
+                <h2 class="font-bold mb-4">VERIFIKASI DATA PEMBUKUAN</h2>
                 <div class="grid grid-cols-2 gap-x-10 gap-y-2">
                     <div>
                         <label class="block font-semibold mb-1">ID PEMBUKUAN</label>

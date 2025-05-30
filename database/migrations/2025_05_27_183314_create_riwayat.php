@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('id_log', 10)->primary();
             $table->string('id_pelayan_creator', 10);
             $table->foreign('id_pelayan_creator')->references('id_pelayan')->on('pelayan');
-            // TODO: pokoknya ini nanti dibuat biar bisa ngambil id dari setiap updated table
             $table->string('id_tabel_ubah', 10);
             $table->string('jenis_perubahan', 6);
             $table->dateTime('tgl_perubahan');

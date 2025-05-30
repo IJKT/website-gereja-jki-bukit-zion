@@ -17,7 +17,7 @@ class Pelayan extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-    protected $fillable = ['id_pelayan', 'id_jemaat', 'hak_akses_pelayan'];
+    protected $fillable = ['id_pelayan', 'id_jemaat', 'hak_akses_pelayan', 'status_pelayan'];
 
     // In app/Models/Pelayan.php
 
