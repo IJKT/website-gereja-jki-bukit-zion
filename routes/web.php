@@ -101,7 +101,7 @@ Route::get('/manajemen/riwayat', function () {
         'Manajemen.riwayat',
         [
             'title' => 'Manajemen Riwayat',
-            'riwayat' => Riwayat::with('pelayan.jemaat')->paginate(5)
+            'riwayat' => Riwayat::with('pelayan.jemaat')->latest('tgl_perubahan')->paginate(5)
         ]
     );
 });
@@ -113,9 +113,10 @@ Route::prefix('pembukuan')
             route::get('', [PembukuanController::class, 'viewall'])->name('.viewall');
             route::get('tambah', [PembukuanController::class, 'tambah'])->name('.tambah');
             route::get('{pembukuan}', [PembukuanController::class, 'ubah'])->name('.ubah');
+            route::get('/verifikasi/{pembukuan}', [PembukuanController::class, 'verifikasi'])->name('.verifikasi');
             Route::put('add', [PembukuanController::class, 'add'])->name('.add');
             Route::put('update/{pembukuan}', [PembukuanController::class, 'update'])->name('.update');
-            // Route::put('verify/{pembukuan}', [PembukuanController::class, 'update'])->name('.verify');
+            Route::put('verify/{pembukuan}', [PembukuanController::class, 'verify'])->name('.verify');
         }
     );
 

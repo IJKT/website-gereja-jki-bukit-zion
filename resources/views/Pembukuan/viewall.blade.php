@@ -8,13 +8,32 @@
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-4">
                     <label class="font-semibold">PEMBUKUAN</label>
-                    <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
-                        <!-- Replace with icon if needed -->
-                        <svg class="h-5 w-5 font-bold" viewBox="0 0 15 15" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 2.5H15M3 7.5H12M5 12.5H10" stroke="#ffffff" />
-                        </svg>
-                    </button>
+                    {{-- filter button --}}
+                    <x-filter-dropdown>
+                        <form method="GET" action="{{ route('Pembukuan.viewall') }}">
+                            <div class="mx-2 mt-2 mb-4">
+                                <label for="tanggal_awal" class="block text-sm font-medium text-gray-700">Tanggal
+                                    Awal</label>
+                                <input type="date" id="tanggal_awal" name="tanggal_awal"
+                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                    value="{{ request('tanggal_awal') }}"
+                                    class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <label for="tanggal_akhir" class="block text-sm font-medium text-gray-700">Tanggal
+                                    Akhir</label>
+                                <input type="date" id="tanggal_akhir" name="tanggal_akhir"
+                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                    min="{{ request('tanggal_awal') }}" value="{{ request('tanggal_akhir') }}"
+                                    class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <label for="jenis_pembukuan" class="block text-sm font-medium text-gray-700">Jenis
+                                    Pembukuan</label>
+                                <select name="jenis_pembukuan" id="jenis_pembukuan"
+                                    class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="">Semua</option>
+                                    <option value="Uang Masuk">Uang Masuk</option>
+                                    <option value="Uang Keluar">Uang Keluar</option>
+                                </select>
+                            </div>
+                    </x-filter-dropdown>
                 </div>
                 <table class="w-full border-collapse ">
                     <thead>
@@ -66,11 +85,11 @@
                                     {{-- 
                                     TODO: buat view buat verifikasi pembukuan
                                     --}}
-                                    {{-- <a href="/pembukuan/verifikasi/{{ $_pembukuan['id_pembukuan'] }}">
+                                    <a href="/pembukuan/verifikasi/{{ $_pembukuan['id_pembukuan'] }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
-                                            @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
-                                    </a> --}}
+                                            @if (in_array($_pembukuan['verifikasi_pembukuan'], [1, 2])) hidden @endif">VERIF</button>
+                                    </a>
                                 </td>
                             </tr>
 
@@ -89,14 +108,7 @@
                     </tbody>
                 </table>
                 <?php
-                $result = \DB::table('pembukuan')
-                    ->selectRaw(
-                        "
-                        SUM(CASE WHEN jenis_pembukuan = 'Uang Masuk' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pemasukan,
-                        SUM(CASE WHEN jenis_pembukuan = 'Uang Keluar' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pengeluaran
-                    ",
-                    )
-                    ->first();
+                $result = \DB::table('pembukuan')->selectRaw("SUM(CASE WHEN jenis_pembukuan = 'Uang Masuk' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pemasukan, SUM(CASE WHEN jenis_pembukuan = 'Uang Keluar' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pengeluaran")->first();
                 
                 $total_pemasukan = $result->total_pemasukan;
                 $total_pengeluaran = $result->total_pengeluaran;
@@ -122,6 +134,9 @@
         </div>
 
         <!-- Button -->
+        {{-- 
+        TODO: jangan lupa bikin report buat diunduh. sesuaikan dengan filter
+        --}}
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
             <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                 UNDUH
@@ -134,4 +149,24 @@
         </div>
     </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tanggalAwal = document.getElementById('tanggal_awal');
+            const tanggalAkhir = document.getElementById('tanggal_akhir');
+
+            function updateMinTanggalAkhir() {
+                tanggalAkhir.min = tanggalAwal.value;
+                // Optional: if tanggal_akhir is before tanggal_awal, reset it
+                if (tanggalAkhir.value < tanggalAwal.value) {
+                    tanggalAkhir.value = tanggalAwal.value;
+                }
+            }
+
+            tanggalAwal.addEventListener('change', updateMinTanggalAkhir);
+
+            // Set initial min on page load
+            updateMinTanggalAkhir();
+        });
+    </script>
 </x-layout_sistem_informasi>

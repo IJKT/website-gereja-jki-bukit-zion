@@ -26,7 +26,7 @@ class JemaatController extends Controller
             'Manajemen.Jemaat.viewall',
             [
                 'title' => 'Manajemen Jemaat',
-                'jemaat' => Jemaat::with('user')->simplePaginate(5)
+                'jemaat' => Jemaat::with('user')->paginate(5)
             ]
         );
     }

@@ -30,35 +30,44 @@
                         @foreach ($riwayat as $_riwayat)
                             <tr class="bg-white text-sm text-center">
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_riwayat['tgl_perubahan'])->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                                    {{ \Carbon\Carbon::parse($_riwayat['tgl_perubahan'])->locale('id_ID')->isoFormat('DD MMMM Y HH:mm:ss') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2 text-left">
                                     {{ $_riwayat->pelayan->jemaat->nama_jemaat }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    @if (substr($_riwayat['id_tabel'], 0, 2) == 'LI')
+                                    {{-- @dd($_riwayat->id_tabel_ubah) --}}
+                                    @if (substr($_riwayat->id_tabel_ubah, 0, 2) == 'LI')
                                         LAGU
-                                    @elseif (substr($_riwayat['id_tabel'], 0, 2) == 'PG')
+                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'PG')
                                         PEMBUKUAN
-                                    @elseif (substr($_riwayat['id_tabel'], 0, 2) == 'JI')
+                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'JI')
                                         JADWAL
-                                    @elseif (substr($_riwayat['id_tabel'], 0, 2) == 'RF')
+                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'RF')
                                         RANGKUMAN
+                                        {{-- 
+                                        TODO: tambahin fitur log yang lainS
+                                        --}}
                                     @endif
-                                    - ({{ $_riwayat['id_tabel'] }})
+                                    - ({{ $_riwayat['id_tabel_ubah'] }})
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     @if ($_riwayat['jenis_perubahan'] == 1)
-                                        Create
+                                        Tambah
                                     @elseif ($_riwayat['jenis_perubahan'] == 2)
-                                        Update
+                                        Ubah
                                     @elseif ($_riwayat['jenis_perubahan'] == 3)
-                                        Delete
+                                        Hapus
                                     @endif
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-2">
+                    <div>
+                        {{ $riwayat->links() }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

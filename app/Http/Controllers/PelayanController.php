@@ -14,7 +14,7 @@ class PelayanController extends Controller
             'Manajemen.Pelayan.viewall',
             [
                 'title' => 'Manajemen Pelayan',
-                'pelayan' => Pelayan::with('jemaat')->simplePaginate(5)
+                'pelayan' => Pelayan::with('jemaat')->paginate(5)
             ]
         );
     }

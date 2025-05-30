@@ -13,15 +13,13 @@
     <div x-show="open" @click.away="open = false" x-transition
         class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-gray-200 ring-1 ring-white ring-opacity-5 z-50"
         style="display: none;">
-        <form class="p-4 space-y-4" method="GET" action="{{ url()->current() }}">
-
-            {{ $slot }}
-            <div class="flex justify-end gap-2">
-                <button type="submit"
-                    class="bg-[#215773] text-white font-semibold px-3 py-1 rounded hover:bg-[#1a4a60]">CARI</button>
-                <button type="reset"
-                    class="bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded hover:bg-gray-300">ULANG</button>
-            </div>
-        </form>
+        {{ $slot }}
+        <div class="flex justify-end gap-2 mb-2">
+            <button type="submit"
+                class="bg-[#215773] text-white font-semibold px-3 py-1 rounded hover:bg-[#1a4a60]">CARI</button>
+            <button type="reset"
+                class="bg-gray-200 text-gray-700 font-semibold px-3 py-1 rounded hover:bg-gray-300">ULANG</button>
+            </form>
+        </div>
     </div>
 </div>
