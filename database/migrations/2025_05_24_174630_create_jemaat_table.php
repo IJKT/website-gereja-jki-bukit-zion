@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('tmpt_lahir_jemaat', 50);
             $table->date('tgl_lahir_jemaat');
             $table->string('telp_jemaat', 20);
-            $table->date('tgl_daftar_jemaat');
+            $table->datetime('tgl_daftar_jemaat');
             $table->string('email_jemaat', 50)->unique();
             $table->string('alamat_jemaat', 100);
             $table->boolean('status_baptis_jemaat')->default(0);

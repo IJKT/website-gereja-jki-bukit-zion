@@ -79,7 +79,7 @@
         </form>
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <form id="statusForm" action="{{ route('Manajemen.Pelayan.status', $pelayan->id_pelayan) }}" method="POST"
+            <form id="statusForm" action="{{ route('Manajemen.Pelayan.status', $pelayan) }}" method="POST"
                 style="display:none;">
                 @csrf
                 @method('PUT')

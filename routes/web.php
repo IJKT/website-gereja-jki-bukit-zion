@@ -83,10 +83,9 @@ Route::prefix('manajemen/jemaat')
         function () {
             // MANAJEMEN JEMAAT
             route::get('', [JemaatController::class, 'viewall'])->name('.viewall');
-            // route::get('tambah', [JemaatController::class, 'tambah'])->name('.tambah');
             route::get('{jemaat}', [JemaatController::class, 'ubah'])->name('.ubah');
-            // Route::put('add', [JemaatController::class, 'add'])->name('.add');
-            // Route::put('update/{jemaat}', [JemaatController::class, 'update'])->name('.update');
+            Route::put('update/{jemaat}', [JemaatController::class, 'update'])->name('.update');
+            Route::put('status/{jemaat}', [JemaatController::class, 'status'])->name('.status');
 
             //TODO: bentuk buat view pengajuan jemaat
             //MANAJEMEN PENGAJUAN JEMAAT

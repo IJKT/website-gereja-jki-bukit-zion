@@ -46,6 +46,8 @@
                                         RANGKUMAN
                                     @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'PL')
                                         PELAYAN
+                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'JM')
+                                        JEMAAT
                                         {{-- 
                                         TODO: tambahin fitur log yang lain
                                         --}}

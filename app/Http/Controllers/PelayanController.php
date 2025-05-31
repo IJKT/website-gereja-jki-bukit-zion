@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class PelayanController extends Controller
 {
+    // UNTUK SEMUA VIEW
     public function viewall(): View
     {
         return view(
@@ -43,6 +44,7 @@ class PelayanController extends Controller
         );
     }
 
+    // UNTUK SEMUA PUT FUNCTION
     public function update(Request $request, Pelayan $pelayan)
     {
         // Update the pelayan record
@@ -76,6 +78,7 @@ class PelayanController extends Controller
         return redirect()->route('Manajemen.Pelayan.viewall');
     }
 
+    // ETC:
     public function search(Request $request)
     {
         $query = $request->get('q');

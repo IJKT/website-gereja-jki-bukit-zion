@@ -15,6 +15,7 @@ class Riwayat extends Model
     protected $primaryKey = 'id_log';
     protected $keyType = 'string';
     public $timestamps = false;
+
     protected $fillable = [
         'id_log',
         'id_pelayan_creator',

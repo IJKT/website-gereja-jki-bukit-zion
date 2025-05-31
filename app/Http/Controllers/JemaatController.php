@@ -3,23 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jemaat;
+use App\Models\Riwayat;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class JemaatController extends Controller
 {
-    // $jemaat = Jemaat::
-    // public function search(Request $request)
-    // {
-    //     $query = $request->input('query');
-    //     $results = Jemaat::where('nama_jemaat', 'like', "%{$query}%")
-    //         ->limit(10)
-    //         ->get(['id_jemaat', 'nama_jemaat', 'username']);
-
-    //     return response()->json($results);
-    // }
-    // public $prefix = 'Manajemen.Jemaat.';
+    // MENAMPILKAN HALAMAN
     public function viewall(): View
     {
         return view(
@@ -41,12 +32,35 @@ class JemaatController extends Controller
         );
     }
 
+    // UNTUK SEMUA PUT FUNCTION
+    public function update(Request $request, Jemaat $jemaat)
+    {
+        // dd($request);
+        $jemaat->update([
+            // nama email NIK alamat ttl telp hak akses jk
+            'nama_jemaat' => $request->input('nama_jemaat'),
+            'jk_jemaat' => $request->input('jk_jemaat'),
+            'nik_jemaat' => $request->input('nik_jemaat'),
+            'tmpt_lahir_jemaat' => $request->input('tmpt_lahir_jemaat'),
+            'tgl_lahir_jemaat' => $request->input('tgl_lahir_jemaat'),
+            'telp_jemaat' => $request->input('telp_jemaat'),
+            'email_jemaat' => $request->input('email_jemaat'),
+            'alamat_jemaat' => $request->input('alamat_jemaat'),
+            'hak_akses_jemaat' => $request->input('hak_akses_jemaat')
+        ]);
 
-    // TODO: tambah function
-    //     public function viewall(): View
-    //     {
-    //         return view($prefix . 'viewall', [
-    //             'users' => Jemaat::with('users')->paginate(5)
-    //         ]);
-    //     }
+        Riwayat::logChange(2, $jemaat->id_jemaat, null);
+        // Redirect back with a success message
+        return redirect()->route('Manajemen.Jemaat.viewall');
+    }
+    public function status(Request $request, Jemaat $jemaat)
+    {
+        $jemaat->update([
+            'status_jemaat' => $request->status_jemaat
+        ]);
+
+        Riwayat::logChange(2, $jemaat->id_jemaat, null);
+        // Redirect back with a success message
+        return redirect()->route('Manajemen.Jemaat.viewall');
+    }
 }
