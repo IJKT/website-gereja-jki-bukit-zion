@@ -17,6 +17,7 @@ class Pernikahan extends Model
         'id_jemaat_p',
         'id_jemaat_w',
         'id_pendeta',
+        'komentar_pernikahan',
         'tgl_pernikahan'
     ];
 

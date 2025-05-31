@@ -99,8 +99,9 @@ Route::prefix('manajemen/pengajuan')
             route::get('baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiBaptis'])->name('.verifikasi_baptis');
             route::get('pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiPernikahan'])->name('.verifikasi_pernikahan');
             route::get('registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiRegistrasi'])->name('.verifikasi_registrasi');
-            Route::put('verify/baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyBaptis'])->name('.verify_baptis');
-            Route::put('verify/pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyPernikahan'])->name('.verify_pernikahan');
+            route::get('search', [JemaatController::class, 'search'])->name('.search');
+            Route::put('verify/baptis/{baptis}', [JemaatController::class, 'pengajuanVerifyBaptis'])->name('.verify_baptis');
+            Route::put('verify/pernikahan/{pernikahan}', [JemaatController::class, 'pengajuanVerifyPernikahan'])->name('.verify_pernikahan');
             Route::put('verify/registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyRegistrasi'])->name('.verify_registrasi');
             // Route::put('pengajuan/add', [JemaatController::class, 'pengajuanAdd'])->name('.Pengajuan.add');
             // Route::put('pengajuan/update/{jemaat}', [JemaatController::class, 'pengajuanUpdate'])->name('.Pengajuan.update');

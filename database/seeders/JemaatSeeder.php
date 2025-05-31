@@ -74,7 +74,8 @@ class JemaatSeeder extends Seeder
                 'tgl_daftar_jemaat' => now(),
                 'telp_jemaat' => fake()->phoneNumber(),
                 'email_jemaat' => fake()->unique()->safeEmail(),
-                'alamat_jemaat' => fake()->address()
+                'alamat_jemaat' => fake()->address(),
+                'hak_akses_jemaat' => 'Pelayan',
             ]
         );
     }

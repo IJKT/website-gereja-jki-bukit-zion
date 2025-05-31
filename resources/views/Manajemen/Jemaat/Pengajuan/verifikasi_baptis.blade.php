@@ -69,8 +69,8 @@
                 </div>
                 {{-- untuk mendapatkan hidden input --}}
                 <input type="hidden" name="catatan_pengajuan" id="catatan_pengajuan">
-                <input type="hidden" name="verifikasi_pengajuan" id="verifikasi_pengajuan">
                 <input type="hidden" name="tgl_baptis" id="tgl_baptis">
+                <input type="hidden" name="verifikasi_pengajuan" id="verifikasi_pengajuan">
         </form>
 
         <!-- Button -->
@@ -112,7 +112,7 @@
                     // Submit the form
                     document.getElementById('catatan_pengajuan').value = catatan_pengajuan;
                     document.getElementById('verifikasi_pengajuan').value = 2;
-                    // document.getElementById('verifikasiForm').submit();
+                    document.getElementById('verifikasiForm').submit();
                 } else if (result.isDenied) {
                     Swal.fire("Data Tidak Ditolak", "", "error");
                 }
@@ -123,48 +123,120 @@
         function showAlertVerify() {
             Swal.fire({
                 title: "Verifikasi Data?",
-                input: 'date',
-                inputLabel: 'Tanggal Baptis',
+                html: `
+            <label for="swal-tgl-baptis">Tanggal Baptis</label>
+            <input id="swal-tgl-baptis" type="datetime-local" class="swal2-input" style="width:90%">
+            <label for="swal-nama_pembaptis">Nama Pembaptis</label>
+            <input id="swal-nama_pembaptis" type="text" class="swal2-input" style="width:90%" autocomplete="off">
+            <div id="swal-pembaptis-suggestion-list" style="position:relative; z-index:9999; background:white; border:1px solid #ccc; border-radius:4px; display:none; max-height:150px; overflow-y:auto;"></div>
+            <input id="swal-id_pembaptis" type="hidden">
+        `,
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
                 denyButtonText: 'Batal',
-                inputValidator: (value) => {
-                    if (!value) {
-                        return 'Tanggal baptis harus diisi!';
+                preConfirm: () => {
+                    const tgl_baptis = document.getElementById('swal-tgl-baptis').value;
+                    const id_pembaptis = document.getElementById('swal-id_pembaptis').value;
+                    if (!tgl_baptis) {
+                        Swal.showValidationMessage('Tanggal baptis harus diisi!');
+                        return false;
                     }
-                    // Optional: Prevent selecting a past date
-                    const today = new Date();
-                    const selected = new Date(value);
-                    today.setHours(0, 0, 0, 0);
-                    if (selected < today) {
-                        return 'Tanggal baptis tidak boleh di masa lalu!';
+                    if (!id_pembaptis) {
+                        Swal.showValidationMessage('Nama pembaptis harus dipilih dari daftar!');
+                        return false;
                     }
-                    return null;
+                    return {
+                        tgl_baptis,
+                        id_pembaptis
+                    };
                 },
-                // Optional: Set min date to today
                 didOpen: () => {
-                    const input = Swal.getInput();
+                    // Set min date to now
+                    const input = document.getElementById('swal-tgl-baptis');
                     if (input) {
-                        const today = new Date();
-                        const yyyy = today.getFullYear();
-                        const mm = String(today.getMonth() + 1).padStart(2, '0');
-                        const dd = String(today.getDate()).padStart(2, '0');
-                        input.min = `${yyyy}-${mm}-${dd}`;
+                        const now = new Date();
+                        const yyyy = now.getFullYear();
+                        const mm = String(now.getMonth() + 1).padStart(2, '0');
+                        const dd = String(now.getDate()).padStart(2, '0');
+                        const hh = String(now.getHours()).padStart(2, '0');
+                        const min = String(now.getMinutes()).padStart(2, '0');
+                        input.min = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
                     }
+
+                    // Suggestion box logic for Nama Pembaptis
+                    const namaInput = document.getElementById('swal-nama_pembaptis');
+                    const idInput = document.getElementById('swal-id_pembaptis');
+                    const suggestionBox = document.getElementById('swal-pembaptis-suggestion-list');
+                    let debounceTimeout = null;
+
+                    namaInput.addEventListener('input', function() {
+                        idInput.value = ''; // Clear hidden input when typing
+                        const query = namaInput.value.trim();
+                        if (debounceTimeout) clearTimeout(debounceTimeout);
+                        if (query.length < 2) {
+                            suggestionBox.style.display = 'none';
+                            suggestionBox.innerHTML = '';
+                            return;
+                        }
+                        debounceTimeout = setTimeout(() => {
+                            fetch(`/manajemen/pengajuan/search?q=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.length > 0) {
+                                        suggestionBox.innerHTML = data.map(item => `
+                                    <div class="swal2-suggestion-item" style="padding:8px; cursor:pointer;" data-id="${item.id_pelayan}" data-name="${item.nama_jemaat}">
+                                        ${item.nama_jemaat} (${item.id_pelayan})
+                                    </div>
+                                `).join('');
+                                        suggestionBox.style.display = 'block';
+                                        // Add click listeners
+                                        suggestionBox.querySelectorAll(
+                                            '.swal2-suggestion-item').forEach(el => {
+                                            el.addEventListener('click',
+                                                function() {
+                                                    namaInput.value = el
+                                                        .getAttribute(
+                                                            'data-name');
+                                                    idInput.value = el
+                                                        .getAttribute(
+                                                            'data-id');
+                                                    suggestionBox.style
+                                                        .display = 'none';
+                                                });
+                                        });
+                                    } else {
+                                        suggestionBox.innerHTML =
+                                            '<div style="padding:8px; color:#888;">Tidak ditemukan</div>';
+                                        suggestionBox.style.display = 'block';
+                                    }
+                                })
+                                .catch(() => {
+                                    suggestionBox.innerHTML =
+                                        '<div style="padding:8px; color:#888;">Error mengambil data</div>';
+                                    suggestionBox.style.display = 'block';
+                                });
+                        }, 250);
+                    });
+
+                    // Hide suggestion box when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!suggestionBox.contains(e.target) && e.target !== namaInput) {
+                            suggestionBox.style.display = 'none';
+                        }
+                    }, {
+                        capture: true
+                    });
                 }
             }).then((result) => {
                 if (result.isConfirmed && result.value) {
-                    const tgl_baptis = result.value;
-                    const date = new Date(tgl_baptis);
-                    const tanggal_baptis = date.toLocaleDateString('id-ID', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
+                    const {
+                        tgl_baptis,
+                        id_pembaptis
+                    } = result.value;
                     Swal.fire({
                         title: "Data Diverifikasi",
-                        text: "Jemaat akan dibaptis pada " + tanggal_baptis,
+                        text: `Jemaat akan dibaptis pada ${new Date(tgl_baptis).toLocaleString('id-ID')}.`,
                         icon: "success",
                         timer: 2000,
                         showConfirmButton: false
@@ -173,13 +245,22 @@
                     document.getElementById('catatan_pengajuan').value = '';
                     document.getElementById('tgl_baptis').value = tgl_baptis;
                     document.getElementById('verifikasi_pengajuan').value = 1;
+                    // Add a hidden input for id_pembaptis if needed in your form
+                    let idPembaptisInput = document.getElementById('id_pembaptis');
+                    if (!idPembaptisInput) {
+                        idPembaptisInput = document.createElement('input');
+                        idPembaptisInput.type = 'hidden';
+                        idPembaptisInput.name = 'id_pembaptis';
+                        idPembaptisInput.id = 'id_pembaptis';
+                        document.getElementById('verifikasiForm').appendChild(idPembaptisInput);
+                    }
+                    idPembaptisInput.value = id_pembaptis;
                     setTimeout(() => {
-                        // document.getElementById('verifikasiForm').submit();
-                    }, 2000); // Wait for the success alert to close
+                        document.getElementById('verifikasiForm').submit();
+                    }, 2000);
                 } else if (result.isDenied) {
                     Swal.fire("Data Tidak Diverifikasi", "", "error");
                 }
-                // If dismissed or cancelled, do nothing
             });
         }
     </script>

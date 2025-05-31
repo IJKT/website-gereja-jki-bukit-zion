@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('id_jemaat_w', 'pernikahan_jemaat_w_id')->references('id_jemaat')->on('jemaat');
             $table->string('id_pendeta', 10)->nullable();
             $table->foreign('id_pendeta', 'pernikahan_pelayan_id')->references('id_pelayan')->on('pelayan');
-            $table->text('komentar_baptis')->nullable();
+            $table->text('komentar_pernikahan')->nullable();
             $table->dateTime('tgl_pernikahan');
             $table->unique(['id_pernikahan', 'id_jemaat_p', 'id_jemaat_w'], 'unique_pernikahan');
         });

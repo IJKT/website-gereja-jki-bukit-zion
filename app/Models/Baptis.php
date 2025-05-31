@@ -17,6 +17,7 @@ class Baptis extends Model
         'id_jemaat',
         'id_pembaptis',
         'tgl_baptis',
+        'komentar_baptis',
         'bukti_baptis'
     ];
     public function pengajuan_jemaat(): BelongsTo

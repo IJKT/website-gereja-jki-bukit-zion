@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Baptis;
 use App\Models\Jemaat;
 use App\Models\Riwayat;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Baptis;
-use App\Models\PengajuanJemaat;
 use App\Models\Pernikahan;
-use App\Models\User;
+use Illuminate\Http\Request;
+use App\Models\PengajuanJemaat;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 // TODO: bikin pekerjaan_jemaat dan wilayah komsel nanti di database
 
@@ -114,18 +115,27 @@ class JemaatController extends Controller
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.viewall');
     }
-    public function pengajuanVerifyBaptis(Request $request, PengajuanJemaat $pengajuan_jemaat)
+    public function pengajuanVerifyBaptis(Request $request, Baptis $baptis)
     {
-        $pengajuan_jemaat->update([
-            'verifikasi_pengajuan' => $request->verifikasi_pengajuan
+        $baptis->update([
+            'komentar_baptis' => $request->catatan_pengajuan,
+            'id_pembaptis' => $request->id_pembaptis,
+            'tgl_baptis' => $request->tgl_baptis
         ]);
 
-        Riwayat::logChange(2, $pengajuan_jemaat->id_pengajuan, null);
+        $pengajuan_jemaat = PengajuanJemaat::where('id_pengajuan', $baptis->id_baptis)->first();
+        if ($pengajuan_jemaat) {
+            $pengajuan_jemaat->update([
+                'verifikasi_pengajuan' => $request->verifikasi_pengajuan
+            ]);
+        }
+        Riwayat::logChange(2, $baptis->id_baptis, null);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
     public function pengajuanVerifyPernikahan(Request $request, PengajuanJemaat $pengajuan_jemaat)
     {
+
         $pengajuan_jemaat->update([
             'verifikasi_pengajuan' => $request->verifikasi_pengajuan
         ]);
@@ -152,5 +162,20 @@ class JemaatController extends Controller
         Riwayat::logChange(2, $pengajuan_jemaat->id_pengajuan, null);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
+    }
+
+    // ETC
+    public function search(Request $request)
+    {
+        $query = $request->get('q');
+
+        // Join pelayan and jemaat tables to get id_pelayan and nama_jemaat
+        $results = DB::table('pelayan')
+            ->join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
+            ->where('jemaat.nama_jemaat', 'like', "%$query%")
+            ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat')
+            ->get();
+
+        return response()->json($results);
     }
 }

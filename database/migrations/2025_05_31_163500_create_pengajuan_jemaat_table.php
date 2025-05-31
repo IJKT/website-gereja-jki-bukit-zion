@@ -23,7 +23,6 @@ return new class extends Migration
             $table->foreign('id_jemaat', 'pengajuan_jemaat_jemaat_id')->references('id_jemaat')->on('jemaat');
             $table->string('jenis_pengajuan', 10);
             $table->integer('verifikasi_pengajuan')->default(0);
-            $table->text('catatan_pengajuan')->nullable();
         });
     }
 
