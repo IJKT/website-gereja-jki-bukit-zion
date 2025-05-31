@@ -58,7 +58,7 @@
                 <a href="/manajemen/jemaat">
                     <li
                         class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
-                    {{ request()->is('manajemen/jemaat', 'manajemen/jemaat/*') ? 'bg-[#215773]' : '' }}">
+                    {{ request()->is('manajemen/jemaat', 'manajemen/jemaat/*', 'manajemen/pengajuan', 'manajemen/pengajuan/*') ? 'bg-[#215773]' : '' }}">
                         Jemaat
                     </li>
                 </a>
@@ -75,7 +75,7 @@
         <a href="/pembukuan">
             <li
                 class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('pembukuan') ? 'bg-[#215773]' : '' }}">
+            {{ request()->is('pembukuan', 'pembukuan/*') ? 'bg-[#215773]' : '' }}">
                 Pembukuan</li>
         </a>
 

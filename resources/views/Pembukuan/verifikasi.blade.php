@@ -1,7 +1,3 @@
-{{-- 
-TODO: menambahkan cara untuk memverifikasi data yang sudah dibuat oleh bendahara
---}}
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

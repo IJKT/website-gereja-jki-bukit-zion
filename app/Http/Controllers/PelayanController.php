@@ -74,6 +74,13 @@ class PelayanController extends Controller
         $pelayan->hak_akses_pelayan = $request->hak_akses_pelayan;
         $pelayan->save();
 
+        // Update hak_akses_jemaat to 'Pelayan' in the jemaat table
+        $jemaat = Jemaat::find($request->id_jemaat);
+        if ($jemaat) {
+            $jemaat->hak_akses_jemaat = 'Pelayan';
+            $jemaat->save();
+        }
+
         Riwayat::logChange(1, $request->id_pelayan, null);
         return redirect()->route('Manajemen.Pelayan.viewall');
     }
@@ -84,7 +91,7 @@ class PelayanController extends Controller
         $query = $request->get('q');
 
         $results = Jemaat::where('nama_jemaat', 'like', "%$query%")
-            ->where('hak_akses_jemaat', 'Pelayan')
+            ->where('hak_akses_jemaat', 'Jemaat')
             ->select('id_jemaat', 'nama_jemaat')
             ->get();
 

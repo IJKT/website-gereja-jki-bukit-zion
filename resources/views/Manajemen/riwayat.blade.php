@@ -48,13 +48,15 @@
                                         PELAYAN
                                     @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'JM')
                                         JEMAAT
+                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'PJ')
+                                        PENGAJUAN JEMAAT
                                         {{-- 
                                         TODO: tambahin fitur log yang lain
                                         --}}
                                     @endif
                                     - ({{ $_riwayat['id_tabel_ubah'] }})
                                 </td>
-                                <td class="border border-gray-300 px-4 py-2">
+                                <td class="border border-gray-300 px-4 py-2 font-semibold">
                                     @if ($_riwayat['jenis_perubahan'] == 1)
                                         Tambah
                                     @elseif ($_riwayat['jenis_perubahan'] == 2)

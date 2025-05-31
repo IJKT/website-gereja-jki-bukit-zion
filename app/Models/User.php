@@ -10,13 +10,16 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
+
     use HasFactory, Notifiable;
+    protected $primaryKey = 'username';
+    protected $keyType = 'string';
     public $timestamps = false;
     protected $fillable = [
         'username',
-        'name',
-        'email',
-        'password'
+        'password',
+        'verifikasi_user',
+        'catatan_verif_user'
     ];
 
     /**

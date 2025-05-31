@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('jemaat', function (Blueprint $table) {
             $table->string('id_jemaat', 10)->primary();
-            $table->string('username')->unique();
+            $table->string('username', 50)->unique();
             $table->foreign('username')->references('username')->on('users');
             $table->string('nama_jemaat', 50);
             $table->string('jk_jemaat', 1);
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->datetime('tgl_daftar_jemaat');
             $table->string('email_jemaat', 50)->unique();
             $table->string('alamat_jemaat', 100);
+            $table->string('pekerjaan_jemaat', 100)->nullable();
+            $table->string('wilayah_komsel_jemaat', 100)->nullable();
             $table->boolean('status_baptis_jemaat')->default(0);
             $table->date('id_baptis_jemaat')->nullable();
             $table->boolean('status_nikah_jemaat')->default(0);

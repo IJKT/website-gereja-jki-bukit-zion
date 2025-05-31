@@ -61,9 +61,7 @@ class JemaatFactory extends Factory
             'tgl_daftar_jemaat' => $tgl_daftar,
             'email_jemaat' => $this->faker->unique()->safeEmail,
             'alamat_jemaat' => $this->faker->address,
-            'hak_akses_jemaat' => fake()->randomElement(['Jemaat', 'Pelayan']),
-            // 'created_at' => now(),
-            // 'updated_at' => now()
+            'hak_akses_jemaat' => 'Jemaat',
         ];
     }
 }

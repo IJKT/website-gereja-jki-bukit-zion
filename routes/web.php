@@ -86,16 +86,31 @@ Route::prefix('manajemen/jemaat')
             route::get('{jemaat}', [JemaatController::class, 'ubah'])->name('.ubah');
             Route::put('update/{jemaat}', [JemaatController::class, 'update'])->name('.update');
             Route::put('status/{jemaat}', [JemaatController::class, 'status'])->name('.status');
-
-            //TODO: bentuk buat view pengajuan jemaat
-            //MANAJEMEN PENGAJUAN JEMAAT
-            // route::get('pengajuan', [JemaatController::class, 'pengajuanViewall'])->name('.pengajuanViewall');
-            // route::get('pengajuan/tambah', [JemaatController::class, 'pengajuanTambah'])->name('.pengajuanTambah');
-            // route::get('pengajuan/{jemaat}', [JemaatController::class, 'pengajuanUbah'])->name('.pengajuanUbah');
-            // Route::put('pengajuan/add', [JemaatController::class, 'pengajuanAdd'])->name('.pengajuanAdd');
-            // Route::put('pengajuan/update/{jemaat}', [JemaatController::class, 'pengajuanUpdate'])->name('.pengajuanUpdate');
         }
     );
+Route::prefix('manajemen/pengajuan')
+    ->name('Manajemen.Jemaat.Pengajuan')
+    ->group(
+        function () {
+            //TODO: bentuk buat view pengajuan jemaat
+            //MANAJEMEN PENGAJUAN JEMAAT
+            route::get('', [JemaatController::class, 'pengajuanViewall'])->name('.viewall');
+            // route::get('pengajuan/tambah', [JemaatController::class, 'pengajuanTambah'])->name('.Pengajuan.tambah');
+            route::get('baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiBaptis'])->name('.verifikasi_baptis');
+            route::get('pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiPernikahan'])->name('.verifikasi_pernikahan');
+            route::get('registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiRegistrasi'])->name('.verifikasi_registrasi');
+            Route::put('verify/baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyBaptis'])->name('.verify_baptis');
+            Route::put('verify/pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyPernikahan'])->name('.verify_pernikahan');
+            Route::put('verify/registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyRegistrasi'])->name('.verify_registrasi');
+            // Route::put('pengajuan/add', [JemaatController::class, 'pengajuanAdd'])->name('.Pengajuan.add');
+            // Route::put('pengajuan/update/{jemaat}', [JemaatController::class, 'pengajuanUpdate'])->name('.Pengajuan.update');
+        }
+    );
+// Route::get('manajemen/jemaat/pengajuan', function () {
+//     return view(
+//         'Manajemen.riwayat'
+//     );
+// });
 
 Route::get('/manajemen/riwayat', function () {
     return view(

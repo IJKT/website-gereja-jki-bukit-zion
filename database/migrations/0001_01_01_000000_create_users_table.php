@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('username', 50)->primary()->unique();
             $table->string('password');
-            $table->integer('verifikasi_user')->default(1);
+            $table->integer('verifikasi_user')->default(0);
             $table->text('catatan_verif_user')->nullable();
             $table->boolean('status_user')->default(1);
         });

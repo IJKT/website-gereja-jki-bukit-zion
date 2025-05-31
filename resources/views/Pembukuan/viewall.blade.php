@@ -82,9 +82,6 @@
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
                                             @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
                                     </a>
-                                    {{-- 
-                                    TODO: buat view buat verifikasi pembukuan
-                                    --}}
                                     <a href="/pembukuan/verifikasi/{{ $_pembukuan['id_pembukuan'] }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]

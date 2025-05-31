@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pelayan extends Model
 {
@@ -23,8 +24,6 @@ class Pelayan extends Model
         'hak_akses_pelayan',
         'status_pelayan'
     ];
-
-    // In app/Models/Pelayan.php
 
     public static function generateNextId()
     {
@@ -60,9 +59,16 @@ class Pelayan extends Model
     {
         return $this->belongsTo(Jemaat::class, 'id_jemaat', 'id_jemaat');
     }
-
     public function riwayat()
     {
         return $this->hasMany(Riwayat::class, 'id_pelayan', 'id_pelayan_creator');
+    }
+    public function baptis(): HasMany
+    {
+        return $this->hasMany(Baptis::class, 'id_pembaptis', 'id_pelayan');
+    }
+    public function pernikahan(): HasMany
+    {
+        return $this->hasMany(Pernikahan::class, 'id_pendeta', 'id_pelayan');
     }
 }

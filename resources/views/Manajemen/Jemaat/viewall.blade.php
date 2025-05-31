@@ -65,9 +65,11 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                LIHAT PENGAJUAN
-            </button>
+            <a href="/manajemen/pengajuan">
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    LIHAT PENGAJUAN
+                </button>
+            </a>
         </div>
     </div>
     </div>
