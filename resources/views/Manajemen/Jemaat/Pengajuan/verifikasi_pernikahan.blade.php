@@ -74,12 +74,28 @@
                         <input type="text" value="{{ $pengajuan_jemaat->jemaat_wanita->telp_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
+                    <div>
+                        <label class="block font-semibold mb-1">TANGGAL & JAM PERNIKAHAN</label>
+                        <div class="grid grid-cols-2 gap-x-5">
+                            <input type="text" name="tmpt_lahir_jemaat"
+                                value=" {{ \Carbon\Carbon::parse($pengajuan_jemaat->tgl_pernikahan)->format('d M Y') }} "
+                                class="w-full p-2 rounded bg-gray-100" disabled>
+                            <input type="text" class="w-full p-2 rounded bg-gray-100" name="tgl_lahir_jemaat"
+                                value=" {{ \Carbon\Carbon::parse($pengajuan_jemaat->tgl_pernikahan)->format('H:i') }} "
+                                disabled>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">TEMPAT PERNIKAHAN</label>
+                        <input type="text" name="tmpt_lahir_jemaat"
+                            value=" {{ $pengajuan_jemaat->tempat_pernikahan }} " class="w-full p-2 rounded bg-gray-100"
+                            disabled>
+                    </div>
                 </div>
                 {{-- untuk mendapatkan komentar dan verifikasi --}}
                 <input type="hidden" name="catatan_pengajuan" id="catatan_pengajuan">
                 <input type="hidden" name="verifikasi_pengajuan" id="verifikasi_pengajuan">
-                <input type="hidden" name="tgl_jam_pernikahan" id="tgl_jam_pernikahan">
-                <input type="hidden" name="tempat_pernikahan" id="tempat_pernikahan">
+                <input type="hidden" name="id_pendeta" id="tempat_pernikahan">
         </form>
 
         <!-- Button -->
@@ -121,75 +137,132 @@
                     // Submit the form
                     document.getElementById('catatan_pengajuan').value = catatan_pengajuan;
                     document.getElementById('verifikasi_pengajuan').value = 2;
-                    // document.getElementById('verifikasiForm').submit();
+                    document.getElementById('verifikasiForm').submit();
                 } else if (result.isDenied) {
                     Swal.fire("Data Tidak Ditolak", "", "error");
                 }
             });
         }
 
-        // TODO: nanti tambahin date'nya di controller
         function showAlertVerify() {
             Swal.fire({
                 title: "Verifikasi Data?",
-                input: 'date',
-                inputLabel: 'Tanggal Baptis',
+                html: `
+                <label for="swal-nama_pendeta">Nama Pendeta</label>
+                <input id="swal-nama_pendeta" type="text" class="swal2-input" style="width:80%" autocomplete="off">
+                <div id="swal-pendeta-suggestion-list" style="position:relative; z-index:9999; background:white; border:1px solid #ccc; border-radius:4px; display:none; max-height:150px; overflow-y:auto;"></div>
+                <input id="swal-id_pendeta" type="hidden">
+            `,
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
                 denyButtonText: 'Batal',
-                inputValidator: (value) => {
-                    if (!value) {
-                        return 'Tanggal baptis harus diisi!';
+                preConfirm: () => {
+                    const id_pendeta = document.getElementById('swal-id_pendeta').value;
+                    if (!id_pendeta) {
+                        Swal.showValidationMessage('Nama pendeta harus dipilih dari daftar!');
+                        return false;
                     }
-                    // Optional: Prevent selecting a past date
-                    const today = new Date();
-                    const selected = new Date(value);
-                    today.setHours(0, 0, 0, 0);
-                    if (selected < today) {
-                        return 'Tanggal baptis tidak boleh di masa lalu!';
-                    }
-                    return null;
+                    return {
+                        id_pendeta
+                    };
                 },
-                // Optional: Set min date to today
                 didOpen: () => {
-                    const input = Swal.getInput();
-                    if (input) {
-                        const today = new Date();
-                        const yyyy = today.getFullYear();
-                        const mm = String(today.getMonth() + 1).padStart(2, '0');
-                        const dd = String(today.getDate()).padStart(2, '0');
-                        input.min = `${yyyy}-${mm}-${dd}`;
-                    }
+                    // Suggestion box logic for Nama Pembaptis
+                    const namaInput = document.getElementById('swal-nama_pendeta');
+                    const idInput = document.getElementById('swal-id_pendeta');
+                    const suggestionBox = document.getElementById('swal-pendeta-suggestion-list');
+                    let debounceTimeout = null;
+
+                    namaInput.addEventListener('input', function() {
+                        idInput.value = ''; // Clear hidden input when typing
+                        const query = namaInput.value.trim();
+                        if (debounceTimeout) clearTimeout(debounceTimeout);
+                        if (query.length < 2) {
+                            suggestionBox.style.display = 'none';
+                            suggestionBox.innerHTML = '';
+                            return;
+                        }
+                        debounceTimeout = setTimeout(() => {
+                            fetch(`/manajemen/pengajuan/search?q=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.length > 0) {
+                                        suggestionBox.innerHTML = data.map(item => `
+                                        <div class="swal2-suggestion-item" style="padding:8px; cursor:pointer;" data-id="${item.id_pelayan}" data-name="${item.nama_jemaat}">
+                                            ${item.nama_jemaat} (${item.id_pelayan})
+                                        </div>
+                                    `).join('');
+                                        suggestionBox.style.display = 'block';
+                                        // Add click listeners
+                                        suggestionBox.querySelectorAll(
+                                            '.swal2-suggestion-item').forEach(el => {
+                                            el.addEventListener('click',
+                                                function() {
+                                                    namaInput.value = el
+                                                        .getAttribute(
+                                                            'data-name');
+                                                    idInput.value = el
+                                                        .getAttribute(
+                                                            'data-id');
+                                                    suggestionBox.style
+                                                        .display = 'none';
+                                                });
+                                        });
+                                    } else {
+                                        suggestionBox.innerHTML =
+                                            '<div style="padding:8px; color:#888;">Tidak ditemukan</div>';
+                                        suggestionBox.style.display = 'block';
+                                    }
+                                })
+                                .catch(() => {
+                                    suggestionBox.innerHTML =
+                                        '<div style="padding:8px; color:#888;">Error mengambil data</div>';
+                                    suggestionBox.style.display = 'block';
+                                });
+                        }, 250);
+                    });
+
+                    // Hide suggestion box when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!suggestionBox.contains(e.target) && e.target !== namaInput) {
+                            suggestionBox.style.display = 'none';
+                        }
+                    }, {
+                        capture: true
+                    });
                 }
             }).then((result) => {
                 if (result.isConfirmed && result.value) {
-                    const tgl_jam_pernikahan = result.value;
-                    const date = new Date(tgl_jam_pernikahan);
-                    // TODO: ubah ini biar bisa ngambi datetime-local
-                    const tanggal_pernikahan = date.toLocaleDateString('id-ID', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
+                    const {
+                        id_pendeta
+                    } = result.value;
                     Swal.fire({
                         title: "Data Diverifikasi",
-                        text: "Calon pasangan akan diberkati pada pada " + tanggal_pernikahan,
+                        text: `Nama pembaptis: ${document.getElementById('swal-nama_pendeta').value}`,
                         icon: "success",
                         timer: 2000,
                         showConfirmButton: false
                     });
                     // Set form values and submit
                     document.getElementById('catatan_pengajuan').value = '';
-                    document.getElementById('tgl_jam_pernikahan').value = tgl_jam_pernikahan;
                     document.getElementById('verifikasi_pengajuan').value = 1;
+                    // Add a hidden input for id_pendeta if needed in your form
+                    let idPembaptisInput = document.getElementById('id_pendeta');
+                    if (!idPembaptisInput) {
+                        idPembaptisInput = document.createElement('input');
+                        idPembaptisInput.type = 'hidden';
+                        idPembaptisInput.name = 'id_pendeta';
+                        idPembaptisInput.id = 'id_pendeta';
+                        document.getElementById('verifikasiForm').appendChild(idPembaptisInput);
+                    }
+                    idPembaptisInput.value = id_pendeta;
                     setTimeout(() => {
-                        // document.getElementById('verifikasiForm').submit();
-                    }, 2000); // Wait for the success alert to close
+                        document.getElementById('verifikasiForm').submit();
+                    }, 2000);
                 } else if (result.isDenied) {
                     Swal.fire("Data Tidak Diverifikasi", "", "error");
                 }
-                // If dismissed or cancelled, do nothing
             });
         }
     </script>

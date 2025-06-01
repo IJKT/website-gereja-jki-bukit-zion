@@ -19,7 +19,6 @@
                 <table class="w-full border-collapse ">
                     <thead>
                         <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">ID JADWAL</th>
                             <th class="border border-gray-300 px-4 py-2">TIPE IBADAH</th>
                             <th class="border border-gray-300 px-4 py-2">TANGGAL IBADAH</th>
                             <th class="border border-gray-300 px-4 py-2">AKSI</th>
@@ -28,16 +27,16 @@
                     <tbody>
                         @foreach ($jadwal as $_jadwal)
                             <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_jadwal['id'] }}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_jadwal['tipe'] }}</td>
+                                    {{ $_jadwal['jenis_ibadah'] }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_jadwal['tanggal'])->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                                    {{ \Carbon\Carbon::parse($_jadwal['tgl_ibadah'])->locale('id_ID')->isoFormat('DD MMMM Y HH:mm') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <button
-                                        class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                    <a href="/jadwal/{{ $_jadwal['id_jadwal'] }}">
+                                        <button
+                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -48,9 +47,11 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                TAMBAH
-            </button>
+            <a href="/jadwal/tambah">
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    TAMBAH
+                </button>
+            </a>
         </div>
     </div>
     </div>

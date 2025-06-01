@@ -16,7 +16,7 @@
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">USERNAME</label>
-                        <input type="text" value="{{ $pengajuan_jemaat-> }}"
+                        <input type="text" value="{{ $pengajuan_jemaat->jemaat->username }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>

@@ -133,14 +133,22 @@ class JemaatController extends Controller
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
-    public function pengajuanVerifyPernikahan(Request $request, PengajuanJemaat $pengajuan_jemaat)
+    public function pengajuanVerifyPernikahan(Request $request, Pernikahan $pernikahan)
     {
-
-        $pengajuan_jemaat->update([
-            'verifikasi_pengajuan' => $request->verifikasi_pengajuan
+        // dd([$request->catatan_pengajuan, $request->id_pendeta, $request->verifikasi_pengajuan]);
+        $pernikahan->update([
+            'komentar_pernikahan' => $request->catatan_pengajuan,
+            'id_pendeta' => $request->id_pendeta
         ]);
 
-        Riwayat::logChange(2, $pengajuan_jemaat->id_pengajuan, null);
+        $pengajuan_jemaat = PengajuanJemaat::where('id_pengajuan', $pernikahan->id_pernikahan)->first();
+        if ($pengajuan_jemaat) {
+            $pengajuan_jemaat->update([
+                'verifikasi_pengajuan' => $request->verifikasi_pengajuan
+            ]);
+        }
+
+        Riwayat::logChange(2, $pernikahan->id_pernikahan, null);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }

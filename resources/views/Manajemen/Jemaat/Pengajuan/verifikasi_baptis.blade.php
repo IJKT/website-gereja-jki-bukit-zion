@@ -125,9 +125,9 @@
                 title: "Verifikasi Data?",
                 html: `
             <label for="swal-tgl-baptis">Tanggal Baptis</label>
-            <input id="swal-tgl-baptis" type="datetime-local" class="swal2-input" style="width:90%">
+            <input id="swal-tgl-baptis" type="datetime-local" class="swal2-input" style="width:80%">
             <label for="swal-nama_pembaptis">Nama Pembaptis</label>
-            <input id="swal-nama_pembaptis" type="text" class="swal2-input" style="width:90%" autocomplete="off">
+            <input id="swal-nama_pembaptis" type="text" class="swal2-input" style="width:80%" autocomplete="off">
             <div id="swal-pembaptis-suggestion-list" style="position:relative; z-index:9999; background:white; border:1px solid #ccc; border-radius:4px; display:none; max-height:150px; overflow-y:auto;"></div>
             <input id="swal-id_pembaptis" type="hidden">
         `,

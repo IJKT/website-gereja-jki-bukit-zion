@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             PengajuanSeeder::class,
             BaptisSeeder::class,
             PernikahanSeeder::class,
+            JadwalIbadahSeeder::class,
+            DetailJadwalSeeder::class,
         ]);
     }
 }
