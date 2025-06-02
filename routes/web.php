@@ -4,6 +4,7 @@
 // use App\Models\Pelayan;
 // use App\Models\DataPelayan;
 
+use App\Http\Controllers\DetailJadwalController;
 use App\Http\Controllers\JadwalIbadahController;
 use Illuminate\Support\Arr;
 use SweetAlert2\Laravel\Swal;
@@ -146,30 +147,27 @@ Route::prefix('jadwal')
             route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
             route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
             route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
+            Route::get('search-pendeta', [JadwalIbadahController::class, 'searchPendeta'])->name('searchPendeta');
             Route::put('/update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
             Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
+
+            //DETAIL JADWAL
+            route::get('/musik/{jadwal}', [DetailJadwalController::class, 'viewall_musik'])->name('.viewall_musik');
+            route::get('/multimedia/{jadwal}', [DetailJadwalController::class, 'viewall_multimedia'])->name('.viewall_multimedia');
         }
     );
-// Route::get('/jadwal', function () {
-//     return view(
-//         'jadwal',
-//         [
-//             'title' => 'Halaman Jadwal',
-//             'jadwal' => [
-//                 [
-//                     'id' => "JI010125A1",
-//                     'tipe' => 'Shabbat Fellowship',
-//                     'tanggal' => '07-04-2025'
-//                 ],
-//                 [
-//                     'id' => "JI010125A2",
-//                     'tipe' => 'Sunday Service',
-//                     'tanggal' => '09-04-2025'
-//                 ]
-//             ]
-//         ]
-//     );
-// });
+
+// Route::prefix('jadwal')
+// ->name('Jadwal')
+// ->group(
+//     function () {
+//         route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
+//         route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
+//         route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
+//         Route::put('/update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
+//         Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
+//     }
+// );
 
 Route::get('/sermons-articles', function () {
     return view(

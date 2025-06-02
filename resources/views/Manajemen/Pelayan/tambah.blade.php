@@ -1,3 +1,8 @@
+<!-- urus nantian  -->
+
+
+
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="flex-1 bg-white p-10">

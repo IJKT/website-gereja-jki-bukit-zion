@@ -78,5 +78,21 @@ class JemaatSeeder extends Seeder
                 'hak_akses_jemaat' => 'Pelayan',
             ]
         );
+        Jemaat::updateOrCreate(
+            ['id_jemaat' => 'JM010125A4'],
+            [
+                'username' => 'mulmedtest',
+                'nama_jemaat' => 'Coba Coba Multimedia',
+                'jk_jemaat' => 'P',
+                'nik_jemaat' => fake()->numerify('################'),
+                'tmpt_lahir_jemaat' => fake()->city(),
+                'tgl_lahir_jemaat' => fake()->date(),
+                'tgl_daftar_jemaat' => now(),
+                'telp_jemaat' => fake()->phoneNumber(),
+                'email_jemaat' => fake()->unique()->safeEmail(),
+                'alamat_jemaat' => fake()->address(),
+                'hak_akses_jemaat' => 'Pelayan',
+            ]
+        );
     }
 }

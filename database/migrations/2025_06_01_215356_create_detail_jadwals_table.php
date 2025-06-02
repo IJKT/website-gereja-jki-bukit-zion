@@ -17,21 +17,20 @@ return new class extends Migration
             $table->string('id_pelayan', 10)->nullable();
             $table->foreign('id_pelayan', 'detail_jadwal_pelayan_id')->references('id_pelayan')->on('pelayan');
             $table->string('nama_pendeta_undangan', 50)->nullable();
-            /** PELAYAN GEREJA
-             * 1 = Pendeta
+            //   1 = Pendeta
+            /** MUSIK
              * 2 = Worship Leader
-             * 3 = Pelayan
-             * 4 = Singer
-             * 5 = Keyboard
-             * 6 = Drum
-             * 7 = Bass
-             * 8 = Guitar
+             * 3 = Singer
+             * 4 = Keyboard
+             * 5 = Drum
+             * 6 = Bass
+             * 7 = Guitar
              */
             /** MULTIMEDIA
-             * 9 = Video
-             * 10 = Photo
-             * 11 = Live Stream
-             * 12 = Lyrics
+             * 8 = Video
+             * 9 = Photo
+             * 10 = Live Stream
+             * 11 = Lyrics
              */
             $table->integer('peran_pelayan');
         });

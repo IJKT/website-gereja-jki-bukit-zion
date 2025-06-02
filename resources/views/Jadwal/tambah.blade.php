@@ -22,7 +22,7 @@
                         <label class="block font-semibold mb-1">BACKTRACK</label>
                         <div class="relative">
                             <input type="file" name="backtrack" id="backtrack" accept=".mp3" class="hidden"
-                                onchange="updateBacktrackLabel()" required>
+                                onchange="updateBacktrackLabel()">
                             <label for="backtrack" id="backtrack-label"
                                 class="w-full p-2 rounded bg-white cursor-pointer block text-gray-500 ">
                                 File Backtrack Belum Ditemukan
@@ -50,7 +50,6 @@
                         </label>
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="jenis_ibadah" value="Shabbat Fellowship"
-                                class="form-radio text-[#215773]" <input type="radio" name="hak_akses_pelayan"
                                 class="form-radio text-[#215773]" @click="jenis_ibadah = 'Shabbat Fellowship'"
                                 :checked="jenis_ibadah === 'Shabbat Fellowship'">
                             <span
@@ -59,7 +58,6 @@
                         </label>
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="jenis_ibadah" value="Shabbat Service"
-                                class="form-radio text-[#215773]" <input type="radio" name="hak_akses_pelayan"
                                 class="form-radio text-[#215773]" @click="jenis_ibadah = 'Shabbat Service'"
                                 :checked="jenis_ibadah === 'Shabbat Service'">
                             <span :class="jenis_ibadah == 'Shabbat Service' ? 'font-semibold' : 'font-normal'">Shabbat
