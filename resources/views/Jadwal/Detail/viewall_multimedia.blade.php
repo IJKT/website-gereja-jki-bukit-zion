@@ -15,7 +15,7 @@
                 @endphp --}}
 
                 <div class="flex justify-between items-center mb-4">
-                    <label class="font-semibold">JADWAL {{ $jadwal->jenis_ibadah }} -
+                    <label class="font-semibold">JADWAL MULTIMEDIA {{ $jadwal->jenis_ibadah }} -
                         {{ \Carbon\Carbon::parse($jadwal->tgl_ibadah)->translatedFormat('l, d M Y') }}</label>
                     <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
                         <!-- Replace with icon if needed -->
@@ -30,7 +30,7 @@
                     @if (isset($pendeta->id_pelayan))
                         {{ $pendeta->pelayan->jemaat->nama_jemaat }}
                     @else
-                        {{-- {{ $pendeta->nama_pendeta_undangan }} --}}
+                        {{ $pendeta->nama_pendeta_undangan }}
                     @endif
                 </div>
                 <table class="w-full border-collapse ">
@@ -48,22 +48,19 @@
                                     {{ $_pelayan_multimedia->pelayan->jemaat->nama_jemaat }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    @if ($_pelayan_multimedia->peran_pelayan == 2)
-                                        Worship Leader
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 3)
-                                        Singer
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 4)
-                                        Keyboard
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 5)
-                                        Drum
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 6)
-                                        Bass
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 7)
-                                        Guitar
+                                    @if ($_pelayan_multimedia->peran_pelayan == 8)
+                                        Video
+                                    @elseif($_pelayan_multimedia->peran_pelayan == 9)
+                                        Photo
+                                    @elseif($_pelayan_multimedia->peran_pelayan == 10)
+                                        Live Stream
+                                    @elseif($_pelayan_multimedia->peran_pelayan == 11)
+                                        Lyrics
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/jadwal/musik/{{ $jadwal->id_jadwal }}">
+                                    <a
+                                        href="{{ route('Jadwal.ubah_multimedia', [$jadwal->id_jadwal, $_pelayan_multimedia->id_pelayan]) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -77,7 +74,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/jadwal/tambah">
+            <a href="/jadwal/multimedia/tambah/{{ $jadwal->id_jadwal }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\lagu_pujian;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,6 +25,8 @@ class DatabaseSeeder extends Seeder
             PernikahanSeeder::class,
             JadwalIbadahSeeder::class,
             DetailJadwalSeeder::class,
+            LaguPujianSeeder::class,
+            DetailLaguPujianSeeder::class,
         ]);
     }
 }

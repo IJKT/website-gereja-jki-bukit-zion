@@ -31,7 +31,14 @@ class PelayanSeeder extends Seeder
             ['id_pelayan' => 'PL010125A2'],
             [
                 'id_jemaat' => 'JM010125A4',
-                'hak_akses_pelayan' => 'Praise & Worship'
+                'hak_akses_pelayan' => 'Multimedia'
+            ]
+        );
+        Pelayan::updateOrCreate(
+            ['id_pelayan' => 'PL010125A3'],
+            [
+                'id_jemaat' => 'JM010125A5',
+                'hak_akses_pelayan' => 'Multimedia'
             ]
         );
     }

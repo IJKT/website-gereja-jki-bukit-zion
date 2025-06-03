@@ -70,10 +70,10 @@ Route::prefix('manajemen/pelayan')
     ->name('Manajemen.Pelayan')
     ->group(
         function () {
-            route::get('', [PelayanController::class, 'viewall'])->name('.viewall');
-            route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
-            route::get('search', [PelayanController::class, 'search'])->name('.search');
-            route::get('{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
+            Route::get('', [PelayanController::class, 'viewall'])->name('.viewall');
+            Route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
+            Route::get('search', [PelayanController::class, 'search'])->name('.search');
+            Route::get('{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
             Route::put('add', [PelayanController::class, 'add'])->name('.add');
             Route::put('update/{pelayan}', [PelayanController::class, 'update'])->name('.update');
             Route::put('status/{pelayan}', [PelayanController::class, 'status'])->name('.status');
@@ -85,8 +85,8 @@ Route::prefix('manajemen/jemaat')
     ->group(
         function () {
             // MANAJEMEN JEMAAT
-            route::get('', [JemaatController::class, 'viewall'])->name('.viewall');
-            route::get('{jemaat}', [JemaatController::class, 'ubah'])->name('.ubah');
+            Route::get('', [JemaatController::class, 'viewall'])->name('.viewall');
+            Route::get('{jemaat}', [JemaatController::class, 'ubah'])->name('.ubah');
             Route::put('update/{jemaat}', [JemaatController::class, 'update'])->name('.update');
             Route::put('status/{jemaat}', [JemaatController::class, 'status'])->name('.status');
         }
@@ -97,12 +97,12 @@ Route::prefix('manajemen/pengajuan')
         function () {
             //TODO: bentuk buat view pengajuan jemaat
             //MANAJEMEN PENGAJUAN JEMAAT
-            route::get('', [JemaatController::class, 'pengajuanViewall'])->name('.viewall');
-            // route::get('pengajuan/tambah', [JemaatController::class, 'pengajuanTambah'])->name('.Pengajuan.tambah');
-            route::get('baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiBaptis'])->name('.verifikasi_baptis');
-            route::get('pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiPernikahan'])->name('.verifikasi_pernikahan');
-            route::get('registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiRegistrasi'])->name('.verifikasi_registrasi');
-            route::get('search', [JemaatController::class, 'search'])->name('.search');
+            Route::get('', [JemaatController::class, 'pengajuanViewall'])->name('.viewall');
+            // Route::get('pengajuan/tambah', [JemaatController::class, 'pengajuanTambah'])->name('.Pengajuan.tambah');
+            Route::get('baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiBaptis'])->name('.verifikasi_baptis');
+            Route::get('pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiPernikahan'])->name('.verifikasi_pernikahan');
+            Route::get('registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiRegistrasi'])->name('.verifikasi_registrasi');
+            Route::get('search', [JemaatController::class, 'search'])->name('.search');
             Route::put('verify/baptis/{baptis}', [JemaatController::class, 'pengajuanVerifyBaptis'])->name('.verify_baptis');
             Route::put('verify/pernikahan/{pernikahan}', [JemaatController::class, 'pengajuanVerifyPernikahan'])->name('.verify_pernikahan');
             Route::put('verify/registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyRegistrasi'])->name('.verify_registrasi');
@@ -130,10 +130,10 @@ Route::prefix('pembukuan')
     ->name('Pembukuan')
     ->group(
         function () {
-            route::get('', [PembukuanController::class, 'viewall'])->name('.viewall');
-            route::get('tambah', [PembukuanController::class, 'tambah'])->name('.tambah');
-            route::get('{pembukuan}', [PembukuanController::class, 'ubah'])->name('.ubah');
-            route::get('/verifikasi/{pembukuan}', [PembukuanController::class, 'verifikasi'])->name('.verifikasi');
+            Route::get('', [PembukuanController::class, 'viewall'])->name('.viewall');
+            Route::get('tambah', [PembukuanController::class, 'tambah'])->name('.tambah');
+            Route::get('{pembukuan}', [PembukuanController::class, 'ubah'])->name('.ubah');
+            Route::get('/verifikasi/{pembukuan}', [PembukuanController::class, 'verifikasi'])->name('.verifikasi');
             Route::put('add', [PembukuanController::class, 'add'])->name('.add');
             Route::put('update/{pembukuan}', [PembukuanController::class, 'update'])->name('.update');
             Route::put('verify/{pembukuan}', [PembukuanController::class, 'verify'])->name('.verify');
@@ -144,26 +144,34 @@ Route::prefix('jadwal')
     ->name('Jadwal')
     ->group(
         function () {
-            route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
-            route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
-            route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
-            Route::get('search-pendeta', [JadwalIbadahController::class, 'searchPendeta'])->name('searchPendeta');
-            Route::put('/update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
+            Route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
+            Route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
+            Route::get('search-pendeta', [JadwalIbadahController::class, 'searchPendeta'])->name('.search-pendeta');
+            Route::get('search-multimedia', [JadwalIbadahController::class, 'searchMultimedia'])->name('.search-multimedia');
+            Route::put('update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
             Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
 
             //DETAIL JADWAL
-            route::get('/musik/{jadwal}', [DetailJadwalController::class, 'viewall_musik'])->name('.viewall_musik');
-            route::get('/multimedia/{jadwal}', [DetailJadwalController::class, 'viewall_multimedia'])->name('.viewall_multimedia');
+            Route::put('pelayan/add', [DetailJadwalController::class, 'AddPelayan'])->name('.AddPelayan');
+            Route::get('musik/{jadwal}', [DetailJadwalController::class, 'viewall_musik'])->name('.viewall_musik');
+            Route::get('multimedia/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_multimedia'])->name('.ubah_multimedia');
+            Route::get('multimedia/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_multimedia'])->name('.tambah_multimedia');
+            Route::get('multimedia/{jadwal}', [DetailJadwalController::class, 'viewall_multimedia'])->name('.viewall_multimedia');
+            Route::get('pujian/{jadwal}', [DetailJadwalController::class, 'viewall_pujian'])->name('.viewall_pujian');
+
+
+            Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
         }
     );
 
+Route::get('/test-route');
 // Route::prefix('jadwal')
 // ->name('Jadwal')
 // ->group(
 //     function () {
-//         route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
-//         route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
-//         route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
+//         Route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
+//         Route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
+//         Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
 //         Route::put('/update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
 //         Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
 //     }

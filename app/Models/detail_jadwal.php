@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class detail_jadwal extends Model
 {
     protected $table = 'detail_jadwal';
-    protected $primaryKey = 'id_ibadah';
+    protected $primaryKey = 'id_jadwal';
     protected $keyType = 'string';
     public $timestamps = false;
 
@@ -25,6 +25,6 @@ class detail_jadwal extends Model
     }
     public function pelayan(): BelongsTo
     {
-        return $this->belongsTo(Pelayan::class, 'id_pelayan', 'id_jadwal');
+        return $this->belongsTo(Pelayan::class, 'id_pelayan', 'id_pelayan');
     }
 }

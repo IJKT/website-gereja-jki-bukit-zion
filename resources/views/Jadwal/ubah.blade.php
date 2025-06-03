@@ -21,20 +21,19 @@
                             value="{{ \Carbon\Carbon::parse($jadwal->tgl_ibadah)->format('Y-m-d\TH:i') }}"
                             class="w-full p-2 rounded bg-white" min="{{ now()->format('Y-m-d\TH:i') }}" required>
                     </div>
-
-                    {{-- PENDETA Suggestion Box --}}
-                    {{-- <div class="relative" id="pendeta-suggestion-box">
-                        <label class="block font-semibold mb-1">PENDETA</label>
-                        <input type="text" id="pendeta-search-input" name="nama_pendeta"
-                            class="w-full p-2 rounded bg-white" placeholder="Ketik nama pendeta..."
-                            value="{{ old('nama_pendeta', $pendeta->pelayan->jemaat->nama_jemaat ?? '') }}"
-                            autocomplete="off" required oninput="searchPendeta()" onfocus="searchPendeta()">
-                        <input type="hidden" name="id_pendeta" id="pendeta-id-hidden"
-                            value="{{ old('id_pendeta', $pendeta->pelayan->id_pelayan ?? '') }}">
-                        <ul id="pendeta-suggestion-list"
-                            class="absolute z-10 bg-white border border-gray-300 w-full mt-1 rounded shadow hidden"
-                            style="max-height: 200px; overflow-y: auto;"></ul>
-                    </div> --}}
+                    <div class="relative">
+                        <label class="block font-semibold mb-1">NAMA PENDETA</label>
+                        <input type="text" id="nama_pendeta" name="nama_pendeta"
+                            value="@if ($pendeta->nama_pendeta_undangan == null) {{ $pendeta->pelayan->jemaat->nama_jemaat }} @else {{ $pendeta->nama_pendeta_undangan }} @endif"
+                            class="w-full p-2 rounded bg-white" placeholder="Tambahkan Nama Pendeta" autocomplete="off"
+                            required>
+                        <div id="pendeta-suggestions"
+                            class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
+                            <!-- Suggestions will appear here -->
+                        </div>
+                        <!-- Hidden input to store pelayan ID -->
+                        <input type="hidden" id="id_pelayan" name="id_pelayan" />
+                    </div>
 
                     <div>
                         <label class="block font-semibold mb-1">BACKTRACK</label>
@@ -116,7 +115,8 @@
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
             <a href="/jadwal">
-                <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                <button type="button"
+                    class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
                 </button>
             </a>
@@ -145,99 +145,124 @@
     @stack('scripts')
     <script>
         // PENDETA suggestion box logic (reference-style, plain JS)
-        let pendetaResults = [];
-        let pendetaSelectedIndex = -1;
-
-        function searchPendeta() {
-            const input = document.getElementById('pendeta-search-input');
-            const list = document.getElementById('pendeta-suggestion-list');
-            const query = input.value.trim();
-
-            if (query.length < 2) {
-                list.innerHTML = '';
-                list.classList.add('hidden');
-                return;
-            }
-
-            fetch(`/jadwal/search-pendeta____)}`)
-                .then(response => response.json())
-                .then(data => {
-                    pendetaResults = data;
-                    pendetaSelectedIndex = -1;
-                    if (data.length === 0) {
-                        list.innerHTML = '<li class="px-4 py-2 text-gray-500">Tidak ditemukan</li>';
-                    } else {
-                        list.innerHTML = data.map((item, idx) =>
-                            `<li class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                                data-id="${item.id_pelayan}"
-                                data-name="${item.nama_jemaat}"
-                                onclick="selectPendeta(${idx})"
-                                onmouseover="highlightPendeta(${idx})"
-                                id="pendeta-suggestion-item-${idx}"
-                            >${item.nama_jemaat}</li>`
-                        ).join('');
-                    }
-                    list.classList.remove('hidden');
-                });
-        }
-
-        function selectPendeta(idx) {
-            const input = document.getElementById('pendeta-search-input');
-            const hidden = document.getElementById('pendeta-id-hidden');
-            if (pendetaResults[idx]) {
-                input.value = pendetaResults[idx].nama_jemaat;
-                hidden.value = pendetaResults[idx].id_pelayan;
-            }
-            document.getElementById('pendeta-suggestion-list').classList.add('hidden');
-            checkRequiredFields();
-        }
-
-        function highlightPendeta(idx) {
-            pendetaSelectedIndex = idx;
-            const items = document.querySelectorAll('#pendeta-suggestion-list li');
-            items.forEach((item, i) => {
-                if (i === idx) {
-                    item.classList.add('bg-blue-100');
-                } else {
-                    item.classList.remove('bg-blue-100');
+        document.addEventListener('DOMContentLoaded', function() {
+            setupSearchableInput({
+                inputId: 'nama_pendeta',
+                hiddenId: 'id_pelayan',
+                suggestionBoxId: 'pendeta-suggestions',
+                searchUrl: '/jadwal/search-pendeta', // Adjust to your route
+                valueKeys: {
+                    id: 'id_pelayan',
+                    name: 'nama_pendeta'
                 }
             });
-        }
 
-        // Keyboard navigation for suggestion box
-        document.getElementById('pendeta-search-input').addEventListener('keydown', function(e) {
-            const list = document.getElementById('pendeta-suggestion-list');
-            const items = list.querySelectorAll('li');
-            if (list.classList.contains('hidden') || items.length === 0) return;
+            function setupSearchableInput({
+                inputId,
+                hiddenId,
+                suggestionBoxId,
+                searchUrl,
+                valueKeys
+            }) {
+                const input = document.getElementById(inputId);
+                const hiddenInput = document.getElementById(hiddenId);
+                const suggestionBox = document.getElementById(suggestionBoxId);
 
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                pendetaSelectedIndex = (pendetaSelectedIndex + 1) % items.length;
-                highlightPendeta(pendetaSelectedIndex);
-                items[pendetaSelectedIndex].scrollIntoView({
-                    block: 'nearest'
+                input.addEventListener('input', function() {
+                    // Clear hidden input whenever user types
+                    hiddenInput.value = '';
+                    checkRequiredFields();
+
+                    const query = input.value.trim();
+                    if (query.length >= 2) {
+                        fetch(`${searchUrl}?q=${encodeURIComponent(query)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.length > 0) {
+                                    suggestionBox.innerHTML = data.map(item => `
+                                        <div class="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                                            data-id="${item[valueKeys.id]}"
+                                            data-name="${item[valueKeys.name]}">
+                                            ${item[valueKeys.name]} (${item[valueKeys.id]})
+                                        </div>
+                                    `).join('');
+                                    suggestionBox.classList.remove('hidden');
+                                    addSuggestionClickListeners();
+                                } else {
+                                    suggestionBox.classList.add('hidden');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching suggestions:', error);
+                                suggestionBox.classList.add('hidden');
+                            });
+                    } else {
+                        suggestionBox.classList.add('hidden');
+                    }
                 });
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                pendetaSelectedIndex = (pendetaSelectedIndex - 1 + items.length) % items.length;
-                highlightPendeta(pendetaSelectedIndex);
-                items[pendetaSelectedIndex].scrollIntoView({
-                    block: 'nearest'
-                });
-            } else if (e.key === 'Enter') {
-                if (pendetaSelectedIndex >= 0 && pendetaResults[pendetaSelectedIndex]) {
-                    e.preventDefault();
-                    selectPendeta(pendetaSelectedIndex);
+
+                function addSuggestionClickListeners() {
+                    const items = suggestionBox.querySelectorAll('div');
+                    items.forEach(item => {
+                        item.addEventListener('click', function() {
+                            input.value = item.getAttribute('data-name');
+                            hiddenInput.value = item.getAttribute('data-id');
+                            suggestionBox.classList.add('hidden');
+                            checkRequiredFields();
+                        });
+                    });
                 }
-            }
-        });
 
-        // Hide suggestion list when clicking outside
-        document.addEventListener('mousedown', function(event) {
-            const box = document.getElementById('pendeta-suggestion-box');
-            if (!box.contains(event.target)) {
-                document.getElementById('pendeta-suggestion-list').classList.add('hidden');
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!suggestionBox.contains(e.target) && e.target !== input) {
+                        suggestionBox.classList.add('hidden');
+                    }
+                });
             }
+
+            // Function to check if all required fields are filled
+            function checkRequiredFields() {
+                const form = document.getElementById('jadwalForm');
+                const requiredFields = form.querySelectorAll('[required]');
+                let allFilled = true;
+
+                requiredFields.forEach(field => {
+                    if (field.type === 'file') {
+                        if (field.files.length === 0 && field.hasAttribute('required')) {
+                            allFilled = false;
+                        }
+                    } else if (field.type === 'radio') {
+                        // We'll check this separately
+                    } else {
+                        if (!field.value.trim()) {
+                            allFilled = false;
+                        }
+                    }
+                });
+
+                // Check if a radio button in the 'jenis_ibadah' group is selected
+                const jenisIbadahChecked = form.querySelector('input[name="jenis_ibadah"]:checked');
+                if (!jenisIbadahChecked) {
+                    allFilled = false;
+                }
+
+                document.getElementById('simpanBtn').disabled = !allFilled;
+            }
+
+            // Attach event listeners to required fields and radios
+            const form = document.getElementById('jadwalForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.addEventListener('input', checkRequiredFields);
+            });
+            // Add event listeners to radio buttons
+            const hakAksesRadios = form.querySelectorAll('input[name="peran_pelayan"]');
+            hakAksesRadios.forEach(
+                radio => {
+                    radio.addEventListener('change', checkRequiredFields);
+                });
+            checkRequiredFields(); // Initial check
         });
 
         // Backtrack label update
@@ -253,35 +278,6 @@
                 label.classList.remove('text-black');
                 label.classList.add('text-gray-500');
             }
-        }
-
-        // Required fields checker (including radio group)
-        function checkRequiredFields() {
-            const form = document.getElementById('jadwalForm');
-            const requiredFields = form.querySelectorAll('[required]');
-            let allFilled = true;
-
-            requiredFields.forEach(field => {
-                if (field.type === 'file') {
-                    if (field.files.length === 0) {
-                        allFilled = false;
-                    }
-                } else if (field.type === 'radio') {
-                    // handled below
-                } else {
-                    if (!field.value.trim()) {
-                        allFilled = false;
-                    }
-                }
-            });
-
-            // Check if a radio button in the 'jenis_ibadah' group is selected
-            const jenisIbadahChecked = form.querySelector('input[name="jenis_ibadah"]:checked');
-            if (!jenisIbadahChecked) {
-                allFilled = false;
-            }
-
-            document.getElementById('simpanBtn').disabled = !allFilled;
         }
 
         // Attach event listeners to required fields and radio buttons

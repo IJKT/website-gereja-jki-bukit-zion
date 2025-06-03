@@ -54,5 +54,13 @@ class UserSeeder extends Seeder
                 'verifikasi_user' => 1,
             ]
         );
+        User::updateOrCreate(
+            ['username' => 'mulmedtest2'],
+            [
+                'password' => Hash::make('multimedia'),
+                // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
+                'verifikasi_user' => 1,
+            ]
+        );
     }
 }

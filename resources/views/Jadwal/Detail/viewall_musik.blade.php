@@ -30,7 +30,7 @@
                     @if (isset($pendeta->id_pelayan))
                         {{ $pendeta->pelayan->jemaat->nama_jemaat }}
                     @else
-                        {{-- {{ $pendeta->nama_pendeta_undangan }} --}}
+                        {{ $pendeta->nama_pendeta_undangan }}
                     @endif
                 </div>
                 <table class="w-full border-collapse ">

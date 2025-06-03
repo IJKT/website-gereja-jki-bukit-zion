@@ -6,16 +6,8 @@
             <!-- Submission Table -->
             <div>
                 <!-- Header -->
-
-                {{-- @php
-                    // Make sure Carbon is imported and locale is set to Indonesian
-                    \Carbon\Carbon::setLocale('id');
-                    // Parse the date and format it as 'dddd, D MMMM Y' (e.g., Minggu, 1 Juni 2025)
-                    $tanggalIndo = \Carbon\Carbon::parse($jadwal->tanggal)->translatedFormat('dddd, D MMMM Y');
-                @endphp --}}
-
                 <div class="flex justify-between items-center mb-4">
-                    <label class="font-semibold">JADWAL PRAISE & WORSHIP {{ $jadwal->jenis_ibadah }} -
+                    <label class="font-semibold">DAFTAR PUJIAN {{ $jadwal->jenis_ibadah }} -
                         {{ \Carbon\Carbon::parse($jadwal->tgl_ibadah)->translatedFormat('l, d M Y') }}</label>
                     <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
                         <!-- Replace with icon if needed -->
@@ -30,39 +22,33 @@
                     @if (isset($pendeta->id_pelayan))
                         {{ $pendeta->pelayan->jemaat->nama_jemaat }}
                     @else
-                        {{-- {{ $pendeta->nama_pendeta_undangan }} --}}
+                        {{ $pendeta->nama_pendeta_undangan }}
                     @endif
                 </div>
                 <table class="w-full border-collapse ">
                     <thead>
                         <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
-                            <th class="border border-gray-300 px-4 py-2">PERAN PELAYAN</th>
+                            <th class="border border-gray-300 px-4 py-2">URUTAN</th>
+                            <th class="border border-gray-300 px-4 py-2">JUDUL LAGU</th>
+                            <th class="border border-gray-300 px-4 py-2">LINK LAGU</th>
                             <th class="border border-gray-300 px-4 py-2">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pelayan_musik as $_pelayan_musik)
+                        @foreach ($urutan_lagu as $_urutan_lagu)
                             <tr class="bg-white text-sm text-center">
+                                <td class="border border-gray-300 px-4 py-2">
+                                    {{ $_urutan_lagu->urutan_lagu }}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_pelayan_musik->pelayan->jemaat->nama_jemaat }}</td>
+                                    {{ $_urutan_lagu->lagu_pujian->nama_lagu }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    @if ($_pelayan_musik->peran_pelayan == 2)
-                                        Worship Leader
-                                    @elseif($_pelayan_musik->peran_pelayan == 3)
-                                        Singer
-                                    @elseif($_pelayan_musik->peran_pelayan == 4)
-                                        Keyboard
-                                    @elseif($_pelayan_musik->peran_pelayan == 5)
-                                        Drum
-                                    @elseif($_pelayan_musik->peran_pelayan == 6)
-                                        Bass
-                                    @elseif($_pelayan_musik->peran_pelayan == 7)
-                                        Guitar
-                                    @endif
+                                    <a class="hover:underline" href="{{ $_urutan_lagu->lagu_pujian->link_lagu }}"
+                                        target="_blank">
+                                        {{ $_urutan_lagu->lagu_pujian->link_lagu }}
                                 </td>
+                                </a>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/jadwal/musik/{{ $jadwal->id_jadwal }}">
+                                    <a href="/jadwal/pujian/{{ $jadwal->id_jadwal }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -76,7 +62,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/jadwal/tambah">
+            <a href="/jadwal/pujian/tambah">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

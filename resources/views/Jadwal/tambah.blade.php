@@ -18,6 +18,17 @@
                         <input type="datetime-local" name="tgl_ibadah" class="w-full p-2 rounded bg-white"
                             min="{{ now()->format('Y-m-d\TH:i') }}" required>
                     </div>
+                    <div class="relative">
+                        <label class="block font-semibold mb-1">NAMA PENDETA</label>
+                        <input type="text" id="nama_pendeta" name="nama_pendeta" class="w-full p-2 rounded bg-white"
+                            placeholder="Tambahkan Nama Pendeta" autocomplete="off" required>
+                        <div id="pendeta-suggestions"
+                            class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
+                            <!-- Suggestions will appear here -->
+                        </div>
+                        <!-- Hidden input to store pelayan ID -->
+                        <input type="hidden" id="id_pelayan" name="id_pelayan" />
+                    </div>
                     <div>
                         <label class="block font-semibold mb-1">BACKTRACK</label>
                         <div class="relative">
@@ -83,54 +94,114 @@
     </div>
     </div>
 
-    {{-- untuk ngehilangin koma pas udah submit --}}
     @stack('scripts')
     <script>
-        // Function to check if all required fields are filled
-        function checkRequiredFields() {
-            const form = document.getElementById('jadwalForm');
-            const requiredFields = form.querySelectorAll('[required]');
-            let allFilled = true;
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    allFilled = false;
-                }
-            });
-            document.getElementById('simpanBtn').disabled = !allFilled;
-        }
-
-        function checkRequiredFields() {
-            const form = document.getElementById('jadwalForm');
-            const requiredFields = form.querySelectorAll('[required]');
-            let allFilled = true;
-
-            requiredFields.forEach(field => {
-                if (field.type === 'file') {
-                    if (field.files.length === 0) {
-                        allFilled = false;
-                    }
-                } else if (field.type === 'radio') {
-                    // di handle di radio group
-                } else {
-                    if (!field.value.trim()) {
-                        allFilled = false;
-                    }
-                }
-            });
-
-            // Check if a radio button in the 'jenis_ibadah' group is selected
-            const jenisIbadahChecked = form.querySelector('input[name="jenis_ibadah"]:checked');
-            if (!jenisIbadahChecked) {
-                allFilled = false;
-            }
-
-            document.getElementById('simpanBtn').disabled = !allFilled;
-        }
-
-
-        // Attach event listeners to required fields and radio buttons
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('jadwalForm');
+            const simpanBtn = document.getElementById('simpanBtn');
+
+            // Autocomplete Nama Pendeta
+            setupSearchableInput({
+                inputId: 'nama_pendeta',
+                hiddenId: 'id_pelayan',
+                suggestionBoxId: 'pendeta-suggestions',
+                searchUrl: '/jadwal/search-pendeta',
+                valueKeys: {
+                    id: 'id_pelayan',
+                    name: 'nama_pendeta'
+                }
+            });
+
+            function setupSearchableInput({
+                inputId,
+                hiddenId,
+                suggestionBoxId,
+                searchUrl,
+                valueKeys
+            }) {
+                const input = document.getElementById(inputId);
+                const hiddenInput = document.getElementById(hiddenId);
+                const suggestionBox = document.getElementById(suggestionBoxId);
+
+                input.addEventListener('input', function() {
+                    hiddenInput.value = '';
+                    checkRequiredFields();
+
+                    const query = input.value.trim();
+                    if (query.length >= 2) {
+                        fetch(`${searchUrl}?q=${encodeURIComponent(query)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.length > 0) {
+                                    suggestionBox.innerHTML = data.map(item => `
+                                    <div class="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                                        data-id="${item[valueKeys.id]}"
+                                        data-name="${item[valueKeys.name]}">
+                                        ${item[valueKeys.name]} (${item[valueKeys.id]})
+                                    </div>
+                                `).join('');
+                                    suggestionBox.classList.remove('hidden');
+                                    addSuggestionClickListeners();
+                                } else {
+                                    suggestionBox.classList.add('hidden');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching suggestions:', error);
+                                suggestionBox.classList.add('hidden');
+                            });
+                    } else {
+                        suggestionBox.classList.add('hidden');
+                    }
+                });
+
+                function addSuggestionClickListeners() {
+                    const items = suggestionBox.querySelectorAll('div');
+                    items.forEach(item => {
+                        item.addEventListener('click', function() {
+                            input.value = item.getAttribute('data-name');
+                            hiddenInput.value = item.getAttribute('data-id');
+                            suggestionBox.classList.add('hidden');
+                            checkRequiredFields();
+                        });
+                    });
+                }
+
+                document.addEventListener('click', function(e) {
+                    if (!suggestionBox.contains(e.target) && e.target !== input) {
+                        suggestionBox.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Cek semua isian wajib
+            function checkRequiredFields() {
+                const requiredFields = form.querySelectorAll('[required]');
+                let allFilled = true;
+
+                requiredFields.forEach(field => {
+                    if (field.type === 'file') {
+                        if (field.files.length === 0) {
+                            allFilled = false;
+                        }
+                    } else if (field.type === 'radio') {
+                        // Radio akan dicek di bawah
+                    } else {
+                        if (!field.value.trim()) {
+                            allFilled = false;
+                        }
+                    }
+                });
+
+                const jenisIbadahChecked = form.querySelector('input[name="jenis_ibadah"]:checked');
+                if (!jenisIbadahChecked) {
+                    allFilled = false;
+                }
+
+                simpanBtn.disabled = !allFilled;
+            }
+
+            // Pasang listener ke semua field wajib
             const requiredFields = form.querySelectorAll('[required]');
             requiredFields.forEach(field => {
                 if (field.type === 'file') {
@@ -139,47 +210,52 @@
                     field.addEventListener('input', checkRequiredFields);
                 }
             });
-            // Add event listeners to radio buttons for 'jenis_ibadah'
+
             const jenisIbadahRadios = form.querySelectorAll('input[name="jenis_ibadah"]');
             jenisIbadahRadios.forEach(radio => {
                 radio.addEventListener('change', checkRequiredFields);
             });
-            checkRequiredFields(); // Initial check
-        });
 
-        function updateBacktrackLabel() {
-            const input = document.getElementById('backtrack');
-            const label = document.getElementById('backtrack-label');
-            const filenameSpan = document.getElementById('backtrack-filename');
-            if (input.files && input.files.length > 0) {
-                label.textContent = input.files[0].name;
-                label.classList.remove('text-gray-500');
-                label.classList.add('text-black');
-            } else {
-                filenameSpan.textContent = '';
-                label.textContent = 'File Backtrack Belum Ditemukan';
-                label.classList.remove('text-black');
-                label.classList.add('text-gray-500');
-            }
-        }
+            checkRequiredFields(); // Awal
 
-        function showAlertSave() {
-            Swal.fire({
-                title: "Simpan perubahan?",
-                icon: 'warning',
-                showDenyButton: true,
-                confirmButtonText: "Simpan",
-                denyButtonText: 'batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Remove commas before submit
-                    Swal.fire("Perubahan diubah", "", "success");
-                    // Submit the form
-                    document.getElementById('jadwalForm').submit();
-                } else if (result.isDenied) {
-                    Swal.fire("Perubahan tidak diubah", "", "error");
+            // Update label file input
+            window.updateBacktrackLabel = function() {
+                const input = document.getElementById('backtrack');
+                const label = document.getElementById('backtrack-label');
+                const filenameSpan = document.getElementById('backtrack-filename');
+
+                if (input.files && input.files.length > 0) {
+                    label.textContent = input.files[0].name;
+                    label.classList.remove('text-gray-500');
+                    label.classList.add('text-black');
+                } else {
+                    filenameSpan.textContent = '';
+                    label.textContent = 'File Backtrack Belum Ditemukan';
+                    label.classList.remove('text-black');
+                    label.classList.add('text-gray-500');
                 }
-            });
-        }
+
+                checkRequiredFields(); // Recheck on file change
+            };
+
+            // Konfirmasi sebelum simpan
+            window.showAlertSave = function() {
+                Swal.fire({
+                    title: "Simpan perubahan?",
+                    icon: 'warning',
+                    showDenyButton: true,
+                    confirmButtonText: "Simpan",
+                    denyButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire("Perubahan disimpan", "", "success");
+                        form.submit();
+                    } else if (result.isDenied) {
+                        Swal.fire("Perubahan tidak disimpan", "", "info");
+                    }
+                });
+            };
+        });
     </script>
+
 </x-layout_sistem_informasi>

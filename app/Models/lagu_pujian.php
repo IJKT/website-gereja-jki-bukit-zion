@@ -5,32 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class jadwal_ibadah extends Model
+class lagu_pujian extends Model
 {
-    protected $table = 'jadwal_ibadah';
-    protected $primaryKey = 'id_jadwal';
+    protected $table = 'lagu_pujian';
+    protected $primaryKey = 'id_lagu';
     protected $keyType = 'string';
     public $timestamps = false;
 
     protected $fillable = [
-        'id_jadwal',
-        'jenis_ibadah',
-        'tgl_ibadah',
-        'backtrack',
+        'id_lagu',
+        'nama_lagu',
+        'link_lagu',
     ];
 
     public static function generateNextId()
     {
         $tgl_daftar = now();
         $datePart = $tgl_daftar->format('dmy');
-        $prefix = "JI{$datePart}";
+        $prefix = "LI{$datePart}";
 
-        $lastJadwal = self::where('id_jadwal', 'like', "{$prefix}%")
-            ->orderByDesc('id_jadwal')
+        $lastLagu = self::where('id_lagu', 'like', "{$prefix}%")
+            ->orderByDesc('id_lagu')
             ->first();
 
-        if ($lastJadwal) {
-            $lastId = $lastJadwal->id_jadwal;
+        if ($lastLagu) {
+            $lastId = $lastLagu->id_lagu;
             $suffix = substr($lastId, strlen($prefix));
             $letter = substr($suffix, 0, 1);
             $number = intval(substr($suffix, 1));
@@ -49,12 +48,8 @@ class jadwal_ibadah extends Model
         return "{$prefix}{$newSuffix}";
     }
 
-    public function detail_jadwal(): HasMany
-    {
-        return $this->hasMany(detail_jadwal::class, 'id_jadwal', 'id_jadwal');
-    }
     public function detail_lagu_pujian(): HasMany
     {
-        return $this->hasMany(detail_lagu_pujian::class, 'id_jadwal', 'id_jadwal');
+        return $this->hasMany(detail_lagu_pujian::class, 'id_lagu', 'id_lagu');
     }
 }

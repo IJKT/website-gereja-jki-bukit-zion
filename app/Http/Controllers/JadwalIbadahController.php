@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\detail_jadwal;
 use App\Models\Pelayan;
 use App\Models\Riwayat;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Models\jadwal_ibadah;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class JadwalIbadahController extends Controller
@@ -49,6 +51,8 @@ class JadwalIbadahController extends Controller
     // PUT FUNCTIONS
     public function update(Request $request, jadwal_ibadah $jadwal)
     {
+        // dd(detail_jadwal::where('id_jadwal', $jadwal->id_jadwal)->where('peran_pelayan', 1)->first());
+
         // Make backtrack optional
         $request->validate([
             'jenis_ibadah' => 'required',
@@ -80,10 +84,17 @@ class JadwalIbadahController extends Controller
 
         $jadwal->save();
 
+        //update pendeta
+        detail_jadwal::where('id_jadwal', $jadwal->id_jadwal)
+            ->where('peran_pelayan', 1)
+            ->update([
+                'id_pelayan' => $request->filled('id_pelayan') ? $request->id_pelayan : null,
+                'nama_pendeta_undangan' => $request->filled('id_pelayan') ? null : $request->nama_pendeta
+            ]);
         Riwayat::logChange(2, $jadwal->id_jadwal, null);
 
         // Redirect back with a success message
-        return redirect()->route('Jadwal.viewall')->with('success', 'Jadwal updated successfully!');
+        return redirect()->route('Jadwal.viewall');
     }
     public function add(Request $request)
     {
@@ -96,9 +107,10 @@ class JadwalIbadahController extends Controller
             'backtrack' => 'nullable|file|mimes:mp3',
         ]);
 
+        $new_id = jadwal_ibadah::generateNextId();
         $jadwal = new jadwal_ibadah();
         $jadwal->jenis_ibadah = $request->jenis_ibadah;
-        $jadwal->id_jadwal = jadwal_ibadah::generateNextId();
+        $jadwal->id_jadwal = $new_id;
         $jadwal->tgl_ibadah = $request->tgl_ibadah;
 
         if ($request->hasFile('backtrack')) {
@@ -120,6 +132,14 @@ class JadwalIbadahController extends Controller
         }
 
         $jadwal->save();
+
+        detail_jadwal::create([
+            'id_jadwal' => $new_id,
+            'peran_pelayan' => 1, // 1 = Pendeta
+            'id_pelayan' => $request->filled('id_pelayan') ? $request->id_pelayan : null,
+            'nama_pendeta_undangan' => $request->filled('id_pelayan') ? null : $request->nama_pendeta
+        ]);
+
         Riwayat::logChange(1, $jadwal->id_jadwal, null);
         return redirect()->route('Jadwal.viewall');
     }
@@ -128,14 +148,33 @@ class JadwalIbadahController extends Controller
     {
         $query = $request->get('q');
 
-        // Find pelayan with peran_pelayan = 1 (Pendeta), join jemaat for name search
-        $results = DB::table('pelayan')
-            ->join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
-            ->join('detail_jadwal', 'pelayan.id_pelayan', '=', 'detail_jadwal.id_pelayan')
-            ->where('detail_jadwal.peran_pelayan', 1)
+        $results = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
             ->where('jemaat.nama_jemaat', 'like', "%$query%")
-            ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat')
-            ->distinct()
+            ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat as nama_pendeta')
+            ->get();
+
+        return response()->json($results);
+    }
+
+    public function searchMultimedia(Request $request)
+    {
+        $query = $request->get('q');
+        $jadwalId = $request->get('jadwal_id');
+
+        // Default to empty collection if no jadwal_id
+        $excludedPelayanIds = collect();
+
+        if ($jadwalId) {
+            $excludedPelayanIds = DB::table('detail_jadwal')
+                ->where('id_jadwal', $jadwalId)
+                ->pluck('id_pelayan');
+        }
+
+        $results = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
+            ->where('jemaat.nama_jemaat', 'like', "%$query%")
+            ->where('pelayan.hak_akses_pelayan', 'Multimedia')
+            ->whereNotIn('pelayan.id_pelayan', $excludedPelayanIds)
+            ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat as nama_pelayan')
             ->get();
 
         return response()->json($results);
