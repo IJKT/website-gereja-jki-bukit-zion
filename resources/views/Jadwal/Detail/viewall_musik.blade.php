@@ -62,7 +62,8 @@
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/jadwal/musik/{{ $jadwal->id_jadwal }}">
+                                    <a
+                                        href="{{ route('Jadwal.ubah_musik', [$jadwal->id_jadwal, $_pelayan_musik->id_pelayan]) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -76,7 +77,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/jadwal/tambah">
+            <a href="/jadwal/musik/tambah/{{ $jadwal->id_jadwal }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

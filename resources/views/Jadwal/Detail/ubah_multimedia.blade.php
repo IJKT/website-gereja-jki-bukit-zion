@@ -1,58 +1,59 @@
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="flex-1 bg-white p-10">
-        {{-- <form id="multimediaForm" action="{{ route('Jadwal.UpdatePelayan') }}" method="POST">
+        <form id="multimediaForm" action="{{ route('Jadwal.UpdatePelayan') }}" method="POST">
             @csrf
-            @method('PUT') --}}
-        <div class="bg-gray-200 p-6 rounded-md">
-            <h2 class="font-bold text-md mb-4">UBAH DATA PELAYAN MULTIMEDIA</h2>
-            <div class="grid grid-cols-2 gap-x-10 gap-y-4">
-                <div>
-                    <label class="block font-semibold mb-1">ID JADWAL</label>
-                    <input name="id_jadwal" type="text" value="{{ $pelayan->id_jadwal }}"
-                        class="w-full p-2 rounded bg-gray-100" disabled>
-                </div>
-                <div class="relative">
-                    <label class="block font-semibold mb-1">NAMA LENGKAP</label>
-                    <input type="text" id="nama_pelayan" name="nama_pelayan"
-                        value="{{ $pelayan->pelayan->jemaat->nama_jemaat }}" class="w-full p-2 rounded bg-white"
-                        placeholder="Tambahkan Nama Pelayan" autocomplete="off" required>
-                    <div id="pelayan-suggestions"
-                        class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
-                        <!-- Suggestions will appear here -->
+            @method('PUT')
+            <div class="bg-gray-200 p-6 rounded-md">
+                <h2 class="font-bold text-md mb-4">UBAH DATA PELAYAN MULTIMEDIA</h2>
+                <div class="grid grid-cols-2 gap-x-10 gap-y-4">
+                    <div>
+                        <label class="block font-semibold mb-1">ID JADWAL</label>
+                        <input name="id_jadwal" type="text" value="{{ $pelayan->id_jadwal }}"
+                            class="w-full p-2 rounded bg-gray-100" readonly>
                     </div>
-                    <!-- Hidden input to store pelayan ID -->
-                    <input type="hidden" id="id_pelayan" name="id_pelayan" required />
+                    <div class="relative">
+                        <label class="block font-semibold mb-1">NAMA LENGKAP</label>
+                        <input type="text" id="nama_pelayan" name="nama_pelayan"
+                            value="{{ $pelayan->pelayan->jemaat->nama_jemaat }}" class="w-full p-2 rounded bg-gray-100"
+                            placeholder="Tambahkan Nama Pelayan" autocomplete="off" disabled>
+                        <div id="pelayan-suggestions"
+                            class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
+                            <!-- Suggestions will appear here -->
+                        </div>
+                        <!-- Hidden input to store pelayan ID -->
+                        <input type="hidden" id="id_pelayan" value="{{ $pelayan->id_pelayan }}" name="id_pelayan"
+                            required />
+                    </div>
+                </div>
+                <div x-data="{ peran_pelayan: '{{ $pelayan->peran_pelayan }}' }" class="mt-6">
+                    <label class="block font-semibold my-1">PERAN PELAYAN</label>
+                    <div class="grid grid-cols-2 gap-x-10 gap-y-4 w-1/2">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="peran_pelayan" value="8" class="form-radio text-[#215773]"
+                                @click="peran_pelayan = '8'" :checked="peran_pelayan === '8'" required>
+                            <span :class="peran_pelayan == '8' ? 'font-semibold' : 'font-normal'">Video</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="peran_pelayan" value="9" class="form-radio text-[#215773]"
+                                @click="peran_pelayan = '9'" :checked="peran_pelayan === '9'">
+                            <span :class="peran_pelayan == '9' ? 'font-semibold' : 'font-normal'">Photo</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="peran_pelayan" value="10" class="form-radio text-[#215773]"
+                                @click="peran_pelayan = '10'" :checked="peran_pelayan === '10'">
+                            <span :class="peran_pelayan == '10' ? 'font-semibold' : 'font-normal'">Live
+                                Stream</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="peran_pelayan" value="11" class="form-radio text-[#215773]"
+                                @click="peran_pelayan = '11'" :checked="peran_pelayan === '11'">
+                            <span :class="peran_pelayan == '11' ? 'font-semibold' : 'font-normal'">Lyrics</span>
+                        </label>
+                    </div>
                 </div>
             </div>
-            <div x-data="{ peran_pelayan: '{{ $pelayan->peran_pelayan }}' }" class="mt-6">
-                <label class="block font-semibold my-1">PERAN PELAYAN</label>
-                <div class="grid grid-cols-2 gap-x-10 gap-y-4 w-1/2">
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="peran_pelayan" value="8" class="form-radio text-[#215773]"
-                            @click="peran_pelayan = '8'" :checked="peran_pelayan === '8'" required>
-                        <span :class="peran_pelayan == '8' ? 'font-semibold' : 'font-normal'">Video</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="peran_pelayan" value="9" class="form-radio text-[#215773]"
-                            @click="peran_pelayan = '9'" :checked="peran_pelayan === '9'">
-                        <span :class="peran_pelayan == '9' ? 'font-semibold' : 'font-normal'">Photo</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="peran_pelayan" value="10" class="form-radio text-[#215773]"
-                            @click="peran_pelayan = '10'" :checked="peran_pelayan === '10'">
-                        <span :class="peran_pelayan == '10' ? 'font-semibold' : 'font-normal'">Live
-                            Stream</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="peran_pelayan" value="11" class="form-radio text-[#215773]"
-                            @click="peran_pelayan = '11'" :checked="peran_pelayan === '11'">
-                        <span :class="peran_pelayan == '11' ? 'font-semibold' : 'font-normal'">Lyrics</span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        {{-- </form> --}}
+        </form>
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
             <a href="{{ url()->previous() }}">

@@ -62,5 +62,13 @@ class UserSeeder extends Seeder
                 'verifikasi_user' => 1,
             ]
         );
+        User::updateOrCreate(
+            ['username' => 'pawtest'],
+            [
+                'password' => Hash::make('praiseworship'),
+                // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
+                'verifikasi_user' => 1,
+            ]
+        );
     }
 }

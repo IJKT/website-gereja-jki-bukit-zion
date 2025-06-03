@@ -46,9 +46,9 @@ class DetailJadwalController extends Controller
         $data_pelayan = $detail_jadwal::with('pelayan')->where('id_pelayan', $pelayan->id_pelayan)->first();
 
         return view(
-            'Jadwal.Detail.ubah_multimedia',
+            'Jadwal.Detail.ubah_musik',
             [
-                'title' => 'Ubah Pelayan Multimedia',
+                'title' => 'Ubah Pelayan Praise & Worship',
                 'pelayan' => $data_pelayan, // single pelayan for this assignment
             ]
         );
@@ -120,6 +120,23 @@ class DetailJadwalController extends Controller
         $detail_jadwal->save();
 
         Riwayat::logChange(1, $request->id_jadwal, null);
+
+        $secondLastUrl = $request->input('second_last_url', session('second_last_url', url('/')));
+        // Optionally clear it from session
+        session()->forget('second_last_url');
+
+        return redirect($secondLastUrl);
+    }
+    public function UpdatePelayan(Request $request)
+    {
+        // You should pass a unique identifier for the detail_jadwal you want to update.
+        detail_jadwal::where('id_pelayan', $request->id_pelayan)
+            ->where('id_jadwal', $request->id_jadwal)
+            ->update([
+                'peran_pelayan' => $request->peran_pelayan
+            ]);
+
+        Riwayat::logChange(2, $request->id_jadwal, null);
 
         $secondLastUrl = $request->input('second_last_url', session('second_last_url', url('/')));
         // Optionally clear it from session

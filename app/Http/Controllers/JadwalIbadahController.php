@@ -179,4 +179,27 @@ class JadwalIbadahController extends Controller
 
         return response()->json($results);
     }
+    public function searchMusik(Request $request)
+    {
+        $query = $request->get('q');
+        $jadwalId = $request->get('jadwal_id');
+
+        // Default to empty collection if no jadwal_id
+        $excludedPelayanIds = collect();
+
+        if ($jadwalId) {
+            $excludedPelayanIds = DB::table('detail_jadwal')
+                ->where('id_jadwal', $jadwalId)
+                ->pluck('id_pelayan');
+        }
+
+        $results = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
+            ->where('jemaat.nama_jemaat', 'like', "%$query%")
+            ->where('pelayan.hak_akses_pelayan', 'Praise & Worship')
+            ->whereNotIn('pelayan.id_pelayan', $excludedPelayanIds)
+            ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat as nama_pelayan')
+            ->get();
+
+        return response()->json($results);
+    }
 }

@@ -11,6 +11,7 @@ use SweetAlert2\Laravel\Swal;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelayanController;
 use App\Http\Controllers\JemaatController;
+use App\Http\Controllers\LaguPujianController;
 use App\Http\Controllers\PembukuanController;
 use App\Models\Pembukuan;
 use App\Models\Riwayat;
@@ -95,7 +96,6 @@ Route::prefix('manajemen/pengajuan')
     ->name('Manajemen.Jemaat.Pengajuan')
     ->group(
         function () {
-            //TODO: bentuk buat view pengajuan jemaat
             //MANAJEMEN PENGAJUAN JEMAAT
             Route::get('', [JemaatController::class, 'pengajuanViewall'])->name('.viewall');
             // Route::get('pengajuan/tambah', [JemaatController::class, 'pengajuanTambah'])->name('.Pengajuan.tambah');
@@ -148,11 +148,17 @@ Route::prefix('jadwal')
             Route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
             Route::get('search-pendeta', [JadwalIbadahController::class, 'searchPendeta'])->name('.search-pendeta');
             Route::get('search-multimedia', [JadwalIbadahController::class, 'searchMultimedia'])->name('.search-multimedia');
+            Route::get('search-musik', [JadwalIbadahController::class, 'searchMusik'])->name('.search-musik');
             Route::put('update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
             Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
 
+
+            // TODO: selesaikan buat yang pujian
             //DETAIL JADWAL
             Route::put('pelayan/add', [DetailJadwalController::class, 'AddPelayan'])->name('.AddPelayan');
+            Route::put('pelayan/update', [DetailJadwalController::class, 'UpdatePelayan'])->name('.UpdatePelayan');
+            Route::get('musik/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_musik'])->name('.ubah_musik');
+            Route::get('musik/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_musik'])->name('.tambah_musik');
             Route::get('musik/{jadwal}', [DetailJadwalController::class, 'viewall_musik'])->name('.viewall_musik');
             Route::get('multimedia/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_multimedia'])->name('.ubah_multimedia');
             Route::get('multimedia/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_multimedia'])->name('.tambah_multimedia');
@@ -163,19 +169,6 @@ Route::prefix('jadwal')
             Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
         }
     );
-
-Route::get('/test-route');
-// Route::prefix('jadwal')
-// ->name('Jadwal')
-// ->group(
-//     function () {
-//         Route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
-//         Route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
-//         Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
-//         Route::put('/update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
-//         Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
-//     }
-// );
 
 Route::get('/sermons-articles', function () {
     return view(
@@ -198,29 +191,14 @@ Route::get('/sermons-articles', function () {
     );
 });
 
-Route::get('/lagu', function () {
-    return view(
-        'lagu',
-        [
-            'title' => 'Halaman Lagu Ibadah',
-            'lagu' => [
-                [
-                    'id' => "LI020125A1",
-                    'tipe' => 'Shabbat Fellowship',
-                    'tanggal' => '07-04-2025'
-                ],
-                [
-                    'id' => "LI020125A2",
-                    'tipe' => 'Sunday Service',
-                    'tanggal' => '09-04-2025'
-                ]
-            ]
-        ]
+Route::prefix('lagu')
+    ->name('LaguPujian')
+    ->group(
+        function () {
+            Route::get('', [LaguPujianController::class, 'viewall'])->name('.viewall');
+            Route::get('tambah', [LaguPujianController::class, 'tambah'])->name('.tambah');
+            Route::get('{lagu}', [LaguPujianController::class, 'ubah'])->name('.ubah');
+            Route::put('update/{lagu}', [LaguPujianController::class, 'update'])->name('.update');
+            Route::put('add', [LaguPujianController::class, 'add'])->name('.add');
+        }
     );
-});
-
-
-
-Route::get('/tes', function () {
-    return view('tes');
-});

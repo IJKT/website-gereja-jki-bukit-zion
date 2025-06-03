@@ -19,25 +19,26 @@
                 <table class="w-full border-collapse ">
                     <thead>
                         <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">ID DAFTAR</th>
-                            <th class="border border-gray-300 px-4 py-2">TIPE IBADAH</th>
-                            <th class="border border-gray-300 px-4 py-2">TANGGAL IBADAH</th>
+                            <th class="border border-gray-300 px-4 py-2">NAMA LAGU</th>
+                            <th class="border border-gray-300 px-4 py-2">LINK LAGU</th>
                             <th class="border border-gray-300 px-4 py-2">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($lagu as $_lagu)
                             <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_lagu['id'] }}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_lagu['tipe'] }}</td>
+                                    {{ $_lagu['nama_lagu'] }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_lagu['tanggal'])->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                                    <a href="{{ $_lagu->link_lagu }}" class="hover:underline" target="_blank">
+                                        {{ $_lagu->link_lagu }}
+                                    </a>
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <button
-                                        class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                    <a href="{{ route('LaguPujian.ubah', $_lagu) }}">
+                                        <button
+                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -48,9 +49,11 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                TAMBAH
-            </button>
+            <a href="/lagu/tambah">
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    TAMBAH
+                </button>
+            </a>
         </div>
     </div>
     </div>

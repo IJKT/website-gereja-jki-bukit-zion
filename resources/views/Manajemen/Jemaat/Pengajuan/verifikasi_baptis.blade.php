@@ -119,7 +119,6 @@
             });
         }
 
-        // TODO: nanti tambahin date'nya di controller
         function showAlertVerify() {
             Swal.fire({
                 title: "Verifikasi Data?",

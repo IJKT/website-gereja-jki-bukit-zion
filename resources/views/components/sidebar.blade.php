@@ -82,7 +82,7 @@
         <a href="/jadwal">
             <li
                 class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('jadwal') ? 'bg-[#215773]' : '' }}">
+            {{ request()->is('jadwal', 'jadwal/*') ? 'bg-[#215773]' : '' }}">
                 Jadwal</li>
         </a>
 
@@ -96,9 +96,8 @@
         <a href="/lagu">
             <li
                 class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('lagu') ? 'bg-[#215773]' : '' }}">
+            {{ request()->is('lagu', 'lagu/*') ? 'bg-[#215773]' : '' }}">
                 Lagu</li>
         </a>
-
     </ul>
 </div>

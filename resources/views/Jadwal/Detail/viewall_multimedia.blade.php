@@ -1,3 +1,5 @@
+<!-- TODO: bikin biar bisa hapus file -->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

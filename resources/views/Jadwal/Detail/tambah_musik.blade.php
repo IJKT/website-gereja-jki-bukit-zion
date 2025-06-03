@@ -1,11 +1,11 @@
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="flex-1 bg-white p-10">
-        <form id="multimediaForm" action="{{ route('Jadwal.add_multimedia') }}" method="POST">
+        <form id="musikForm" action="{{ route('Jadwal.AddPelayan') }}" method="POST">
             @csrf
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
-                <h2 class="font-bold text-md mb-4">TAMBAH DATA PELAYAN MULTIMEDIA</h2>
+                <h2 class="font-bold text-md mb-4">TAMBAH DATA PELAYAN MUSIK</h2>
                 <div class="grid grid-cols-2 gap-x-10 gap-y-4">
                     <div>
                         <label class="block font-semibold mb-1">ID JADWAL</label>
@@ -27,58 +27,54 @@
 
                 <div x-data="{ peran_pelayan: '' }" class="mt-6">
                     <label class="block font-semibold my-1">PERAN PELAYAN</label>
-                    <div class="grid grid-cols-4 gap-x-10 gap-y-4">
+                    <div class="grid grid-cols-2 gap-x-10 gap-y-4 w-1/2">
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="peran_pelayan" value="2" class="form-radio text-[#215773]"
-                                @click="peran_pelayan = 'Worship Leader'" :checked="peran_pelayan === 'Worship Leader'"
-                                required>
-                            <span :class="peran_pelayan == 'Worship Leader' ? 'font-semibold' : 'font-normal'">Worship
-                                Leader</span>
+                                @click="peran_pelayan = '2'" :checked="peran_pelayan === '2'" required>
+                            <span :class="peran_pelayan == '2' ? 'font-semibold' : 'font-normal'">Worship Leader</span>
                         </label>
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="peran_pelayan" value="3" class="form-radio text-[#215773]"
-                                @click="peran_pelayan = 'Singer'" :checked="peran_pelayan === 'Singer'">
-                            <span :class="peran_pelayan == 'Singer' ? 'font-semibold' : 'font-normal'">Singer</span>
+                                @click="peran_pelayan = '3'" :checked="peran_pelayan === '3'">
+                            <span :class="peran_pelayan == '3' ? 'font-semibold' : 'font-normal'">Singer</span>
                         </label>
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="peran_pelayan" value="4" class="form-radio text-[#215773]"
-                                @click="peran_pelayan = 'Keyboard'" :checked="peran_pelayan === 'Keyboard'">
-                            <span :class="peran_pelayan == 'Keyboard' ? 'font-semibold' : 'font-normal'">Keyboard</span>
+                                @click="peran_pelayan = '4'" :checked="peran_pelayan === '4'">
+                            <span :class="peran_pelayan == '4' ? 'font-semibold' : 'font-normal'">Keyboard</span>
                         </label>
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="peran_pelayan" value="5" class="form-radio text-[#215773]"
-                                @click="peran_pelayan = 'Drum'" :checked="peran_pelayan === 'Drum'">
-                            <span :class="peran_pelayan == 'Drum' ? 'font-semibold' : 'font-normal'">Drum</span>
+                                @click="peran_pelayan = '5'" :checked="peran_pelayan === '5'">
+                            <span :class="peran_pelayan == '5' ? 'font-semibold' : 'font-normal'">Drum</span>
                         </label>
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="peran_pelayan" value="6" class="form-radio text-[#215773]"
-                                @click="peran_pelayan = 'Bass'" :checked="peran_pelayan === 'Bass'">
-                            <span :class="peran_pelayan == 'Bass' ? 'font-semibold' : 'font-normal'">Bass</span>
+                                @click="peran_pelayan = '6'" :checked="peran_pelayan === '6'">
+                            <span :class="peran_pelayan == '6' ? 'font-semibold' : 'font-normal'">Bass</span>
                         </label>
                         <label class="flex items-center space-x-2">
                             <input type="radio" name="peran_pelayan" value="7" class="form-radio text-[#215773]"
-                                @click="peran_pelayan = 'Guitar'" :checked="peran_pelayan === 'Guitar'">
-                            <span :class="peran_pelayan == 'Guitar' ? 'font-semibold' : 'font-normal'">Guitar</span>
+                                @click="peran_pelayan = '7'" :checked="peran_pelayan === '7'">
+                            <span :class="peran_pelayan == '7' ? 'font-semibold' : 'font-normal'">Guitar</span>
                         </label>
                     </div>
                 </div>
             </div>
-
-            <!-- Button -->
-            <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-                <a href="/manajemen/pelayan">
-                    <button type="button"
-                        class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
-                        BATAL
-                    </button>
-                </a>
-                <button type="button"
-                    class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200"
-                    id="simpanBtn" onclick="showAlertSave()" disabled>
-                    SIMPAN
-                </button>
-            </div>
         </form>
+        <!-- Button -->
+        <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
+            <a href="/jadwal/musik/{{ $jadwal->id_jadwal }}">
+                <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                    BATAL
+                </button>
+            </a>
+            <button type="button"
+                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200"
+                id="simpanBtn" onclick="showAlertSave()" disabled>
+                SIMPAN
+            </button>
+        </div>
     </div>
 
     <script>
@@ -87,7 +83,7 @@
                 inputId: 'nama_pelayan',
                 hiddenId: 'id_pelayan',
                 suggestionBoxId: 'pelayan-suggestions',
-                searchUrl: '/jadwal/search-multimedia', // Adjust to your route
+                searchUrl: '/jadwal/search-musik', // Adjust to your route
                 valueKeys: {
                     id: 'id_pelayan',
                     name: 'nama_pelayan'
@@ -111,8 +107,11 @@
                     checkRequiredFields();
 
                     const query = input.value.trim();
+                    const jadwalId = document.querySelector('input[name="id_jadwal"]').value;
                     if (query.length >= 2) {
-                        fetch(`${searchUrl}?q=${encodeURIComponent(query)}`)
+                        fetch(
+                                `${searchUrl}?q=${encodeURIComponent(query)}&jadwal_id=${encodeURIComponent(jadwalId)}`
+                            )
                             .then(response => response.json())
                             .then(data => {
                                 if (data.length > 0) {
@@ -160,7 +159,7 @@
 
             // Function to check if all required fields are filled
             function checkRequiredFields() {
-                const form = document.getElementById('multimediaForm');
+                const form = document.getElementById('musikForm');
                 // Check all visible required fields
                 const requiredFields = form.querySelectorAll('[required]');
                 let allFilled = true;
@@ -192,7 +191,7 @@
             }
 
             // Attach event listeners to required fields and radios
-            const form = document.getElementById('multimediaForm');
+            const form = document.getElementById('musikForm');
             const requiredFields = form.querySelectorAll('[required]');
             requiredFields.forEach(field => {
                 field.addEventListener('input', checkRequiredFields);
@@ -216,7 +215,7 @@
                 if (result.isConfirmed) {
                     Swal.fire("Data Baru Disimpan", "", "success");
                     // Submit the form
-                    document.getElementById('multimediaForm').submit();
+                    document.getElementById('musikForm').submit();
                 } else if (result.isDenied) {
                     Swal.fire("Data Baru Tidak Disimpan", "", "error");
                 }

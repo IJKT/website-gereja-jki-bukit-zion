@@ -1,5 +1,3 @@
-<!-- TODO: tambahin masalah nama pendeta -->
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

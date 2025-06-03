@@ -1,5 +1,3 @@
-<!--TODO: kerjain ini nanti-->
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- Main Content --}}
