@@ -1,3 +1,5 @@
+<!-- TODO: bikin biar bisa hapus file -->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -48,7 +50,8 @@
                                 </td>
                                 </a>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/jadwal/pujian/{{ $jadwal->id_jadwal }}">
+                                    <a
+                                        href="{{ route('Jadwal.ubah_pujian', [$jadwal->id_jadwal, $_urutan_lagu->id_lagu]) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -62,7 +65,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/jadwal/pujian/tambah">
+            <a href="{{ route('Jadwal.tambah_pujian', $jadwal->id_jadwal) }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

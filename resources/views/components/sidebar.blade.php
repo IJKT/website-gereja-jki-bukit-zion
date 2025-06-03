@@ -89,7 +89,7 @@
         <a href="/sermons-articles">
             <li
                 class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('sermons-articles') ? 'bg-[#215773]' : '' }}">
+            {{ request()->is('sermons-articles', 'sermons-articles/*') ? 'bg-[#215773]' : '' }}">
                 Sermons & Articles</li>
         </a>
 

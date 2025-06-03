@@ -9,7 +9,6 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    /*************  ✨ Windsurf Command 🌟  *************/
     public function up(): void
     {
         Schema::create('jemaat', function (Blueprint $table) {

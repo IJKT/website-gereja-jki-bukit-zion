@@ -19,9 +19,9 @@
                 <table class="w-full border-collapse ">
                     <thead>
                         <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">ID RANGKUMAN</th>
+                            <th class="border border-gray-300 px-4 py-2">TANGGAL PEMBUATAN</th>
                             <th class="border border-gray-300 px-4 py-2">JUDUL</th>
-                            <th class="border border-gray-300 px-4 py-2">TIPE RANGKUMAN</th>
+                            <th class="border border-gray-300 px-4 py-2">TIPE</th>
                             <th class="border border-gray-300 px-4 py-2">AKSI</th>
                         </tr>
                     </thead>
@@ -29,14 +29,17 @@
                         @foreach ($rangkuman as $_rangkuman)
                             <tr class="bg-white text-sm text-center">
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_rangkuman['id'] }}</td>
+                                    {{ \Carbon\Carbon::parse($_rangkuman->tgl_rangkuman)->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                                </td>
                                 <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_rangkuman['judul'] }}</td>
+                                    {{ $_rangkuman->judul_rangkuman }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_rangkuman['tipe'] }}</td>
+                                    {{ $_rangkuman->tipe_rangkuman }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <button
-                                        class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                    <a href="{{ route('RangkumanFirman.ubah', $_rangkuman) }}">
+                                        <button
+                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -47,9 +50,11 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                TAMBAH
-            </button>
+            <a href="{{ route('RangkumanFirman.tambah') }}">
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    TAMBAH
+                </button>
+            </a>
         </div>
     </div>
     </div>

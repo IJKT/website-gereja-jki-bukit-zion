@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class detail_lagu_pujian extends Model
 {
     protected $table = 'detail_lagu_pujian';
-    protected $primaryKey = 'id_lagu';
+    protected $primaryKey = 'id_jadwal';
     protected $keyType = 'string';
     public $timestamps = false;
 

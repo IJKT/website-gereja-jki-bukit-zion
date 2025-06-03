@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             DetailJadwalSeeder::class,
             LaguPujianSeeder::class,
             DetailLaguPujianSeeder::class,
+            RangkumanFirmanSeeder::class,
         ]);
     }
 }

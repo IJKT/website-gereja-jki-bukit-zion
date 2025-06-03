@@ -5,6 +5,7 @@
 // use App\Models\DataPelayan;
 
 use App\Http\Controllers\DetailJadwalController;
+use App\Http\Controllers\DetailLaguPujianController;
 use App\Http\Controllers\JadwalIbadahController;
 use Illuminate\Support\Arr;
 use SweetAlert2\Laravel\Swal;
@@ -13,12 +14,29 @@ use App\Http\Controllers\PelayanController;
 use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\LaguPujianController;
 use App\Http\Controllers\PembukuanController;
+use App\Http\Controllers\RangkumanFirmanController;
+use App\Models\detail_lagu_pujian;
 use App\Models\Pembukuan;
 use App\Models\Riwayat;
 
-Route::get('/', function () {
-    return view('Home.home', ['title' => "Halaman Home"]);
-});
+// Route::get('/', function () {
+//     return view('Home.home', ['title' => "Halaman Home"]);
+// });
+Route::prefix('/')
+    ->name('Home')
+    ->group(
+        function () {
+            Route::get('', function () {
+                return view('home', ['title' => "Halaman Home"]);
+            });
+            // Route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
+            // Route::get('search', [PelayanController::class, 'search'])->name('.search');
+            // Route::get('{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
+            // Route::put('add', [PelayanController::class, 'add'])->name('.add');
+            // Route::put('update/{pelayan}', [PelayanController::class, 'update'])->name('.update');
+            // Route::put('status/{pelayan}', [PelayanController::class, 'status'])->name('.status');
+        }
+    );
 
 Route::get('/about', function () {
     return view(
@@ -110,11 +128,6 @@ Route::prefix('manajemen/pengajuan')
             // Route::put('pengajuan/update/{jemaat}', [JemaatController::class, 'pengajuanUpdate'])->name('.Pengajuan.update');
         }
     );
-// Route::get('manajemen/jemaat/pengajuan', function () {
-//     return view(
-//         'Manajemen.riwayat'
-//     );
-// });
 
 Route::get('/manajemen/riwayat', function () {
     return view(
@@ -147,49 +160,50 @@ Route::prefix('jadwal')
             Route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
             Route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
             Route::get('search-pendeta', [JadwalIbadahController::class, 'searchPendeta'])->name('.search-pendeta');
-            Route::get('search-multimedia', [JadwalIbadahController::class, 'searchMultimedia'])->name('.search-multimedia');
-            Route::get('search-musik', [JadwalIbadahController::class, 'searchMusik'])->name('.search-musik');
             Route::put('update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
             Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
+
+            Route::get('search-multimedia', [JadwalIbadahController::class, 'searchMultimedia'])->name('.search-multimedia');
+            Route::get('search-musik', [JadwalIbadahController::class, 'searchMusik'])->name('.search-musik');
+            Route::get('search-pujian', [JadwalIbadahController::class, 'searchPujian'])->name('.search-pujian');
 
 
             // TODO: selesaikan buat yang pujian
             //DETAIL JADWAL
             Route::put('pelayan/add', [DetailJadwalController::class, 'AddPelayan'])->name('.AddPelayan');
             Route::put('pelayan/update', [DetailJadwalController::class, 'UpdatePelayan'])->name('.UpdatePelayan');
+            Route::put('lagu/add', [DetailLaguPujianController::class, 'AddLagu'])->name('.AddLagu');
+            Route::put('lagu/update', [DetailLaguPujianController::class, 'UpdateLagu'])->name('.UpdateLagu');
+
+
             Route::get('musik/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_musik'])->name('.ubah_musik');
             Route::get('musik/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_musik'])->name('.tambah_musik');
             Route::get('musik/{jadwal}', [DetailJadwalController::class, 'viewall_musik'])->name('.viewall_musik');
+
             Route::get('multimedia/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_multimedia'])->name('.ubah_multimedia');
             Route::get('multimedia/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_multimedia'])->name('.tambah_multimedia');
             Route::get('multimedia/{jadwal}', [DetailJadwalController::class, 'viewall_multimedia'])->name('.viewall_multimedia');
-            Route::get('pujian/{jadwal}', [DetailJadwalController::class, 'viewall_pujian'])->name('.viewall_pujian');
 
+            Route::get('pujian/ubah/{detail_lagu}/{lagu}', [DetailLaguPujianController::class, 'ubah_pujian'])->name('.ubah_pujian');
+            Route::get('pujian/tambah/{jadwal}', [DetailLaguPujianController::class, 'tambah_pujian'])->name('.tambah_pujian');
+            Route::get('pujian/{jadwal}', [DetailJadwalController::class, 'viewall_pujian'])->name('.viewall_pujian');
 
             Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
         }
     );
 
-Route::get('/sermons-articles', function () {
-    return view(
-        'sermons_articles',
-        [
-            'title' => 'Halaman Rangkuman Firman',
-            'rangkuman' => [
-                [
-                    'id' => "RF040325A1",
-                    'judul' => 'Sermon Name',
-                    'tipe' => 'Sermons'
-                ],
-                [
-                    'id' => "RF040325A2",
-                    'judul' => 'Article Name',
-                    'tipe' => 'Articles'
-                ]
-            ]
-        ]
+Route::prefix('sermons-articles')
+    ->name('RangkumanFirman')
+    ->group(
+        function () {
+            Route::get('', [RangkumanFirmanController::class, 'viewall'])->name('.viewall');
+            Route::get('tambah', [RangkumanFirmanController::class, 'tambah'])->name('.tambah');
+            Route::put('add', [RangkumanFirmanController::class, 'add'])->name('.add');
+            Route::put('update/{rangkuman}', [RangkumanFirmanController::class, 'update'])->name('.update');
+
+            Route::get('{rangkuman}', [RangkumanFirmanController::class, 'ubah'])->name('.ubah');
+        }
     );
-});
 
 Route::prefix('lagu')
     ->name('LaguPujian')

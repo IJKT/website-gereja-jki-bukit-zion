@@ -8,6 +8,7 @@ use App\Models\Riwayat;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Models\jadwal_ibadah;
+use App\Models\lagu_pujian;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -198,6 +199,26 @@ class JadwalIbadahController extends Controller
             ->where('pelayan.hak_akses_pelayan', 'Praise & Worship')
             ->whereNotIn('pelayan.id_pelayan', $excludedPelayanIds)
             ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat as nama_pelayan')
+            ->get();
+
+        return response()->json($results);
+    }
+    public function searchPujian(Request $request)
+    {
+        $query = $request->get('q');
+        $jadwalId = $request->get('jadwal_id');
+
+        // Default to empty collection if no jadwal_id
+        $excludedPujianIds = collect();
+
+        if ($jadwalId) {
+            $excludedPujianIds = DB::table('detail_lagu_pujian')
+                ->where('id_jadwal', $jadwalId)
+                ->pluck('id_lagu');
+        }
+        $results = lagu_pujian::where('nama_lagu', 'like', "%$query%")
+            ->whereNotIn('id_lagu', $excludedPujianIds)
+            ->select('id_lagu', 'nama_lagu')
             ->get();
 
         return response()->json($results);

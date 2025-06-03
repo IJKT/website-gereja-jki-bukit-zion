@@ -40,7 +40,7 @@
                                 onchange="updateBacktrackLabel()">
                             <label for="backtrack" id="backtrack-label"
                                 class="w-full p-2 rounded bg-white cursor-pointer block ">
-                                {{ $jadwal->backtrack ? \Illuminate\Support\Str::after($jadwal->backtrack, 'backtracks/') : null }}
+                                {{ \Illuminate\Support\Str::after($jadwal->backtrack, 'backtracks/') : null }}
                             </label>
                             <div class="flex items-center space-x-2 mt-2">
                                 <a href="{{ asset('storage/' . $jadwal->backtrack) }}" download
