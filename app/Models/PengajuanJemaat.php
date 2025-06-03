@@ -21,7 +21,35 @@ class PengajuanJemaat extends Model
         'verifikasi_pengajuan',
         'catatan_pengajuan'
     ];
+    public static function generateNextId()
+    {
+        $tgl_daftar = now();
+        $datePart = $tgl_daftar->format('dmy');
+        $prefix = "PJ{$datePart}";
 
+        $lastId = self::where('id_pengajuan', 'like', "{$prefix}%")
+            ->orderByDesc('id_pengajuan')
+            ->first();
+
+        if ($lastId) {
+            $lastId = $lastId->id_pengajuan;
+            $suffix = substr($lastId, strlen($prefix));
+            $letter = substr($suffix, 0, 1);
+            $number = intval(substr($suffix, 1));
+            if ($number < 9) {
+                $number++;
+            } else {
+                $number = 1;
+                $letter = chr(ord($letter) + 1);
+            }
+        } else {
+            $letter = 'A';
+            $number = 1;
+        }
+
+        $newSuffix = "{$letter}{$number}";
+        return "{$prefix}{$newSuffix}";
+    }
     public function jemaat(): BelongsTo
     {
         return $this->belongsTo(Jemaat::class, 'id_jemaat', 'id_jemaat');

@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['username' => 'ishakjoseph'],
             [
-                'password' => Hash::make('admin'),
+                'password' => bcrypt('admin'),
                 // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
                 'verifikasi_user' => 1,
             ]
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['username' => 'spousetest'],
             [
-                'password' => Hash::make('test'),
+                'password' => bcrypt('test'),
                 // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
                 'verifikasi_user' => 1,
             ]
@@ -35,13 +35,13 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['username' => 'registrationtest'],
             [
-                'password' => Hash::make('test')
+                'password' => bcrypt('test')
             ]
         );
         User::updateOrCreate(
             ['username' => 'pendetatest'],
             [
-                'password' => Hash::make('pendeta'),
+                'password' => bcrypt('pendeta'),
                 // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
                 'verifikasi_user' => 1,
             ]
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['username' => 'mulmedtest'],
             [
-                'password' => Hash::make('multimedia'),
+                'password' => bcrypt('multimedia'),
                 // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
                 'verifikasi_user' => 1,
             ]
@@ -57,7 +57,7 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['username' => 'mulmedtest2'],
             [
-                'password' => Hash::make('multimedia'),
+                'password' => bcrypt('multimedia'),
                 // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
                 'verifikasi_user' => 1,
             ]
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['username' => 'pawtest'],
             [
-                'password' => Hash::make('praiseworship'),
+                'password' => bcrypt('praiseworship'),
                 // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
                 'verifikasi_user' => 1,
             ]

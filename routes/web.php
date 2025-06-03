@@ -6,6 +6,7 @@
 
 use App\Http\Controllers\DetailJadwalController;
 use App\Http\Controllers\DetailLaguPujianController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JadwalIbadahController;
 use Illuminate\Support\Arr;
 use SweetAlert2\Laravel\Swal;
@@ -14,61 +15,36 @@ use App\Http\Controllers\PelayanController;
 use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\LaguPujianController;
 use App\Http\Controllers\PembukuanController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RangkumanFirmanController;
 use App\Models\detail_lagu_pujian;
 use App\Models\Pembukuan;
 use App\Models\Riwayat;
 
-// Route::get('/', function () {
-//     return view('Home.home', ['title' => "Halaman Home"]);
-// });
-Route::prefix('/')
-    ->name('Home')
+Route::prefix('profil')
+    ->name('Profil')
     ->group(
         function () {
-            Route::get('', function () {
-                return view('home', ['title' => "Halaman Home"]);
-            });
-            // Route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
-            // Route::get('search', [PelayanController::class, 'search'])->name('.search');
-            // Route::get('{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
-            // Route::put('add', [PelayanController::class, 'add'])->name('.add');
+            Route::get('', [ProfilController::class, 'profil'])->name('.profil');
             // Route::put('update/{pelayan}', [PelayanController::class, 'update'])->name('.update');
-            // Route::put('status/{pelayan}', [PelayanController::class, 'status'])->name('.status');
         }
     );
-
-Route::get('/about', function () {
-    return view(
-        'Home.about',
-        ['nama' => "Ivan S. Tjahja"],
-        ['title' => "Halaman About"]
-    );
-});
-
-Route::get('/login', function () {
-    return view('Akun.login', ['title' => "Halaman Login"]);
-});
-Route::get('/register', function () {
-    return view('Akun.register', ['title' => "Halaman Register"]);
-});
-
-Route::get('/profil', function () {
-    return view(
-        'profile',
-        [
-            'title' => "Halaman Profil",
-            'nama_lengkap' => 'John Doe',
-            'email' => 'johndoe@gmail.com',
-            'nik' => '1234567890',
-            'tempat_lahir' => 'Surabaya',
-            'tanggal_lahir' => '01-01-2025',
-            'alamat' => 'Jl. Lorem Ipsum no. 1',
-            'jenis_kelamin' => 'P',
-            'nomor_hp' => '081234567890'
-        ]
-    );
-});
+// Route::get('profil', function () {
+//     return view(
+//         'profile',
+//         [
+//             'title' => "Halaman Profil",
+//             'nama_lengkap' => 'John Doe',
+//             'email' => 'johndoe@gmail.com',
+//             'nik' => '1234567890',
+//             'tempat_lahir' => 'Surabaya',
+//             'tanggal_lahir' => '01-01-2025',
+//             'alamat' => 'Jl. Lorem Ipsum no. 1',
+//             'jenis_kelamin' => 'P',
+//             'nomor_hp' => '081234567890'
+//         ]
+//     );
+// });
 
 Route::get('/pengajuan/baptis', function () {
     return view(
@@ -214,5 +190,30 @@ Route::prefix('lagu')
             Route::get('{lagu}', [LaguPujianController::class, 'ubah'])->name('.ubah');
             Route::put('update/{lagu}', [LaguPujianController::class, 'update'])->name('.update');
             Route::put('add', [LaguPujianController::class, 'add'])->name('.add');
+        }
+    );
+
+Route::prefix('/')
+    ->name('Home')
+    ->group(
+        function () {
+            Route::get('', [HomeController::class, 'home'])->name('.home');
+            Route::get('about', [HomeController::class, 'about'])->name('.about');
+
+            Route::get('sermons', [HomeController::class, 'sermons'])->name('.sermons');
+            Route::get('sermons/{kategori}', [HomeController::class, 'sermons_categories'])->name('.sermons_categories');
+
+            Route::get('articles', [HomeController::class, 'articles'])->name('.articles');
+
+            Route::get('devotions', [HomeController::class, 'devotions'])->name('.devotions');
+
+            Route::get('login', [HomeController::class, 'login'])->name('.Akun.login');
+            Route::post('login/authenticate', [HomeController::class, 'login_authenticate'])->name('.Akun.login_authenticate');
+            Route::get('register', [HomeController::class, 'register'])->name('.Akun.register');
+            Route::post('register/authenticate', [HomeController::class, 'register_authenticate'])->name('.Akun.register_authenticate');
+            Route::post('/cek-username', [HomeController::class, 'cekUsername'])->name('.cek.username');
+
+
+            Route::get('{slug}', [HomeController::class, 'single_post'])->name('.single_post');
         }
     );

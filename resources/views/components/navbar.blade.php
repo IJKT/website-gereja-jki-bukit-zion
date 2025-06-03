@@ -23,14 +23,17 @@
 
         {{-- navbar w-full --}}
         <div class="hidden lg:flex lg:gap-x-12 text-white text-sm/6 font-semibold">
-            <a href="/" class="hover:text-blue-400">HOME</a>
-            <a href="/about" class="hover:text-blue-400">ABOUT</a>
-            <a href="/" class="hover:text-blue-400">SERMONS</a>
-            <a href="/" class="hover:text-blue-400">ARTICLE</a>
-            <a href="/" class="hover:text-blue-400">DEVOTION</a>
+            <a href="{{ route('Home.home') }}" class="hover:text-blue-400">HOME</a>
+            <a href="{{ route('Home.about') }}" class="hover:text-blue-400">ABOUT</a>
+            <a href="{{ route('Home.sermons') }}" class="hover:text-blue-400">SERMONS</a>
+            <a href="{{ route('Home.articles') }}" class="hover:text-blue-400">ARTICLE</a>
+            <a href="{{ route('Home.devotions') }}" class="hover:text-blue-400">DEVOTION</a>
             <a href="/" class="hover:text-blue-400">GALLERY</a>
             <a href="/" class="hover:text-blue-400">CONTACT</a>
-            <a href="/login" class="hover:text-blue-400" target="_blank">LOGIN</a>
+
+            <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->
+            <a href="{{ route('Home.Akun.login') }}" class="hover:text-blue-400" target="_blank">LOGIN</a>
+            <a href="/profil" class="hover:text-blue-400" target="_blank">ACCOUNT</a>
 
             <!-- Social Media Icons -->
             <div class="flex items-center space-x-3">
@@ -67,17 +70,26 @@
                 <div class="-my-6 divide-y divide-gray-500/10">
                     <div class="space-y-2 py-6">
                         <div class="-mx-3 font-semibold text-white">
-                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">HOME</a>
-                            <a href="/about" class="hover:text-blue-400 block rounded-lg px-3 py-2">ABOUT</a>
-                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">SERMONS</a>
-                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">ARTICLE</a>
-                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">DEVOTION</a>
+                            <a href="{{ route('Home.home') }}"
+                                class="hover:text-blue-400 block rounded-lg px-3 py-2">HOME</a>
+                            <a href="{{ route('Home.about') }}"
+                                class="hover:text-blue-400 block rounded-lg px-3 py-2">ABOUT</a>
+                            <a href="{{ route('Home.sermons') }}"
+                                class="hover:text-blue-400 block rounded-lg px-3 py-2">SERMONS</a>
+                            <a href="{{ route('Home.articles') }}"
+                                class="hover:text-blue-400 block rounded-lg px-3 py-2">ARTICLE</a>
+                            <a href="{{ route('Home.devotions') }}"
+                                class="hover:text-blue-400 block rounded-lg px-3 py-2">DEVOTION</a>
                             <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">GALLERY</a>
                             <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">CONTACT</a>
                         </div>
                         <div class="py-6">
-                            <a href="/login"
+                            <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->
+                            <a href="{{ route('Home.Akun.login') }}"
                                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">LOGIN</a>
+                            <a href="/profil"
+                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">LOGIN</a>
+
                         </div>
 
                         <!-- Social Media Icons -->
