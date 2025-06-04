@@ -26,10 +26,26 @@
                     <tbody>
                         <!-- Add dynamic rows here -->
                         <tr class="bg-white text-sm text-center">
-                            <td class="border border-gray-300 px-4 py-2">none</td>
-                            <td class="border border-gray-300 px-4 py-2">none</td>
-                            <td class="border border-gray-300 px-4 py-2">none</td>
-                            <td class="border border-gray-300 px-4 py-2">none</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ \Carbon\Carbon::parse($data_baptis->tanggal_pengajuan)->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                @if ($data_baptis->verifikasi_pengajuan == 0)
+                                    <div class="font-bold text-yellow-500">TUNGGU</div>
+                                @elseif ($data_baptis->verifikasi_pengajuan == 1)
+                                    <div class="font-bold text-green-500">VERIF</div>
+                                @elseif ($data_baptis->verifikasi_pengajuan == 2)
+                                    <div class="font-bold text-red-500">TOLAK</div>
+                                @endif
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $detail_baptis->komentar_baptis }}
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                <a href="#">
+                                    <button
+                                        class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

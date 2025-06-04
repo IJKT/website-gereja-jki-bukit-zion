@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,14 +14,8 @@ class ProfilController extends Controller
             'Profil.profile',
             [
                 'title' => "Halaman Profil",
-                'nama_lengkap' => 'John Doe',
-                'email' => 'johndoe@gmail.com',
-                'nik' => '1234567890',
-                'tempat_lahir' => 'Surabaya',
-                'tanggal_lahir' => '01-01-2025',
-                'alamat' => 'Jl. Lorem Ipsum no. 1',
-                'jenis_kelamin' => 'P',
-                'nomor_hp' => '081234567890'
+                // TODO: ini kalo kayak auth user
+                'user' => User::where('username', 'ishakjoseph')->first(),
             ]
         );
     }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('id_jemaat', 10);
             $table->foreign('id_jemaat', 'pengajuan_jemaat_jemaat_id')->references('id_jemaat')->on('jemaat');
             $table->string('jenis_pengajuan', 10);
+            $table->date('tanggal_pengajuan');
             $table->integer('verifikasi_pengajuan')->default(0);
         });
     }

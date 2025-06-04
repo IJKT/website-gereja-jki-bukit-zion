@@ -15,11 +15,17 @@ use App\Http\Controllers\PelayanController;
 use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\LaguPujianController;
 use App\Http\Controllers\PembukuanController;
+use App\Http\Controllers\PengajuanJemaatController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RangkumanFirmanController;
 use App\Models\detail_lagu_pujian;
 use App\Models\Pembukuan;
+use App\Models\PengajuanJemaat;
 use App\Models\Riwayat;
+
+
+// Route::middleware( 'auth')
+//     ->group(function () {
 
 Route::prefix('profil')
     ->name('Profil')
@@ -29,36 +35,30 @@ Route::prefix('profil')
             // Route::put('update/{pelayan}', [PelayanController::class, 'update'])->name('.update');
         }
     );
-// Route::get('profil', function () {
+
+Route::prefix('pengajuan')
+    ->name('PengajuanJemaat')
+    ->group(
+        function () {
+            Route::get('/baptis', [PengajuanJemaatController::class, 'baptis'])->name('.baptis');
+            Route::get('/pernikahan', [PengajuanJemaatController::class, 'pernikahan'])->name('.pernikahan');
+            // Route::put('update/{pelayan}', [PelayanController::class, 'update'])->name('.update');
+        }
+    );
+
+// Route::get('/pengajuan/baptis', function () {
 //     return view(
-//         'profile',
-//         [
-//             'title' => "Halaman Profil",
-//             'nama_lengkap' => 'John Doe',
-//             'email' => 'johndoe@gmail.com',
-//             'nik' => '1234567890',
-//             'tempat_lahir' => 'Surabaya',
-//             'tanggal_lahir' => '01-01-2025',
-//             'alamat' => 'Jl. Lorem Ipsum no. 1',
-//             'jenis_kelamin' => 'P',
-//             'nomor_hp' => '081234567890'
-//         ]
+//         'submission_baptis',
+//         ['title' => "Pengajuan Baptis"]
 //     );
 // });
 
-Route::get('/pengajuan/baptis', function () {
-    return view(
-        'submission_baptis',
-        ['title' => "Pengajuan Baptis"]
-    );
-});
-
-Route::get('/pengajuan/pernikahan', function () {
-    return view(
-        'submission_marriage',
-        ['title' => "Pengajuan Pernikahan"]
-    );
-});
+// Route::get('/pengajuan/pernikahan', function () {
+//     return view(
+//         'submission_marriage',
+//         ['title' => "Pengajuan Pernikahan"]
+//     );
+// });
 
 
 Route::prefix('manajemen/pelayan')
@@ -192,6 +192,7 @@ Route::prefix('lagu')
             Route::put('add', [LaguPujianController::class, 'add'])->name('.add');
         }
     );
+// });
 
 Route::prefix('/')
     ->name('Home')

@@ -80,17 +80,10 @@ class HomeController extends Controller
     }
     public function login_authenticate(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        $data = $request->only('username', 'password');
 
-        // Optional: validate input
-        $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($data)) {
             $request->session()->regenerate();
-
             return redirect()->route('Profil.profil');
         } else {
             return redirect()->back()->with('gagal', 'Username atau password anda salah');

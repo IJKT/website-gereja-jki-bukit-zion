@@ -17,21 +17,24 @@ class PengajuanSeeder extends Seeder
             ['id_pengajuan' => 'PJ010125A1'],
             [
                 'id_jemaat' => 'JM180903A1',
-                'jenis_pengajuan' => 'Baptis'
+                'jenis_pengajuan' => 'Baptis',
+                'tanggal_pengajuan' => now(),
             ]
         );
         PengajuanJemaat::updateOrCreate(
             ['id_pengajuan' => 'PJ010125A2'],
             [
                 'id_jemaat' => 'JM180903A1',
-                'jenis_pengajuan' => 'Pernikahan'
+                'jenis_pengajuan' => 'Pernikahan',
+                'tanggal_pengajuan' => now(),
             ]
         );
         PengajuanJemaat::updateOrCreate(
             ['id_pengajuan' => 'PJ010125A3'],
             [
                 'id_jemaat' => 'JM010125A2',
-                'jenis_pengajuan' => 'Registrasi'
+                'jenis_pengajuan' => 'Registrasi',
+                'tanggal_pengajuan' => now(),
             ]
         );
     }

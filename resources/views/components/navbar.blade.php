@@ -33,7 +33,7 @@
 
             <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->
             <a href="{{ route('Home.Akun.login') }}" class="hover:text-blue-400" target="_blank">LOGIN</a>
-            <a href="/profil" class="hover:text-blue-400" target="_blank">ACCOUNT</a>
+            {{-- <a href="/profil" class="hover:text-blue-400" target="_blank">ACCOUNT</a> --}}
 
             <!-- Social Media Icons -->
             <div class="flex items-center space-x-3">
