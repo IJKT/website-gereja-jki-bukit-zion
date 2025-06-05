@@ -23,12 +23,13 @@
                 <img src="pics/logo_pic.png" class="w-[70px] h-[70px] mx-auto">
                 <h1 class="text-3xl font-extrabold text-center mb-5">MASUK KE AKUN</h1>
             </div>
-            <form action="{{ route('Home.Akun.login_authenticate') }}" method="post" class="flex flex-col gap-4 mt-8">
+            <form action="{{ route('login_authenticate') }}" method="post" class="flex flex-col gap-4 mt-8">
                 @csrf
                 <div>
                     <label for="username" class="font-semibold">Username</label>
-                    <input type="username" name="username" id="username" placeholder="Masukkan Username Anda"
-                        class="w-full mt-2 p-2 rounded-md border-2 border-[#ffffff]  bg-[#ffffff]  focus:border-[#215773]"
+                    <input type="text" name="username" id="username" placeholder="Masukkan Username Anda"
+                        value="{{ old('username') }}"
+                        class="w-full mt-2 p-2 rounded-md border-2 border-[#ffffff] bg-[#ffffff] focus:border-[#215773]"
                         autocomplete="off" required oninvalid="this.setCustomValidity('Username is required')"
                         oninput="this.setCustomValidity('')">
                 </div>
@@ -43,6 +44,7 @@
                     <p class="text-center text-md">{{ session('gagal') }}</p>
                 @endif
                 <div class="flex justify-between mt-4">
+                    <!--TODO: LUPA PASSWORD-->
                     {{-- <a href="/" class="text-sm font-bold underline hover:text-[#215773]">Lupa Password?</a> --}}
                     <a href="/register" class="text-sm font-bold underline hover:text-[#215773]">Belum punya akun?
                         Daftarkan dulu</a>

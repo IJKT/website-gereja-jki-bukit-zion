@@ -32,8 +32,11 @@
             <a href="/" class="hover:text-blue-400">CONTACT</a>
 
             <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->
-            <a href="{{ route('Home.Akun.login') }}" class="hover:text-blue-400" target="_blank">LOGIN</a>
-            {{-- <a href="/profil" class="hover:text-blue-400" target="_blank">ACCOUNT</a> --}}
+            @auth
+                <a href="{{ route('Profil.profil') }}" class="hover:text-blue-400">ACCOUNT</a>
+            @else
+                <a href="{{ route('login') }}" class="hover:text-blue-400" target="_blank">LOGIN</a>
+            @endauth
 
             <!-- Social Media Icons -->
             <div class="flex items-center space-x-3">
@@ -85,11 +88,13 @@
                         </div>
                         <div class="py-6">
                             <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->
-                            <a href="{{ route('Home.Akun.login') }}"
-                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">LOGIN</a>
-                            <a href="/profil"
-                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">LOGIN</a>
-
+                            @auth
+                                <a href="{{ route('Profil.profil') }}"
+                                    class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">ACCOUNT</a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">LOGIN</a>
+                            @endauth
                         </div>
 
                         <!-- Social Media Icons -->

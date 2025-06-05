@@ -36,6 +36,13 @@
                             disabled>
                     </div>
                     <div>
+                        <label class="block font-semibold mb-1">WILAYAH KOMSEL</label>
+                        <input type="text" name="komsel"
+                            value="{{ $pengajuan_jemaat->jemaat->wilayah_komsel_jemaat }}"
+                            placeholder="Belum tergabung pada sebuah komsel" autocomplete="off"
+                            class="w-full p-2 rounded bg-gray-100" disabled>
+                    </div>
+                    <div>
                         <label class="block font-semibold mb-1">ALAMAT</label>
                         <input type="text" name="alamat_jemaat"
                             value="{{ $pengajuan_jemaat->jemaat->alamat_jemaat }}"
@@ -64,7 +71,7 @@
                             value="@if ($pengajuan_jemaat->jemaat->jk_jemaat == 'P') Pria @else Wanita @endif"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
-                    w<!-- TODO: tambahin field buat pekerjaan dan wilayah komsel -->
+                    <!-- TODO: tambahin field buat pekerjaan dan wilayah komsel -->
                 </div>
             </div>
             <input type="hidden" name="catatan_pengajuan" id="catatan_pengajuan">

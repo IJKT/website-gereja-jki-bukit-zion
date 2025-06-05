@@ -9,6 +9,7 @@
     @vite('resources/css/app.css')
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body style="font-family: 'Kantumruy Pro', sans-serif;">
@@ -24,23 +25,10 @@
                 <h1 class="text-3xl font-extrabold text-center mb-5">DAFTAR AKUN</h1>
             </div>
             <form x-data="{
-                username: '',
-                usernameError: false,
                 password: '',
                 konfirmasi_password: '',
-                async cekUsername() {
-                    const res = await fetch('{{ route('Home.cek.username') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ username: this.username })
-                    });
-                    const data = await res.json();
-                    this.usernameError = data.exists;
-                },
-                async handleSubmit(e) {
+                username: '',
+                handleSubmit(e) {
                     if (this.password !== this.konfirmasi_password) {
                         Swal.fire({
                             icon: 'error',
@@ -49,19 +37,12 @@
                         });
                         return;
                     }
-                    if (this.usernameError) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Username sudah digunakan!'
-                        });
-                        return;
-                    }
             
+                    // Jika valid, submit form secara normal
                     Swal.fire({
                         icon: 'success',
                         title: 'Sukses!',
-                        text: 'Akun berhasil terregistrasi',
+                        text: 'Akun berhasil terdaftar',
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
@@ -69,7 +50,7 @@
                     });
                 }
             }" @submit.prevent="handleSubmit($event)"
-                action="{{ route('Home.Akun.register_authenticate') }}" method="post" class="flex flex-col gap-4 mt-8">
+                action="{{ route('Home.Akun.register_authenticate') }}" method="POST" class="flex flex-col gap-4 mt-8">
                 @csrf
                 <div class="flex justify-between gap-4">
                     {{-- left side --}}
@@ -138,15 +119,14 @@
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
                             autocomplete="off" oninvalid="this.setCustomValidity('Alamat belum diisi')"
                             oninput="this.setCustomValidity('')">
-                        {{-- onchange="if(!this.value) {window.open('www.google.com/maps', '_blank');}"> --}}
-
                         <label for="telepon" class="font-semibold mb-1">Telepon</label>
-                        <input type="tel" name="telepon" id="telepon"
+                        <input type="text" name="telepon" id="telepon"
                             placeholder="Masukkan nomor telepon anda"
                             class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                            autocomplete="off" pattern="[0-9]+" minlength="8"
+                            autocomplete="off" minlength="8"
                             oninvalid="this.setCustomValidity('Nomor telepon hanya boleh angka dan tidak boleh kosong')"
-                            oninput="this.setCustomValidity('')">
+                            oninput="this.setCustomValidity('')" pattern="\d*" inputmode="numeric"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
 
                         <div class="mb-4" x-data="{ gender: '' }">
                             <label class="font-semibold block mb-4">Jenis Kelamin</label>
@@ -171,9 +151,6 @@
                         class="w-1/5 p-2 rounded-md bg-[#215773] hover:bg-[#2f4957] mt-5 text-white font-bold">REGISTER</button>
                 </div>
             </form>
-            {{-- <button type="submit"
-                class="w-1/5 p-2 rounded-md bg-[#215773] hover:bg-[#2f4957] mt-5 text-white font-bold"
-                onclick="window.location.href='{{ route('Home.Akun.login') }}'">REGISTER</button> --}}
         </div>
     </div>
 </body>

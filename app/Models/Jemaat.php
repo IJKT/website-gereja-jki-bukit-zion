@@ -28,7 +28,8 @@ class Jemaat extends Model
         'email_jemaat',
         'alamat_jemaat',
         'hak_akses_jemaat',
-        'status_jemaat'
+        'status_jemaat',
+        'wilayah_komsel_jemaat'
     ];
 
     public static function generateNextId()

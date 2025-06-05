@@ -26,7 +26,8 @@
                                 class="w-full h-40 object-cover rounded-md mb-4 p-1 bg-white">
                         @endif
                         <h2 class="mb-2 text-lg font-bold tracking-tight text-gray-900 hover:underline"><a
-                                href="#">{{ $_rangkuman->judul_rangkuman }}</a></h2>
+                                href="{{ route('Home.single_post', $_rangkuman->slug_rangkuman) }}">{{ $_rangkuman->judul_rangkuman }}</a>
+                        </h2>
                         <p>
                             {!! \Illuminate\Support\Str::limit($_rangkuman->isi_rangkuman, 100, $end = '...') !!}
                         </p>

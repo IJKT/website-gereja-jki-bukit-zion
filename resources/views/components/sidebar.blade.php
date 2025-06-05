@@ -6,98 +6,113 @@
             {{ request()->is('profil') ? 'bg-[#215773]' : '' }}">
                 Profil</li>
         </a>
-
         {{-- pengajuan --}}
-        <li class="font-bold text-md rounded-md px-2 py-1 -mb-0.5 relative hover:bg-[#5d5d5d]
+        @if (Auth::user()->verifikasi_user == 1)
+            <li class="font-bold text-md rounded-md px-2 py-1 -mb-0.5 relative hover:bg-[#5d5d5d]
         {{ request()->is('pengajuan/*') ? 'bg-[#215773]' : '' }}"
-            @mouseenter="openSub1 = true" @mouseleave="openSub1 = false">
-            Pengajuan
-            <span class="text right float-right">
-                <svg class="h-4 w-4 mt-1" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
-                </svg>
-            </span>
-            <ul class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub1"
-                :class="{ 'block': openSub1, 'hidden': !openSub1 }">
-                <a href="/pengajuan/baptis">
-                    <li
-                        class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
+                @mouseenter="openSub1 = true" @mouseleave="openSub1 = false">
+                Pengajuan
+
+                <span class="text right float-right">
+                    <svg class="h-4 w-4 mt-1" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
+                    </svg>
+                </span>
+                <ul class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub1"
+                    :class="{ 'block': openSub1, 'hidden': !openSub1 }">
+                    <a href="/pengajuan/baptis">
+                        <li
+                            class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
                     {{ request()->is('pengajuan/baptis') ? 'bg-[#215773]' : '' }}">
-                        Baptis
-                    </li>
-                </a>
-                <a href="/pengajuan/pernikahan">
-                    <li
-                        class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
+                            Baptis
+                        </li>
+                    </a>
+                    <a href="/pengajuan/pernikahan">
+                        <li
+                            class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
                     {{ request()->is('pengajuan/pernikahan') ? 'bg-[#215773]' : '' }}">
-                        Pernikahan
-                    </li>
-                </a>
-            </ul>
-        </li>
-
-        {{-- manajemen --}}
-        <li class="font-bold text-md rounded-md px-2 py-1 -mb-0.5 relative hover:bg-[#5d5d5d]
-        {{ request()->is('manajemen/*') ? 'bg-[#215773]' : '' }}"
-            @mouseenter="openSub2 = true" @mouseleave="openSub2 = false">
-            Manajemen
-            <span class="text right float-right">
-                <svg class="h-4 w-4 mt-1" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
-                </svg>
-            </span>
-            <ul class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub2"
-                :class="{ 'block': openSub2, 'hidden': !openSub2 }">
-                <a href="/manajemen/pelayan">
-                    <li
-                        class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
+                            Pernikahan
+                        </li>
+                    </a>
+                </ul>
+            </li>
+        @endif
+        @if (Auth::user()->jemaat->hak_akses_jemaat == 'Pelayan')
+            {{-- manajemen --}}
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Koordinator' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
+                <li class="font-bold text-md rounded-md px-2 py-1 -mb-0.5 relative hover:bg-[#5d5d5d] {{ request()->is('manajemen/*') ? 'bg-[#215773]' : '' }}"
+                    @mouseenter="openSub2 = true" @mouseleave="openSub2 = false"> Manajemen
+                    <span class="text right float-right">
+                        <svg class="h-4 w-4 mt-1" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
+                        </svg>
+                    </span>
+                    <ul class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub2"
+                        :class="{ 'block': openSub2, 'hidden': !openSub2 }">
+                        <a href="/manajemen/pelayan">
+                            <li
+                                class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
                     {{ request()->is('manajemen/pelayan', 'manajemen/pelayan/*') ? 'bg-[#215773]' : '' }}">
-                        Pelayan
-                    </li>
-                </a>
-                <a href="/manajemen/jemaat">
-                    <li
-                        class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
+                                Pelayan
+                            </li>
+                        </a>
+                        <a href="/manajemen/jemaat">
+                            <li
+                                class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
                     {{ request()->is('manajemen/jemaat', 'manajemen/jemaat/*', 'manajemen/pengajuan', 'manajemen/pengajuan/*') ? 'bg-[#215773]' : '' }}">
-                        Jemaat
-                    </li>
-                </a>
-                <a href="/manajemen/riwayat">
-                    <li
-                        class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
+                                Jemaat
+                            </li>
+                        </a>
+                        <a href="/manajemen/riwayat">
+                            <li
+                                class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
                     {{ request()->is('manajemen/riwayat') ? 'bg-[#215773]' : '' }}">
-                        Riwayat
-                    </li>
+                                Riwayat
+                            </li>
+                        </a>
+                    </ul>
+                </li>
+            @endif
+
+            {{-- pembukuan --}}
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Bendahara' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
+                <a href="/pembukuan">
+                    <li
+                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is('pembukuan', 'pembukuan/*') ? 'bg-[#215773]' : '' }}">
+                        Pembukuan</li>
                 </a>
-            </ul>
-        </li>
+            @endif
 
-        <a href="/pembukuan">
-            <li
-                class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('pembukuan', 'pembukuan/*') ? 'bg-[#215773]' : '' }}">
-                Pembukuan</li>
-        </a>
+            {{-- jadwal --}}
+            <a href="/jadwal">
+                <li
+                    class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is('jadwal', 'jadwal/*') ? 'bg-[#215773]' : '' }}">
+                    Jadwal</li>
+            </a>
 
-        <a href="/jadwal">
-            <li
-                class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('jadwal', 'jadwal/*') ? 'bg-[#215773]' : '' }}">
-                Jadwal</li>
-        </a>
+            {{-- rangkuman firman --}}
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Multimedia' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
+                <a href="/sermons-articles">
+                    <li
+                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]{{ request()->is('sermons-articles', 'sermons-articles/*') ? 'bg-[#215773]' : '' }}">
+                        Sermons & Articles</li>
+                </a>
+            @endif
 
-        <a href="/sermons-articles">
-            <li
-                class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('sermons-articles', 'sermons-articles/*') ? 'bg-[#215773]' : '' }}">
-                Sermons & Articles</li>
-        </a>
-
-        <a href="/lagu">
-            <li
-                class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]
-            {{ request()->is('lagu', 'lagu/*') ? 'bg-[#215773]' : '' }}">
-                Lagu</li>
-        </a>
+            {{-- lagu --}}
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Praise & Worship' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
+                <a href="/lagu">
+                    <li
+                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]{{ request()->is('lagu', 'lagu/*') ? 'bg-[#215773]' : '' }}">
+                        Lagu</li>
+                </a>
+            @endif
+        @endif
     </ul>
 </div>

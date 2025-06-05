@@ -35,11 +35,11 @@
                                 disabled>
                         </div>
                     </div>
-                    <div>
+                    {{-- <div>
                         <label class="block font-semibold mb-1">PEKERJAAN</label>
                         <input type="text" value="{{ $pengajuan_jemaat->jemaat->pekerjaan_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" placeholder="Belum/Tidak Bekerja" disabled>
-                    </div>
+                    </div> --}}
                     <div>
                         <label class="block font-semibold mb-1">ALAMAT</label>
                         <input type="text" value="{{ $pengajuan_jemaat->jemaat->alamat_jemaat }}"

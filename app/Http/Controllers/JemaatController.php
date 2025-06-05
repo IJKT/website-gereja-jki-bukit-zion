@@ -175,15 +175,15 @@ class JemaatController extends Controller
     // ETC
     public function search(Request $request)
     {
-            $query = $request->get('q');
+        $query = $request->get('q');
 
-            // Join pelayan and jemaat tables to get id_pelayan and nama_jemaat
-            $results = DB::table('pelayan')
-                ->join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
-                ->where('jemaat.nama_jemaat', 'like', "%$query%")
-                ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat')
-                ->get();
+        // Join pelayan and jemaat tables to get id_pelayan and nama_jemaat
+        $results = DB::table('pelayan')
+            ->join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
+            ->where('jemaat.nama_jemaat', 'like', "%$query%")
+            ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat')
+            ->get();
 
-            return response()->json($results);
+        return response()->json($results);
     }
 }

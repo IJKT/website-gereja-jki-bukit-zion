@@ -9,14 +9,21 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PengajuanJemaat;
 use App\Models\rangkuman_firman;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function home(): View
     {
-        return view('Home.home', ['title' => "Halaman Home"]);
+        $user = Auth::user();
+        $id = Auth::id();
+        return view('Home.home', [
+            'title' => "Halaman Home",
+            'user' => $user,
+            'id' => $id,
+        ]);
     }
     public function about(): View
     {
@@ -70,21 +77,36 @@ class HomeController extends Controller
             'rangkuman' => $rangkuman
         ]);
     }
-    public function login(): View
+
+    public function login()
     {
+        if (Auth::check()) {
+            return redirect()->route('Profil.profil');
+        }
         return view('Home.Akun.login', ['title' => "Halaman Login"]);
     }
-    public function register(): View
+    public function logout()
     {
+        Auth::logout();
+        return redirect()->route('Home.home');
+    }
+    public function register()
+    {
+        if (Auth::check()) {
+            return redirect()->route('Profil.profil');
+        }
         return view('Home.Akun.register', ['title' => "Halaman Register"]);
     }
     public function login_authenticate(Request $request)
     {
-        $data = $request->only('username', 'password');
-
-        if (Auth::attempt($data)) {
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required'],
+        ]);
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('Profil.profil');
+
+            return redirect()->intended(route('Profil.profil'));
         } else {
             return redirect()->back()->with('gagal', 'Username atau password anda salah');
         };
@@ -120,8 +142,9 @@ class HomeController extends Controller
         $pengajuan->id_pengajuan = PengajuanJemaat::generateNextId();
         $pengajuan->id_jemaat = $id_jemaat;
         $pengajuan->jenis_pengajuan = 'Registrasi';
+        $pengajuan->tanggal_pengajuan = now();
         $pengajuan->save();
 
-        return redirect()->route('Home.Akun.login');
+        return redirect()->route('login');
     }
 }

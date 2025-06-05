@@ -1,3 +1,5 @@
+<!--TODO: ADD FORM PERNIKAHAN-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -7,13 +9,15 @@
             <div class="mb-4">
                 <label class="block font-semibold mb-1">TANGGAL PERNIKAHAN</label>
                 <input type="text" placeholder="Kirimkan Pengajuan Terlebih Dahulu"
-                    value="{{ $data_pernikahan->tgl_pernikahan }}"
+                    value="@if ($data_pernikahan != null) ({{ $data_pernikahan->tgl_pernikahan }}) @endif"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>
             <div class="mb-4">
                 <label class="block font-semibold mb-1">NAMA PASANGAN</label>
                 <input type="text" placeholder="Kirimkan Pengajuan Terlebih Dahulu"
-                    value=@if ($data_pernikahan->id_jemaat == $detail_pernikahan->id_jemaat_p) {{ $detail_pernikahan->jemaat_wanita->nama_jemaat }} @else {{ $detail_pernikahan->jemaat_pria->nama_jemaat }} @endif
+                    value="@if ($data_pernikahan != null) @if ($data_pernikahan->id_jemaat == $detail_pernikahan->id_jemaat_p) {{ $detail_pernikahan->jemaat_wanita->nama_jemaat }}
+                      @else {{ $detail_pernikahan->jemaat_pria->nama_jemaat }} @endif
+                    @endif"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>
             <div class="mb-6">
@@ -36,28 +40,31 @@
                     </thead>
                     <tbody>
                         <!-- Add dynamic rows here -->
-                        <tr class="bg-white text-sm text-center">
-                            <td class="border border-gray-300 px-4 py-2">
-                                {{ \Carbon\Carbon::parse($data_pernikahan->tanggal_pengajuan)->locale('id_ID')->isoFormat('DD MMMM Y') }}
-                            </td>
-                            <td class="border border-gray-300 px-4 py-2">
-                                @if ($data_pernikahan->verifikasi_pengajuan == 0)
-                                    <div class="font-bold text-yellow-500">TUNGGU</div>
-                                @elseif ($data_pernikahan->verifikasi_pengajuan == 1)
-                                    <div class="font-bold text-green-500">VERIF</div>
-                                @elseif ($data_pernikahan->verifikasi_pengajuan == 2)
-                                    <div class="font-bold text-red-500">TOLAK</div>
-                                @endif
-                            </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $detail_pernikahan->komentar_pernikahan }}
-                            </td>
-                            <td class="border border-gray-300 px-4 py-2">
-                                <a href="#">
-                                    <button
-                                        class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                </a>
-                            </td>
-                        </tr>
+                        @if ($data_pernikahan != null)
+                            <tr class="bg-white text-sm text-center">
+                                <td class="border border-gray-300 px-4 py-2">
+                                    {{ \Carbon\Carbon::parse($data_pernikahan->tanggal_pengajuan)->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    @if ($data_pernikahan->verifikasi_pengajuan == 0)
+                                        <div class="font-bold text-yellow-500">TUNGGU</div>
+                                    @elseif ($data_pernikahan->verifikasi_pengajuan == 1)
+                                        <div class="font-bold text-green-500">VERIF</div>
+                                    @elseif ($data_pernikahan->verifikasi_pengajuan == 2)
+                                        <div class="font-bold text-red-500">TOLAK</div>
+                                    @endif
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    {{ $detail_pernikahan->komentar_pernikahan }}
+                                </td>
+                                <td class="border border-gray-300 px-4 py-2">
+                                    <a href="#">
+                                        <button
+                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -65,9 +72,15 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                TAMBAH PENGAJUAN
-            </button>
+            @if ($data_pernikahan == null)
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    TAMBAH
+                </button>
+            @elseif ($data_pernikahan->verifikasi_pengajuan == 2)
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    UBAH
+                </button>
+            @endif
         </div>
     </div>
 </x-layout_sistem_informasi>

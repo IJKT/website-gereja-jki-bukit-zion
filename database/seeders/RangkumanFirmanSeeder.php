@@ -52,7 +52,7 @@ class RangkumanFirmanSeeder extends Seeder
                 'tgl_rangkuman' => now(),
                 'slug_rangkuman' => Str::slug($judul3),
                 'isi_rangkuman' => fake()->paragraph(),
-                'tipe_rangkuman' => 'Articles',
+                'tipe_rangkuman' => 'Devotions',
             ]
         );
     }
