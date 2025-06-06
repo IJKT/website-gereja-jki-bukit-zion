@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pelayan;
 use App\Models\Riwayat;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Models\detail_jadwal;
 use App\Models\jadwal_ibadah;
 use App\Models\detail_lagu_pujian;
-use App\Models\Pelayan;
+use Illuminate\Support\Facades\Auth;
 
 class DetailJadwalController extends Controller
 {
@@ -119,7 +120,7 @@ class DetailJadwalController extends Controller
         $detail_jadwal->peran_pelayan = $request->peran_pelayan;
         $detail_jadwal->save();
 
-        Riwayat::logChange(1, $request->id_jadwal, null);
+        Riwayat::logChange(1, $request->id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
 
         $secondLastUrl = $request->input('second_last_url', session('second_last_url', url('/')));
         // Optionally clear it from session
@@ -136,7 +137,7 @@ class DetailJadwalController extends Controller
                 'peran_pelayan' => $request->peran_pelayan
             ]);
 
-        Riwayat::logChange(2, $request->id_jadwal, null);
+        Riwayat::logChange(2, $request->id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
 
         $secondLastUrl = $request->input('second_last_url', session('second_last_url', url('/')));
         // Optionally clear it from session

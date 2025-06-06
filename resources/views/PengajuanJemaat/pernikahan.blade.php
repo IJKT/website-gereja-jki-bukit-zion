@@ -8,13 +8,13 @@
             <!-- Marriage Info -->
             <div class="mb-4">
                 <label class="block font-semibold mb-1">TANGGAL PERNIKAHAN</label>
-                <input type="text" placeholder="Kirimkan Pengajuan Terlebih Dahulu"
-                    value="@if ($data_pernikahan != null) ({{ $data_pernikahan->tgl_pernikahan }}) @endif"
+                <input type="text" placeholder="Tanggal Pernikahan Tidak Ditemukan"
+                    value="@if ($data_pernikahan != null) {{ \Carbon\Carbon::parse($detail_pernikahan->tgl_pernikahan)->isoFormat('d MMMM Y H:m') }} @endif"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>
             <div class="mb-4">
                 <label class="block font-semibold mb-1">NAMA PASANGAN</label>
-                <input type="text" placeholder="Kirimkan Pengajuan Terlebih Dahulu"
+                <input type="text" placeholder="Nama Pasangan Tidak Ditemukan"
                     value="@if ($data_pernikahan != null) @if ($data_pernikahan->id_jemaat == $detail_pernikahan->id_jemaat_p) {{ $detail_pernikahan->jemaat_wanita->nama_jemaat }}
                       @else {{ $detail_pernikahan->jemaat_pria->nama_jemaat }} @endif
                     @endif"
@@ -22,7 +22,7 @@
             </div>
             <div class="mb-6">
                 <label class="block font-semibold mb-1">NAMA PENDETA</label>
-                <input type="text" placeholder="Kirimkan Pengajuan Terlebih Dahulu"
+                <input type="text" placeholder="Nama Pendeta Tidak Ditemukan"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>
 

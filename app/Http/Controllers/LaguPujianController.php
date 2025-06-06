@@ -6,6 +6,7 @@ use App\Models\Riwayat;
 use Illuminate\View\View;
 use App\Models\lagu_pujian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LaguPujianController extends Controller
 {
@@ -53,7 +54,7 @@ class LaguPujianController extends Controller
         $lagu->link_lagu = $request->link_lagu;
         $lagu->save();
 
-        Riwayat::logChange(1, $request->id_lagu, null);
+        Riwayat::logChange(1, $request->id_lagu, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('LaguPujian.viewall');
     }
     public function update(Request $request, lagu_pujian $lagu)
@@ -65,7 +66,7 @@ class LaguPujianController extends Controller
             'link_lagu' => $request->link_lagu
         ]);
 
-        Riwayat::logChange(1, $request->id_lagu, null);
+        Riwayat::logChange(1, $request->id_lagu, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('LaguPujian.viewall');
     }
 }

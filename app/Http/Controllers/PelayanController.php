@@ -7,6 +7,7 @@ use App\Models\Pelayan;
 use App\Models\Riwayat;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PelayanController extends Controller
 {
@@ -17,7 +18,12 @@ class PelayanController extends Controller
             'Manajemen.Pelayan.viewall',
             [
                 'title' => 'Manajemen Pelayan',
-                'pelayan' => Pelayan::with('jemaat')->paginate(5)
+                'pelayan' => $pelayan = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
+                    ->orderBy('jemaat.nama_jemaat', 'asc')
+                    ->select('pelayan.*') // pilih hanya kolom dari pelayan
+                    ->with('jemaat')       // tetap eager load jemaat
+                    ->paginate(5)
+
             ]
         );
     }
@@ -52,7 +58,7 @@ class PelayanController extends Controller
             'hak_akses_pelayan' => $request->input('hak_akses_pelayan')
         ]);
 
-        Riwayat::logChange(2, $pelayan->id_pelayan, null);
+        Riwayat::logChange(2, $pelayan->id_pelayan, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Pelayan.viewall');
     }
@@ -62,14 +68,14 @@ class PelayanController extends Controller
             'status_pelayan' => $request->status_pelayan
         ]);
 
-        Riwayat::logChange(2, $pelayan->id_pelayan, null);
+        Riwayat::logChange(2, $pelayan->id_pelayan, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Pelayan.viewall');
     }
     public function add(Request $request)
     {
         $pelayan = new Pelayan();
-        $pelayan->id_pelayan = $request->id_pelayan;
+        $pelayan->id_pelayan = Pelayan::generateNextId();
         $pelayan->id_jemaat = $request->id_jemaat;
         $pelayan->hak_akses_pelayan = $request->hak_akses_pelayan;
         $pelayan->save();
@@ -81,7 +87,7 @@ class PelayanController extends Controller
             $jemaat->save();
         }
 
-        Riwayat::logChange(1, $request->id_pelayan, null);
+        Riwayat::logChange(1, $request->id_pelayan, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('Manajemen.Pelayan.viewall');
     }
 

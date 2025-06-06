@@ -57,7 +57,7 @@ class Riwayat extends Model
     {
         self::create([
             'id_log' => self::generateNextId(),
-            'id_pelayan_creator' => $id_pelayan_creator ?? 'PL180903A1', // Replace with actual pelayan ID in real use
+            'id_pelayan_creator' => $id_pelayan_creator,
             'id_tabel_ubah' => $id_tabel_ubah,
             'jenis_perubahan' => $jenis_perubahan,
             'tgl_perubahan' => date("Y-m-d H:i:s"),

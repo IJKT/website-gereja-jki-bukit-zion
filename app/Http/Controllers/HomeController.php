@@ -17,12 +17,8 @@ class HomeController extends Controller
 {
     public function home(): View
     {
-        $user = Auth::user();
-        $id = Auth::id();
         return view('Home.home', [
             'title' => "Halaman Home",
-            'user' => $user,
-            'id' => $id,
         ]);
     }
     public function about(): View

@@ -1,13 +1,36 @@
 <header class="bg-[#31333B]" x-data="{ isOpen: false }">
     <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-        {{-- logo --}}
-        <div class=" flex lg:flex-1">
+        {{-- logo kiri --}}
+        <div class="flex lg:flex-1">
             <a href="/" class="-m-1.5 p-1.5">
                 <img class="h-auto w-70" src="{{ asset('pics/logo_text.png') }}" alt="Logo">
             </a>
         </div>
 
-        {{-- burger button --}}
+        {{-- menu tengah --}}
+        <div class="hidden lg:flex lg:gap-x-10 text-white text-sm/6 font-semibold">
+            <a href="{{ route('Home.home') }}" class="hover:text-blue-400">HOME</a>
+            <a href="{{ route('Home.sermons') }}" class="hover:text-blue-400">SERMONS</a>
+            <a href="{{ route('Home.articles') }}" class="hover:text-blue-400">ARTICLE</a>
+            <a href="{{ route('Home.devotions') }}" class="hover:text-blue-400">DEVOTION</a>
+            @auth
+                <a href="{{ route('Profil.profil') }}" class="hover:text-blue-400">ACCOUNT</a>
+            @else
+                <a href="{{ route('login') }}" class="hover:text-blue-400" target="_blank">LOGIN</a>
+            @endauth
+        </div>
+
+        {{-- icon kanan --}}
+        <div class="hidden lg:flex flex-1 justify-end items-center space-x-3">
+            <a href="https://www.instagram.com/bukitzion/" target="_blank">
+                <img src="{{ asset('pics/Instagram Icon.png') }}" alt="Instagram" class="w-[18px] h-auto">
+            </a>
+            <a href="http://www.youtube.com/bukitzion" target="_blank">
+                <img src="{{ asset('pics/Youtube Icon.png') }}" alt="YouTube" class="w-[18px] h-auto">
+            </a>
+        </div>
+
+        {{-- burger untuk mobile --}}
         <div class="flex lg:hidden">
             <button type="button"
                 class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white hover:text-blue-400"
@@ -20,35 +43,8 @@
                 </svg>
             </button>
         </div>
-
-        {{-- navbar w-full --}}
-        <div class="hidden lg:flex lg:gap-x-12 text-white text-sm/6 font-semibold">
-            <a href="{{ route('Home.home') }}" class="hover:text-blue-400">HOME</a>
-            <a href="{{ route('Home.about') }}" class="hover:text-blue-400">ABOUT</a>
-            <a href="{{ route('Home.sermons') }}" class="hover:text-blue-400">SERMONS</a>
-            <a href="{{ route('Home.articles') }}" class="hover:text-blue-400">ARTICLE</a>
-            <a href="{{ route('Home.devotions') }}" class="hover:text-blue-400">DEVOTION</a>
-            <a href="/" class="hover:text-blue-400">GALLERY</a>
-            <a href="/" class="hover:text-blue-400">CONTACT</a>
-
-            <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->
-            @auth
-                <a href="{{ route('Profil.profil') }}" class="hover:text-blue-400">ACCOUNT</a>
-            @else
-                <a href="{{ route('login') }}" class="hover:text-blue-400" target="_blank">LOGIN</a>
-            @endauth
-
-            <!-- Social Media Icons -->
-            <div class="flex items-center space-x-3">
-                <a href="https://www.instagram.com/bukitzion/" target="_blank">
-                    <img src="{{ asset('pics/Instagram Icon.png') }}" alt="Instagram" class="w-[18px] h-auto">
-                </a>
-                <a href="http://www.youtube.com/bukitzion" target="_blank">
-                    <img src="{{ asset('pics/Youtube Icon.png') }}" alt="YouTube" class="w-[18px] h-auto">
-                </a>
-            </div>
-        </div>
     </nav>
+
 
     {{-- mobile view --}}
     <div class="lg:hidden" x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"
@@ -75,16 +71,16 @@
                         <div class="-mx-3 font-semibold text-white">
                             <a href="{{ route('Home.home') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">HOME</a>
-                            <a href="{{ route('Home.about') }}"
-                                class="hover:text-blue-400 block rounded-lg px-3 py-2">ABOUT</a>
+                            {{-- <a href="{{ route('Home.about') }}"
+                                class="hover:text-blue-400 block rounded-lg px-3 py-2">ABOUT</a> --}}
                             <a href="{{ route('Home.sermons') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">SERMONS</a>
                             <a href="{{ route('Home.articles') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">ARTICLE</a>
                             <a href="{{ route('Home.devotions') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">DEVOTION</a>
-                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">GALLERY</a>
-                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">CONTACT</a>
+                            {{-- <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">GALLERY</a>
+                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">CONTACT</a> --}}
                         </div>
                         <div class="py-6">
                             <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\detail_jadwal;
 use App\Models\Pelayan;
 use App\Models\Riwayat;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Models\jadwal_ibadah;
 use App\Models\lagu_pujian;
+use Illuminate\Http\Request;
+use App\Models\detail_jadwal;
+use App\Models\jadwal_ibadah;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 class JadwalIbadahController extends Controller
@@ -92,7 +93,7 @@ class JadwalIbadahController extends Controller
                 'id_pelayan' => $request->filled('id_pelayan') ? $request->id_pelayan : null,
                 'nama_pendeta_undangan' => $request->filled('id_pelayan') ? null : $request->nama_pendeta
             ]);
-        Riwayat::logChange(2, $jadwal->id_jadwal, null);
+        Riwayat::logChange(2, $jadwal->id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
 
         // Redirect back with a success message
         return redirect()->route('Jadwal.viewall');
@@ -141,7 +142,7 @@ class JadwalIbadahController extends Controller
             'nama_pendeta_undangan' => $request->filled('id_pelayan') ? null : $request->nama_pendeta
         ]);
 
-        Riwayat::logChange(1, $jadwal->id_jadwal, null);
+        Riwayat::logChange(1, $jadwal->id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('Jadwal.viewall');
     }
 

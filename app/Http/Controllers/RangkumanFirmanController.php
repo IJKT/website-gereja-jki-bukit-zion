@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\rangkuman_firman;
+use Illuminate\Support\Facades\Auth;
 
 class RangkumanFirmanController extends Controller
 {
@@ -76,7 +77,7 @@ class RangkumanFirmanController extends Controller
 
         $rangkuman->save();
 
-        Riwayat::logChange(1, $request->id_rangkuman, null);
+        Riwayat::logChange(1, $request->id_rangkuman, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('RangkumanFirman.viewall');
     }
     public function update(Request $request, rangkuman_firman $rangkuman)
@@ -116,7 +117,7 @@ class RangkumanFirmanController extends Controller
             $rangkuman->update(['gambar_rangkuman' => $path]); // Update the relative path as a string
         }
 
-        Riwayat::logChange(2, $request->id_rangkuman, null);
+        Riwayat::logChange(2, $request->id_rangkuman, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('RangkumanFirman.viewall');
     }
 }

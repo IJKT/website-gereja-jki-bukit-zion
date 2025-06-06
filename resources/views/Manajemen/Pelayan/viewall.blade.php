@@ -62,7 +62,7 @@
                                 <td class="border border-gray-300 px-4 py-2">
                                     <a href="/manajemen/pelayan/{{ $_pelayan['id_pelayan'] }}">
                                         <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">UBAH</button>
+                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
                                 </td>
                             </tr>

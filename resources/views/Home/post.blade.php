@@ -1,3 +1,5 @@
+<!--TODO: buat previous post-->
+
 <x-layout_home>
     <x-slot:title>{{ $title }}</x-slot:title>
     <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white">

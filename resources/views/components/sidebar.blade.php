@@ -87,6 +87,16 @@
                 </a>
             @endif
 
+            {{-- lagu --}}
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Praise & Worship' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
+                <a href="/lagu">
+                    <li
+                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]{{ request()->is('lagu', 'lagu/*') ? 'bg-[#215773]' : '' }}">
+                        Lagu</li>
+                </a>
+            @endif
+
             {{-- jadwal --}}
             <a href="/jadwal">
                 <li
@@ -104,15 +114,7 @@
                 </a>
             @endif
 
-            {{-- lagu --}}
-            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Praise & Worship' ||
-                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
-                <a href="/lagu">
-                    <li
-                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]{{ request()->is('lagu', 'lagu/*') ? 'bg-[#215773]' : '' }}">
-                        Lagu</li>
-                </a>
-            @endif
+
         @endif
     </ul>
 </div>

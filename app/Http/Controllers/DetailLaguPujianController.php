@@ -6,8 +6,9 @@ use App\Models\Riwayat;
 use App\Models\lagu_pujian;
 use Illuminate\Http\Request;
 use App\Models\detail_jadwal;
-use App\Models\detail_lagu_pujian;
 use App\Models\jadwal_ibadah;
+use App\Models\detail_lagu_pujian;
+use Illuminate\Support\Facades\Auth;
 
 class DetailLaguPujianController extends Controller
 {
@@ -50,7 +51,7 @@ class DetailLaguPujianController extends Controller
         $detail_lagu->urutan_lagu = $request->urutan_lagu;
         $detail_lagu->save();
 
-        Riwayat::logChange(1, $request->id_jadwal, null);
+        Riwayat::logChange(1, $request->id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
 
         $secondLastUrl = $request->input('second_last_url', session('second_last_url', url('/')));
         // Optionally clear it from session
@@ -67,7 +68,7 @@ class DetailLaguPujianController extends Controller
                 'urutan_lagu' => $request->urutan_lagu
             ]);
 
-        Riwayat::logChange(2, $request->id_jadwal, null);
+        Riwayat::logChange(2, $request->id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
 
         $secondLastUrl = $request->input('second_last_url', session('second_last_url', url('/')));
         // Optionally clear it from session

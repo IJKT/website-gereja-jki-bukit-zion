@@ -1,3 +1,5 @@
+<!--TODO: tambahkan pagination-->
+
 <x-layout_home>
     <x-slot:title>{{ $title }}</x-slot:title>
     <section class="bg-white">

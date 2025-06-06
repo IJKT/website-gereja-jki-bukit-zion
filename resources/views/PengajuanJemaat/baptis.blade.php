@@ -9,7 +9,7 @@
             <!-- Marriage Info -->
             <div class="mb-4">
                 <label class="block font-semibold mb-1">TANGGAL BAPTIS</label>
-                <input type="text" placeholder="Kirimkan Pengajuan Terlebih Dahulu"
+                <input type="text" placeholder="Tanggal Baptis Tidak Ditemukan"
                     value="@if ($data_baptis != null) {{ $detail_baptis->tgl_baptis }} @endif"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>

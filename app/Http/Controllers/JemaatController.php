@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\PengajuanJemaat;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 // TODO: bikin pekerjaan_jemaat dan wilayah komsel nanti di database
 
@@ -101,7 +102,7 @@ class JemaatController extends Controller
             'hak_akses_jemaat' => $request->input('hak_akses_jemaat')
         ]);
 
-        Riwayat::logChange(2, $jemaat->id_jemaat, null);
+        Riwayat::logChange(2, $jemaat->id_jemaat, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.viewall');
     }
@@ -111,7 +112,7 @@ class JemaatController extends Controller
             'status_jemaat' => $request->status_jemaat
         ]);
 
-        Riwayat::logChange(2, $jemaat->id_jemaat, null);
+        Riwayat::logChange(2, $jemaat->id_jemaat, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.viewall');
     }
@@ -129,7 +130,7 @@ class JemaatController extends Controller
                 'verifikasi_pengajuan' => $request->verifikasi_pengajuan
             ]);
         }
-        Riwayat::logChange(2, $baptis->id_baptis, null);
+        Riwayat::logChange(2, $baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
@@ -148,7 +149,7 @@ class JemaatController extends Controller
             ]);
         }
 
-        Riwayat::logChange(2, $pernikahan->id_pernikahan, null);
+        Riwayat::logChange(2, $pernikahan->id_pernikahan, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
@@ -167,8 +168,7 @@ class JemaatController extends Controller
             ]);
         }
 
-        Riwayat::logChange(2, $pengajuan_jemaat->id_pengajuan, null);
-        // Redirect back with a success message
+        Riwayat::logChange(2, $pengajuan_jemaat->id_pengajuan, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
 

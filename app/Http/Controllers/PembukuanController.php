@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pembukuan;
 use App\Models\Riwayat;
+use App\Models\Pembukuan;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
 class PembukuanController extends Controller
@@ -85,7 +86,7 @@ class PembukuanController extends Controller
         $pembukuan->deskripsi_pembukuan = $request->deskripsi_pembukuan;
         $pembukuan->save();
 
-        Riwayat::logChange(1, $request->id_pembukuan, null);
+        Riwayat::logChange(1, $request->id_pembukuan, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('Pembukuan.viewall');
     }
     public function update(Request $request, Pembukuan $pembukuan)
@@ -110,7 +111,7 @@ class PembukuanController extends Controller
             'verifikasi_pembukuan' => 0,
         ]);
 
-        Riwayat::logChange(2, $pembukuan->id_pembukuan, null);
+        Riwayat::logChange(2, $pembukuan->id_pembukuan, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Pembukuan.viewall');
     }
@@ -126,7 +127,7 @@ class PembukuanController extends Controller
             'verifikasi_pembukuan' => $validated['verifikasi_pembukuan']
         ]);
 
-        Riwayat::logChange(2, $pembukuan->id_pembukuan, null);
+        Riwayat::logChange(2, $pembukuan->id_pembukuan, Auth::user()->jemaat->pelayan->id_pelayan);
         // Redirect back with a success message
         return redirect()->route('Pembukuan.viewall');
     }
