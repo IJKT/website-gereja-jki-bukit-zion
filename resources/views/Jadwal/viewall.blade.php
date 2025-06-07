@@ -30,7 +30,7 @@
                                 <td class="border border-gray-300 px-4 py-2 text-left">
                                     {{ $_jadwal['jenis_ibadah'] }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_jadwal['tgl_ibadah'])->locale('id_ID')->isoFormat('DD MMMM Y HH:mm') }}
+                                    {{ \Carbon\Carbon::parse($_jadwal['tgl_ibadah'])->locale('id_ID')->isoFormat('dddd, DD MMMM Y HH:mm') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     <a href="/jadwal/{{ $_jadwal['id_jadwal'] }}">

@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('baptis', function (Blueprint $table) {
             $table->string('id_baptis', 10);
             $table->foreign('id_baptis', 'baptis_pengajuan_jemaat_id')->references('id_pengajuan')->on('pengajuan_jemaat')->onDelete('cascade');
-            $table->string('id_jemaat', 10);
-            $table->foreign('id_jemaat', 'baptis_jemaat_id')->references('id_jemaat')->on('jemaat')->onDelete('cascade');
             $table->string('id_pembaptis', 10)->nullable();
             $table->foreign('id_pembaptis', 'baptis_pembaptis_id')->references('id_pelayan')->on('pelayan')->onDelete('cascade');
             $table->string('preferensi_nama_baptis', 20)->nullable();
@@ -23,7 +21,7 @@ return new class extends Migration
             $table->foreign('id_pengajar', 'baptis_pengajar_id')->references('id_pelayan')->on('pelayan')->onDelete('cascade');
             $table->text('komentar_baptis')->nullable();
             $table->dateTime('tgl_baptis')->nullable();
-            $table->unique(['id_baptis', 'id_jemaat'], 'unique_pernikahan');
+            $table->unique(['id_baptis'], 'unique_pernikahan');
         });
     }
     /**

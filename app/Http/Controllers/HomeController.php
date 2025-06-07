@@ -74,14 +74,14 @@ class HomeController extends Controller
         ]);
     }
 
-    public function login()
+    public function Login()
     {
         if (Auth::check()) {
             return redirect()->route('Profil.profil');
         }
         return view('Home.Akun.login', ['title' => "Halaman Login"]);
     }
-    public function logout()
+    public function Logout()
     {
         Auth::logout();
         return redirect()->route('Home.home');
@@ -93,7 +93,7 @@ class HomeController extends Controller
         }
         return view('Home.Akun.register', ['title' => "Halaman Register"]);
     }
-    public function login_authenticate(Request $request)
+    public function LoginAuthenticate(Request $request)
     {
         $credentials = $request->validate([
             'username' => ['required'],

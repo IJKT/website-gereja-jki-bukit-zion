@@ -24,9 +24,9 @@ use App\Models\PengajuanJemaat;
 use App\Models\Riwayat;
 
 
-Route::get('/login', [HomeController::class, 'login'])->name('login');
-Route::post('/login/authenticate', [HomeController::class, 'login_authenticate'])->name('login_authenticate');
-Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
+Route::get('/login', [HomeController::class, 'Login'])->name('login');
+Route::post('/login/authenticate', [HomeController::class, 'LoginAuthenticate'])->name('login_authenticate');
+Route::get('/logout', [HomeController::class, 'Logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('profil')
@@ -43,8 +43,12 @@ Route::middleware(['auth'])->group(function () {
         ->name('PengajuanJemaat')
         ->group(
             function () {
-                Route::get('/baptis', [PengajuanJemaatController::class, 'baptis'])->name('.baptis');
-                Route::get('/pernikahan', [PengajuanJemaatController::class, 'pernikahan'])->name('.pernikahan');
+                Route::get('baptis', [PengajuanJemaatController::class, 'ViewBaptis'])->name('.baptis');
+                Route::get('pernikahan', [PengajuanJemaatController::class, 'ViewPernikahan'])->name('.pernikahan');
+                Route::get('baptis/tambah', [PengajuanJemaatController::class, 'TambahBaptis'])->name('.tambah_baptis');
+                Route::get('baptis/{baptis}', [PengajuanJemaatController::class, 'UbahBaptis'])->name('.ubah_baptis');
+                Route::get('pernikahan/{pernikahan}', [PengajuanJemaatController::class, 'TambahPernikahan'])->name('.tambah_pernikahan');
+                Route::get('pernikahan/{pernikahan}', [PengajuanJemaatController::class, 'pernikahan'])->name('.ubah_pernikahan');
             }
         );
 
@@ -81,16 +85,13 @@ Route::middleware(['auth'])->group(function () {
             function () {
                 //MANAJEMEN PENGAJUAN JEMAAT
                 Route::get('', [JemaatController::class, 'pengajuanViewall'])->name('.viewall');
-                // Route::get('pengajuan/tambah', [JemaatController::class, 'pengajuanTambah'])->name('.Pengajuan.tambah');
                 Route::get('baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiBaptis'])->name('.verifikasi_baptis');
                 Route::get('pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiPernikahan'])->name('.verifikasi_pernikahan');
                 Route::get('registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiRegistrasi'])->name('.verifikasi_registrasi');
-                Route::get('search', [JemaatController::class, 'search'])->name('.search');
                 Route::put('verify/baptis/{baptis}', [JemaatController::class, 'pengajuanVerifyBaptis'])->name('.verify_baptis');
                 Route::put('verify/pernikahan/{pernikahan}', [JemaatController::class, 'pengajuanVerifyPernikahan'])->name('.verify_pernikahan');
                 Route::put('verify/registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifyRegistrasi'])->name('.verify_registrasi');
-                // Route::put('pengajuan/add', [JemaatController::class, 'pengajuanAdd'])->name('.Pengajuan.add');
-                // Route::put('pengajuan/update/{jemaat}', [JemaatController::class, 'pengajuanUpdate'])->name('.Pengajuan.update');
+                Route::get('search', [JemaatController::class, 'search'])->name('.search');
             }
         );
 
@@ -103,7 +104,6 @@ Route::middleware(['auth'])->group(function () {
             ]
         );
     });
-
     Route::prefix('pembukuan')
         ->name('Pembukuan')
         ->group(

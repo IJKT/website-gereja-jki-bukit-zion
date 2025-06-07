@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PengajuanJemaatController extends Controller
 {
-    public function baptis(): View
+    public function ViewBaptis(): View
     {
         // TODO: kerjain ini kalo uda bisa authorization
         $data_baptis = PengajuanJemaat::where('id_jemaat', Auth::user()->jemaat->id_jemaat)->where('jenis_pengajuan', 'Baptis')->first();
@@ -30,20 +30,7 @@ class PengajuanJemaatController extends Controller
             'detail_baptis' => Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first()
         ]);
     }
-    // public function add_baptis(): View
-    // {
-    //     // TODO: kerjain ini kalo uda bisa authorization
-    //     $data_baptis = PengajuanJemaat::where('id_jemaat', Auth::user()->jemaat->id_jemaat)->where('jenis_pengajuan', 'Baptis')->first();
-    //     return view(
-    //         'PengajuanJemaat.baptis',
-    //         [
-    //             'title' => "Pengajuan Baptis",
-    //             'data_baptis' => $data_baptis,
-    //             'detail_baptis' => Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first()
-    //         ]
-    //     );
-    // }
-    public function pernikahan(): View
+    public function ViewPernikahan(): View
     {
         // TODO: kerjain ini kalo uda bisa authorization
         $data_pernikahan = PengajuanJemaat::where('id_jemaat', Auth::user()->jemaat->id_jemaat)->where('jenis_pengajuan', 'Pernikahan')->first();
@@ -62,5 +49,13 @@ class PengajuanJemaatController extends Controller
                 'detail_pernikahan' => Pernikahan::where('id_pernikahan', $data_pernikahan->id_pengajuan)->first()
             ]
         );
+    }
+
+    public function TambahBaptis(): View
+    {
+        return view('PengajuanJemaat.tambah_baptis', [
+            'title' => "Tambah Pengajuan Baptis",
+            'id_baptis' => PengajuanJemaat::generateNextId(),
+        ]);
     }
 }

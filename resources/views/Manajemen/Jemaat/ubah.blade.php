@@ -63,13 +63,26 @@
                     <!-- TODO: tambahin input form buat pekerjaan dan wilayah komsel -->
                     <div>
                         <label class="block font-semibold mb-1">TANGGAL BAPTIS</label>
-                        <input type="text" value="{{ $jemaat->id_baptis_jemaat }}"
+                        <input type="text"
+                            value="@if ($baptis != null) @if ($baptis->verifikasi_pengajuan == 1) {{ $baptis->baptis->tgl_baptisa }} @else Data Baptis Belum Diverifikasi @endif @endif"
                             class="w-full p-2 rounded bg-gray-100" placeholder="Data Baptis Belum Ditemukan" disabled>
                     </div>
                     <div>
+                        @isset($pernikahan)
+                            @php
+                                $data_pernikahan = $pernikahan->pernikahan->first();
+                            @endphp
+                        @endisset
                         <label class="block font-semibold mb-1">NAMA PASANGAN</label>
-                        <input type="text" value="{{ $jemaat->id_pasangan_jemaat }}"
+                        <input type="text"
+                            value="@isset($pernikahan) @if ($pernikahan->verifikasi_pengajuan) {{ $jemaat->jk_jemaat == 'P' ? $data_pernikahan->jemaat_wanita->nama_jemaat : $data_pernikahan->jemaat_pria->nama_jemaat }} @else Data Pernikahan Belum Diverifikasi @endif @endisset"
                             class="w-full p-2 rounded bg-gray-100" placeholder="Data Pernikahan Belum Ditemukan"
+                            disabled>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">WILAYAH KOMSEL</label>
+                        <input type="text" value="{{ $jemaat->wilayah_komsel_jemaat }}"
+                            class="w-full p-2 rounded bg-gray-100" placeholder="Wilayah Komsel Belum Ditemukan"
                             disabled>
                     </div>
                 </div>
@@ -101,7 +114,8 @@
                                 <span :class="hak_akses == 'P' ? 'font-semibold' : 'font-normal'">Pria</span>
                             </label>
                             <label class="flex items-center space-x-2">
-                                <input type="radio" name="jk_jemaat" value="W" class="form-radio text-[#215773]"
+                                <input type="radio" name="jk_jemaat" value="W"
+                                    class="form-radio text-[#215773]"
                                     {{ old('jk_jemaat', $jemaat->jk_jemaat) == 'W' ? 'checked' : '' }}>
                                 <span :class="hak_akses == 'W' ? 'font-semibold' : 'font-normal'">Wanita</span>
                             </label>

@@ -26,10 +26,6 @@ return new class extends Migration
             $table->string('alamat_jemaat', 100);
             $table->string('pekerjaan_jemaat', 100)->nullable();
             $table->string('wilayah_komsel_jemaat', 100)->nullable();
-            $table->boolean('status_baptis_jemaat')->default(0);
-            $table->date('id_baptis_jemaat')->nullable();
-            $table->boolean('status_nikah_jemaat')->default(0);
-            $table->date('id_pasangan_jemaat')->nullable();
             $table->string('hak_akses_jemaat')->default('Jemaat');
             $table->boolean('status_jemaat')->default(1);
             $table->timestamps();

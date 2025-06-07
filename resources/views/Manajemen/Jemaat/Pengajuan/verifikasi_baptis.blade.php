@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-2 gap-x-10 gap-y-2">
                     <div>
                         <label class="block font-semibold mb-1">ID PENGAJUAN</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->id_baptis }}"
+                        <input type="text" value="{{ $pengajuan_jemaat->id_pengajuan }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
@@ -58,12 +58,12 @@
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">PREFERENSI NAMA BAPTIS</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->preferensi_nama_baptis }}"
+                        <input type="text" value="{{ $detail_baptis->preferensi_nama_baptis }}"
                             class="w-full p-2 rounded bg-gray-100" disabled placeholder="Tidak Ada Preferensi">
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">PENGAJAR KELAS BAPTIS</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->pengajar->jemaat->nama_jemaat }}"
+                        <input type="text" value="{{ $detail_baptis->pengajar->jemaat->nama_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                 </div>

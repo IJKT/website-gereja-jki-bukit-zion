@@ -9,7 +9,7 @@
             <div class="mb-4">
                 <label class="block font-semibold mb-1">TANGGAL PERNIKAHAN</label>
                 <input type="text" placeholder="Tanggal Pernikahan Tidak Ditemukan"
-                    value="@if ($data_pernikahan != null) {{ \Carbon\Carbon::parse($detail_pernikahan->tgl_pernikahan)->isoFormat('d MMMM Y H:m') }} @endif"
+                    value="@if ($data_pernikahan != null) {{ \Carbon\Carbon::parse($detail_pernikahan->tgl_pernikahan)->isoFormat('dddd, DD MMMM Y HH:mm') }} @endif"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>
             <div class="mb-4">

@@ -10,7 +10,7 @@
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-4">
                     <label class="font-semibold">DAFTAR PUJIAN {{ $jadwal->jenis_ibadah }} -
-                        {{ \Carbon\Carbon::parse($jadwal->tgl_ibadah)->translatedFormat('l, d M Y') }}</label>
+                        {{ \Carbon\Carbon::parse($jadwal->tgl_ibadah)->isoFormat(' dddd, DD MMMM Y HH:mm') }}</label>
                     <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
                         <!-- Replace with icon if needed -->
                         <svg class="h-5 w-5 font-bold" viewBox="0 0 15 15" fill="none"
@@ -65,6 +65,11 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
+            <a href="{{ url()->previous() }}">
+                <button class="text-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                    KEMBALI
+                </button>
+            </a>
             <a href="{{ route('Jadwal.tambah_pujian', $jadwal->id_jadwal) }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH

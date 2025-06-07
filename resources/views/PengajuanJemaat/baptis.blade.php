@@ -10,7 +10,9 @@
             <div class="mb-4">
                 <label class="block font-semibold mb-1">TANGGAL BAPTIS</label>
                 <input type="text" placeholder="Tanggal Baptis Tidak Ditemukan"
-                    value="@if ($data_baptis != null) {{ $detail_baptis->tgl_baptis }} @endif"
+                    value="@if ($data_baptis != null) @if ($data_baptis->verifikasi_pengajuan == 1) {{ \Carbon\Carbon::parse($detail_baptis->tgl_baptis)->isoFormat('dddd, DD MMMM Y HH:mm') }}
+                    @else Baptis Belum Diverifikasi @endif
+                @endif"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>
 
@@ -60,14 +62,18 @@
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
             @if ($data_baptis == null)
-                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                    TAMBAH
-                </button>
+                <a href="{{ route('PengajuanJemaat.tambah_baptis') }}">
+                    <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                        TAMBAH
+                    </button>
+                </a>
             @elseif ($data_baptis->verifikasi_pengajuan == 2)
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     UBAH
                 </button>
             @endif
+
+            <!--TODO: tambahkan buat download gambar kalau sudah dinyatakan baptisnya selesai. anggepannya kalo verifikasi pengajuannya = 3-->
         </div>
     </div>
 </x-layout_sistem_informasi>

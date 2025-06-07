@@ -74,16 +74,12 @@ class Jemaat extends Model
     {
         return $this->hasMany(PengajuanJemaat::class, 'id_jemaat', 'id_jemaat');
     }
-    public function baptis(): HasMany
+    public function pernikahan_pria(): hasOne
     {
-        return $this->hasMany(Baptis::class, 'id_jemaat', 'id_jemaat');
+        return $this->hasOne(Pernikahan::class, 'id_jemaat_p', 'id_jemaat');
     }
-    public function pernikahan_pria(): HasMany
+    public function pernikahan_wanita(): hasOne
     {
-        return $this->hasMany(Pernikahan::class, 'id_jemaat_p', 'id_jemaat');
-    }
-    public function pernikahan_wanita(): HasMany
-    {
-        return $this->hasMany(Pernikahan::class, 'id_jemaat_w', 'id_jemaat');
+        return $this->hasOne(Pernikahan::class, 'id_jemaat_w', 'id_jemaat');
     }
 }

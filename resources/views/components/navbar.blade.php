@@ -83,7 +83,6 @@
                             <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">CONTACT</a> --}}
                         </div>
                         <div class="py-6">
-                            <!--TODO: perbaiki ini, kalau misalnya, udah login, login di hide dan tampilin profil -->
                             @auth
                                 <a href="{{ route('Profil.profil') }}"
                                     class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">ACCOUNT</a>

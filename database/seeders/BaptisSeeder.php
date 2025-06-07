@@ -16,7 +16,6 @@ class BaptisSeeder extends Seeder
         Baptis::updateOrCreate(
             [
                 'id_baptis' => 'PJ010125A1',
-                'id_jemaat' => 'JM180903A1',
                 'preferensi_nama_baptis' => 'Bahasa Indonesia',
                 'id_pengajar' => 'PL010125A1',
             ]

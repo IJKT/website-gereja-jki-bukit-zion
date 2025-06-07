@@ -36,11 +36,15 @@ class JemaatController extends Controller
     }
     public function ubah(Jemaat $jemaat): View
     {
+        $baptis = PengajuanJemaat::where('id_jemaat', $jemaat->id_jemaat)->where('jenis_pengajuan', 'Baptis')->first();
+        $pernikahan = PengajuanJemaat::where('id_jemaat', $jemaat->id_jemaat)->where('jenis_pengajuan', 'Pernikahan')->first();
         return view(
             'Manajemen.Jemaat.ubah',
             [
                 'title' => 'Ubah Data Jemaat',
-                'jemaat' => $jemaat
+                'jemaat' => $jemaat,
+                'baptis' => $baptis,
+                'pernikahan' => $pernikahan
             ]
         );
     }
@@ -54,13 +58,17 @@ class JemaatController extends Controller
             ]
         );
     }
-    public function pengajuanVerifikasiBaptis(Baptis $pengajuan_jemaat): View
+    public function pengajuanVerifikasiBaptis(PengajuanJemaat $pengajuan_jemaat): View
     {
+        $data_baptis = $pengajuan_jemaat::where('id_jemaat', $pengajuan_jemaat->id_jemaat)
+            ->where('jenis_pengajuan', 'Baptis')
+            ->first();
         return view(
             'Manajemen.Jemaat.Pengajuan.verifikasi_baptis',
             [
                 'title' => 'Verifikasi Pengajuan Baptis',
-                'pengajuan_jemaat' => $pengajuan_jemaat
+                'pengajuan_jemaat' => $data_baptis,
+                'detail_baptis' => Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first(),
             ]
         );
     }
