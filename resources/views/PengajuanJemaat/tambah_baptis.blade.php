@@ -2,70 +2,47 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
     <div class="flex-1 bg-white p-10">
-        {{-- <form id="jadwalForm" action="{{ route('Jadwal.add') }}" method="POST" enctype="multipart/form-data">
+        <form id="pengajuanForm" action="{{ route('PengajuanJemaat.add_baptis') }}" method="POST">
             @csrf
-            @method('PUT') --}}
-        <div class="bg-gray-200 p-6 rounded-md">
-            <h2 class="font-bold mb-4">TAMBAH DATA BAPTIS</h2>
-            <div class="grid grid-cols-2 gap-x-10 gap-y-2">
-                <div>
-                    <label class="block font-semibold mb-1">ID PENGAJUAN</label>
-                    <input type="text" name="id_jadwal" value="{{ $id_baptis }}"
-                        class="w-full p-2 rounded bg-gray-100" readonly>
-                </div>
-                <div class="relative">
-                    <label class="block font-semibold mb-1">PENGAJAR KELAS BAPTIS</label>
-                    <input type="text" id="nama_pengajar" name="nama_pengajar" class="w-full p-2 rounded bg-white"
-                        placeholder="Tambahkan Nama Pengajar Kelas Pembaptis" autocomplete="off" required>
-                    <div id="pengajar_suggestions"
-                        class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
-                        <!-- Suggestions will appear here -->
+            @method('PUT')
+            <div class="bg-gray-200 p-6 rounded-md">
+                <h2 class="font-bold mb-4">TAMBAH DATA BAPTIS</h2>
+                <div class="grid grid-cols-2 gap-x-10 gap-y-2">
+                    <div>
+                        <label class="block font-semibold mb-1">ID PENGAJUAN</label>
+                        <input type="text" name="id_jadwal" value="{{ $id_baptis }}"
+                            class="w-full p-2 rounded bg-gray-100" readonly>
                     </div>
-                    <!-- Hidden input to store pelayan ID -->
-                    <input type="hidden" id="id_pelayan" name="id_pelayan" />
+                    <div class="relative">
+                        <label class="block font-semibold mb-1">PENGAJAR KELAS BAPTIS</label>
+                        <input type="text" id="nama_pengajar" name="nama_pengajar"
+                            class="w-full p-2 rounded bg-white" placeholder="Tambahkan Nama Pengajar Kelas Pembaptis"
+                            autocomplete="off" required>
+                        <div id="pengajar_suggestions"
+                            class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
+                            <!-- Suggestions will appear here -->
+                        </div>
+                        <!-- Hidden input to store pelayan ID -->
+                        <input type="hidden" id="id_pelayan" name="id_pelayan" required />
+                    </div>
+                    <div>
+                        <label class="block font-semibold my-1">PREFERENSI NAMA</label>
+                        <select name="preferensi_nama" class="w-full p-2 rounded bg-white">
+                            <option value="" selected>Tidak Ada Preferensi</option>
+                            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                            <option value="Bahasa Inggris">Bahasa Inggris</option>
+                            <option value="Bahasa Ibrani">Bahasa Ibrani</option>
+                            <option value="Bahasa Yunani">Bahasa Yunani</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <!--TODO: buat ini jadi dropdown aja-->
-            <div x-data="{ preferensi_nama: '' }">
-                <label class="block font-semibold my-1">JENIS IBADAH</label>
-                <div class="grid grid-cols-4 gap-x-10 gap-y-4 w-full">
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="preferensi_nama" value="Bahasa Indonesia"
-                            class="form-radio text-[#215773]" @click="preferensi_nama = 'Bahasa Indonesia'"
-                            :checked="preferensi_nama === 'Bahasa Indonesia'" required>
-                        <span :class="preferensi_nama == 'Bahasa Indonesia' ? 'font-semibold' : 'font-normal'">Bahasa
-                            Indonesia</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="preferensi_nama" value="Bahasa Inggris"
-                            class="form-radio text-[#215773]" @click="preferensi_nama = 'Bahasa Inggris'"
-                            :checked="preferensi_nama === 'Bahasa Inggris'">
-                        <span :class="preferensi_nama == 'Bahasa Inggris' ? 'font-semibold' : 'font-normal'">Bahasa
-                            Inggris</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="preferensi_nama" value="Bahasa Ibrani"
-                            class="form-radio text-[#215773]" @click="preferensi_nama = 'Bahasa Ibrani'"
-                            :checked="preferensi_nama === 'Bahasa Ibrani'">
-                        <span :class="preferensi_nama == 'Bahasa Ibrani' ? 'font-semibold' : 'font-normal'">Bahasa
-                            Ibrani</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="radio" name="preferensi_nama" value="Bahasa Yunani"
-                            class="form-radio text-[#215773]" @click="preferensi_nama = 'Bahasa Yunani'"
-                            :checked="preferensi_nama === 'Bahasa Yunani'">
-                        <span :class="preferensi_nama == 'Bahasa Yunani' ? 'font-semibold' : 'font-normal'">Bahasa
-                            Yunani</span>
-                    </label>
-                </div>
-            </div>
-        </div>
         </form>
     </div>
 
     <!-- Button -->
     <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-        <a href="/jadwal">
+        <a href="{{ route('PengajuanJemaat.baptis') }}">
             <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                 BATAL
             </button>
@@ -80,7 +57,7 @@
     @stack('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('jadwalForm');
+            const form = document.getElementById('pengajuanForm');
             const simpanBtn = document.getElementById('simpanBtn');
 
             // Autocomplete Nama Pendeta
@@ -88,7 +65,8 @@
                 inputId: 'nama_pengajar',
                 hiddenId: 'id_pelayan',
                 suggestionBoxId: 'pengajar_suggestions',
-                searchUrl: '/jadwal/search-pendeta',
+                // TODO: ubah search'nya jadi kek gini semua aja
+                searchUrl: '{{ route('PengajuanJemaat.search_pengajar') }}',
                 valueKeys: {
                     id: 'id_pelayan',
                     name: 'nama_pengajar'
@@ -158,6 +136,23 @@
             }
 
             // Cek semua isian wajib
+            // function checkRequiredFields() {
+            //     const requiredFields = form.querySelectorAll('[required]');
+            //     let allFilled = true;
+
+            //     requiredFields.forEach(field => {
+            //         if (field.type === 'file') {
+            //             if (field.files.length === 0) {
+            //                 allFilled = false;
+            //             }
+            //         } else {
+            //             if (!field.value.trim()) {
+            //                 allFilled = false;
+            //             }
+            //         }
+            //     });
+            // }
+
             function checkRequiredFields() {
                 const requiredFields = form.querySelectorAll('[required]');
                 let allFilled = true;
@@ -167,22 +162,17 @@
                         if (field.files.length === 0) {
                             allFilled = false;
                         }
-                    } else if (field.type === 'radio') {
-                        // Radio akan dicek di bawah
                     } else {
-                        if (!field.value.trim()) {
+                        // Skip checking 'preferensi_nama' even if it's empty
+                        if (!field.value.trim() && field.name !== 'preferensi_nama') {
                             allFilled = false;
                         }
                     }
                 });
 
-                const jenisIbadahChecked = form.querySelector('input[name="preferensi_nama"]:checked');
-                if (!jenisIbadahChecked) {
-                    allFilled = false;
-                }
-
                 simpanBtn.disabled = !allFilled;
             }
+
 
             // Pasang listener ke semua field wajib
             const requiredFields = form.querySelectorAll('[required]');
@@ -194,32 +184,7 @@
                 }
             });
 
-            const jenisIbadahRadios = form.querySelectorAll('input[name="preferensi_nama"]');
-            jenisIbadahRadios.forEach(radio => {
-                radio.addEventListener('change', checkRequiredFields);
-            });
-
             checkRequiredFields(); // Awal
-
-            // Update label file input
-            window.updateBacktrackLabel = function() {
-                const input = document.getElementById('backtrack');
-                const label = document.getElementById('backtrack-label');
-                const filenameSpan = document.getElementById('backtrack-filename');
-
-                if (input.files && input.files.length > 0) {
-                    label.textContent = input.files[0].name;
-                    label.classList.remove('text-gray-500');
-                    label.classList.add('text-black');
-                } else {
-                    filenameSpan.textContent = '';
-                    label.textContent = 'File Backtrack Belum Ditemukan';
-                    label.classList.remove('text-black');
-                    label.classList.add('text-gray-500');
-                }
-
-                checkRequiredFields(); // Recheck on file change
-            };
 
             // Konfirmasi sebelum simpan
             window.showAlertSave = function() {
@@ -232,7 +197,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire("Perubahan disimpan", "", "success");
-                        form.submit();
+                        // form.submit();
                     } else if (result.isDenied) {
                         Swal.fire("Perubahan tidak disimpan", "", "info");
                     }

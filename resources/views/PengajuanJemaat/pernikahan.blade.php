@@ -23,7 +23,9 @@
             <div class="mb-6">
                 <label class="block font-semibold mb-1">NAMA PENDETA</label>
                 <input type="text" placeholder="Nama Pendeta Tidak Ditemukan"
-                    class="w-full p-2 rounded bg-white border border-gray-300" disabled>
+                    class="w-full p-2 rounded bg-white border border-gray-300"
+                    value="@if ($data_pernikahan != null) {{ $detail_pernikahan->pendeta->jemaat->nama_jemaat }} @endif"
+                    disabled>
             </div>
 
             <!-- Submission Table -->
@@ -55,10 +57,11 @@
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
+                                    <!--TODO: tmbhin link ke form edit-->
                                     {{ $detail_pernikahan->komentar_pernikahan }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="#">
+                                    <a href="{{ route('PengajuanJemaat.ubah_pernikahan', $data_pernikahan) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -73,9 +76,11 @@
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
             @if ($data_pernikahan == null)
-                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                    TAMBAH
-                </button>
+                <a href="{{ route('PengajuanJemaat.tambah_pernikahan') }}">
+                    <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                        TAMBAH
+                    </button>
+                </a>
             @elseif ($data_pernikahan->verifikasi_pengajuan == 2)
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     UBAH

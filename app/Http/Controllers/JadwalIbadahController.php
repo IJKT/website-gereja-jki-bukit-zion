@@ -157,7 +157,6 @@ class JadwalIbadahController extends Controller
 
         return response()->json($results);
     }
-
     public function searchMultimedia(Request $request)
     {
         $query = $request->get('q');

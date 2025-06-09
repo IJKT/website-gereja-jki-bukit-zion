@@ -1,4 +1,5 @@
 <?php
+// TODO: bikin biar ngga bisa dibuka sama orang yang tidak memiliki authentication yang sesuai
 
 // use App\Models\Jemaat;
 // use App\Models\Pelayan;
@@ -47,12 +48,16 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('pernikahan', [PengajuanJemaatController::class, 'ViewPernikahan'])->name('.pernikahan');
                 Route::get('baptis/tambah', [PengajuanJemaatController::class, 'TambahBaptis'])->name('.tambah_baptis');
                 Route::get('baptis/{baptis}', [PengajuanJemaatController::class, 'UbahBaptis'])->name('.ubah_baptis');
-                Route::get('pernikahan/{pernikahan}', [PengajuanJemaatController::class, 'TambahPernikahan'])->name('.tambah_pernikahan');
-                Route::get('pernikahan/{pernikahan}', [PengajuanJemaatController::class, 'pernikahan'])->name('.ubah_pernikahan');
+                Route::get('search/pengajar', [PengajuanJemaatController::class, 'SearchPengajar'])->name('.search_pengajar');
+                Route::get('search/pasangan', [PengajuanJemaatController::class, 'SearchPasangan'])->name('.search_pasangan');
+                Route::get('pernikahan/tambah', [PengajuanJemaatController::class, 'TambahPernikahan'])->name('.tambah_pernikahan');
+                Route::get('pernikahan/{pernikahan}', [PengajuanJemaatController::class, 'UbahPernikahan'])->name('.ubah_pernikahan');
+                Route::put('baptis/add', [PengajuanJemaatController::class, 'AddBaptis'])->name('.add_baptis');
+                Route::put('baptis/update/{baptis}', [PengajuanJemaatController::class, 'UpdateBaptis'])->name('.update_baptis');
+                Route::put('pernikahan/add', [PengajuanJemaatController::class, 'AddPernikahan'])->name('.add_pernikahan');
+                Route::put('pernikahan/update/{pernikahan}', [PengajuanJemaatController::class, 'UpdatePernikahan'])->name('.update_pernikahan');
             }
         );
-
-
 
     Route::prefix('manajemen/pelayan')
         ->name('Manajemen.Pelayan')

@@ -5,6 +5,7 @@
     <section class="bg-white">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="grid gap-8 lg:grid-cols-4 sm:grid-cols-2">
+                {{ $rangkuman->links() }}
                 @foreach ($rangkuman as $_rangkuman)
                     <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md">
                         <div class="flex justify-between items-center mb-5 text-gray-500">
