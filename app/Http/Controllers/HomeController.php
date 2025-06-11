@@ -7,11 +7,15 @@ use App\Models\Jemaat;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\PengajuanJemaat;
 use App\Models\rangkuman_firman;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class   HomeController extends Controller
 {
@@ -74,6 +78,7 @@ class   HomeController extends Controller
         ]);
     }
 
+    // AUTHENTICATION
     public function Login()
     {
         if (Auth::check()) {
@@ -81,17 +86,17 @@ class   HomeController extends Controller
         }
         return view('Home.Akun.login', ['title' => "Halaman Login"]);
     }
-    public function Logout()
-    {
-        Auth::logout();
-        return redirect()->route('Home.home');
-    }
     public function register()
     {
         if (Auth::check()) {
             return redirect()->route('Profil.profil');
         }
         return view('Home.Akun.register', ['title' => "Halaman Register"]);
+    }
+    public function Logout()
+    {
+        Auth::logout();
+        return redirect()->route('Home.home');
     }
     public function LoginAuthenticate(Request $request)
     {
@@ -142,5 +147,75 @@ class   HomeController extends Controller
         $pengajuan->save();
 
         return redirect()->route('login');
+    }
+
+    // RESET PASSWORD
+    public function ForgotPassword()
+    {
+        if (Auth::check()) {
+            return redirect()->route('Profil.profil');
+        }
+        return view('Home.Akun.forgot_password', ['title' => "Lupa Password"]);
+    }
+    public function ForgotPasswordAuthenticate(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:jemaat,email_jemaat',
+        ]);
+
+        $token = Str::random(60);
+        $email = $request->email;
+
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $email],
+            ['token' => $token, 'created_at' => now()]
+        );
+
+        // Misalnya kamu ingin pakai Mail (bisa disesuaikan nanti)
+        $resetLink = url("/reset-password/{$token}");
+
+        // Contoh pengiriman via Laravel Mail (jika tidak pakai Mail, cukup dd link dulu)
+        Mail::raw("Klik link berikut untuk reset password Anda: $resetLink", function ($message) use ($email) {
+            $message->to($email)->subject('Reset Password');
+        });
+
+        return back()->with('status', 'Link reset password telah dikirim ke email Anda.');
+    }
+    public function ResetPassword($token)
+    {
+        if (Auth::check()) {
+            return redirect()->route('Profil.profil');
+        }
+        return view('Home.Akun.reset_password', ['title' => "Reset Password", 'token' => $token]);
+    }
+    public function ResetPasswordAuthenticate(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:jemaat,email_jemaat',
+            'password' => 'required|confirmed|min:6',
+            'token' => 'required',
+        ]);
+
+        $record = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->where('token', $request->token)
+            ->first();
+
+        if (!$record || Carbon::parse($record->created_at)->addMinutes(60)->isPast()) {
+            return back()->withErrors(['token' => 'Token tidak valid atau kadaluarsa.']);
+        }
+
+        $jemaat = Jemaat::where('email_jemaat', $request->email)->first();
+        if (!$jemaat) {
+            return back()->withErrors(['email' => 'Email tidak ditemukan.']);
+        }
+
+        $user = User::where('username', $jemaat->username)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+        return redirect()->route('login')->with('status', 'Password berhasil direset.');
     }
 }

@@ -82,4 +82,16 @@ class Jemaat extends Model
     {
         return $this->hasOne(Pernikahan::class, 'id_jemaat_w', 'id_jemaat');
     }
+
+    public function pasangan()
+    {
+        $pernikahan = $this->pernikahan_pria()->first()
+            ?? $this->pernikahan_wanita()->first();
+
+        if (!$pernikahan) return null;
+
+        return $pernikahan->id_jemaat_p === $this->id_jemaat
+            ? $pernikahan->jemaat_wanita
+            : $pernikahan->jemaat_pria;
+    }
 }

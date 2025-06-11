@@ -25,9 +25,21 @@ use App\Models\PengajuanJemaat;
 use App\Models\Riwayat;
 
 
+// Route::get('/test-mail', function () {
+//     \Illuminate\Support\Facades\Mail::raw('Ini email test dari Laravel', function ($message) {
+//         $message->to('ishakjosephk@gmail.com')
+//             ->subject('Tes Email Laravel');
+//     });
+//     return 'Email terkirim!';
+// });
+
 Route::get('/login', [HomeController::class, 'Login'])->name('login');
-Route::post('/login/authenticate', [HomeController::class, 'LoginAuthenticate'])->name('login_authenticate');
+Route::get('/forgot-password', [HomeController::class, 'ForgotPassword'])->name('forgot_password');
+Route::get('/reset-password/{token}', [HomeController::class, 'ResetPassword'])->name('reset_password');
 Route::get('/logout', [HomeController::class, 'Logout'])->name('logout');
+Route::post('/login/authenticate', [HomeController::class, 'LoginAuthenticate'])->name('login_authenticate');
+Route::post('/forgot-password', [HomeController::class, 'ForgotPasswordAuthenticate'])->name('forgot_password_auth');
+Route::post('/reset-password', [HomeController::class, 'ResetPasswordAuthenticate'])->name('reset_password_auth');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('profil')
@@ -44,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('PengajuanJemaat')
         ->group(
             function () {
+                // TODO: kerjain add dan update + hapus komen submit di masing2 blade
                 Route::get('baptis', [PengajuanJemaatController::class, 'ViewBaptis'])->name('.baptis');
                 Route::get('pernikahan', [PengajuanJemaatController::class, 'ViewPernikahan'])->name('.pernikahan');
                 Route::get('baptis/tambah', [PengajuanJemaatController::class, 'TambahBaptis'])->name('.tambah_baptis');
@@ -138,13 +151,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('search-pujian', [JadwalIbadahController::class, 'searchPujian'])->name('.search-pujian');
 
 
-                // TODO: selesaikan buat yang pujian
                 //DETAIL JADWAL
                 Route::put('pelayan/add', [DetailJadwalController::class, 'AddPelayan'])->name('.AddPelayan');
                 Route::put('pelayan/update', [DetailJadwalController::class, 'UpdatePelayan'])->name('.UpdatePelayan');
                 Route::put('lagu/add', [DetailLaguPujianController::class, 'AddLagu'])->name('.AddLagu');
                 Route::put('lagu/update', [DetailLaguPujianController::class, 'UpdateLagu'])->name('.UpdateLagu');
-
 
                 Route::get('musik/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_musik'])->name('.ubah_musik');
                 Route::get('musik/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_musik'])->name('.tambah_musik');

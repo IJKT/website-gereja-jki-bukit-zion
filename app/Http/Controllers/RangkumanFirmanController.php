@@ -46,8 +46,7 @@ class RangkumanFirmanController extends Controller
     {
         $rangkuman = new rangkuman_firman();
         $rangkuman->id_rangkuman_firman = rangkuman_firman::generateNextId();
-        //TODO ubah ini kalo udah bisa authorization
-        $rangkuman->id_pelayan_pnl = 'PL180903A1';
+        $rangkuman->id_pelayan_pnl = Auth::user()->jemaat->pelayan->id_pelayan;
         $rangkuman->nama_narasumber = $request->nama_narasumber;
         $rangkuman->judul_rangkuman = $request->judul_rangkuman;
         $rangkuman->slug_rangkuman = Str::slug($request->judul_rangkuman);
@@ -83,13 +82,12 @@ class RangkumanFirmanController extends Controller
     public function update(Request $request, rangkuman_firman $rangkuman)
     {
 
-        //TODO ubah ini kalo udah bisa authorization
         $kategori_sermons = $request->input('kategori_sermons');
         if ($request->input('tipe_rangkuman') != 'Sermons') {
             $kategori_sermons = null;
         };
         $rangkuman->update([
-            'id_pelayan_pnl' => 'PL180903A1',
+            'id_pelayan_pnl' => Auth::user()->jemaat->pelayan->id_pelayan,
             'nama_narasumber' => $request->input('nama_narasumber'),
             'judul_rangkuman' => $request->input('judul_rangkuman'),
             'slug_rangkuman' => Str::slug($request->input('judul_rangkuman')),

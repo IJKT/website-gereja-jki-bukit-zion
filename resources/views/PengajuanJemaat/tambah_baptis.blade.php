@@ -135,24 +135,6 @@
                 });
             }
 
-            // Cek semua isian wajib
-            // function checkRequiredFields() {
-            //     const requiredFields = form.querySelectorAll('[required]');
-            //     let allFilled = true;
-
-            //     requiredFields.forEach(field => {
-            //         if (field.type === 'file') {
-            //             if (field.files.length === 0) {
-            //                 allFilled = false;
-            //             }
-            //         } else {
-            //             if (!field.value.trim()) {
-            //                 allFilled = false;
-            //             }
-            //         }
-            //     });
-            // }
-
             function checkRequiredFields() {
                 const requiredFields = form.querySelectorAll('[required]');
                 let allFilled = true;
@@ -197,7 +179,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire("Perubahan disimpan", "", "success");
-                        // form.submit();
+                        form.submit();
                     } else if (result.isDenied) {
                         Swal.fire("Perubahan tidak disimpan", "", "info");
                     }

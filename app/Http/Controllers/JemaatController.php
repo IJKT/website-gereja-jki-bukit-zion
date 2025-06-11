@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-// TODO: bikin pekerjaan_jemaat dan wilayah komsel nanti di database
-
 class JemaatController extends Controller
 {
     // MENAMPILKAN HALAMAN

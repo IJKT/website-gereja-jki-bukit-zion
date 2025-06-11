@@ -1,8 +1,7 @@
-<!--TODO: ADD FORM PERNIKAHAN-->
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
+
     <div class="flex-1 bg-white p-10">
         <div class="bg-gray-200 p-6 rounded-md">
             <!-- Marriage Info -->
@@ -15,16 +14,15 @@
             <div class="mb-4">
                 <label class="block font-semibold mb-1">NAMA PASANGAN</label>
                 <input type="text" placeholder="Nama Pasangan Tidak Ditemukan"
-                    value="@if ($data_pernikahan != null) @if ($data_pernikahan->id_jemaat == $detail_pernikahan->id_jemaat_p) {{ $detail_pernikahan->jemaat_wanita->nama_jemaat }}
-                      @else {{ $detail_pernikahan->jemaat_pria->nama_jemaat }} @endif
-                    @endif"
+                    value="{{ $pasangan?->nama_jemaat ?? '' }}"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
             </div>
             <div class="mb-6">
                 <label class="block font-semibold mb-1">NAMA PENDETA</label>
-                <input type="text" placeholder="Nama Pendeta Tidak Ditemukan"
-                    class="w-full p-2 rounded bg-white border border-gray-300"
-                    value="@if ($data_pernikahan != null) {{ $detail_pernikahan->pendeta->jemaat->nama_jemaat }} @endif"
+                <input type="text" class="w-full p-2 rounded bg-white border border-gray-300"
+                    value="@if ($data_pernikahan == null) Belum Mengajukan Pernikahan
+                    @elseif($detail_pernikahan->id_pendeta == null) Nama Pendeta Tidak Ditemukan
+                    @else {{ $detail_pernikahan->pendeta->jemaat->nama_jemaat }} @endif"
                     disabled>
             </div>
 
@@ -57,7 +55,6 @@
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <!--TODO: tmbhin link ke form edit-->
                                     {{ $detail_pernikahan->komentar_pernikahan }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">

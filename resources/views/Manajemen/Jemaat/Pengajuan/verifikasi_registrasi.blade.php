@@ -71,7 +71,6 @@
                             value="@if ($pengajuan_jemaat->jemaat->jk_jemaat == 'P') Pria @else Wanita @endif"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
-                    <!-- TODO: tambahin field buat pekerjaan dan wilayah komsel -->
                 </div>
             </div>
             <input type="hidden" name="catatan_pengajuan" id="catatan_pengajuan">

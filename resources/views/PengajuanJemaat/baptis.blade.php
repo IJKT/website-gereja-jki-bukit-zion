@@ -1,5 +1,3 @@
-<!--TODO: ADD FORM BAPTIS-->
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -47,7 +45,6 @@
                                 <td class="border border-gray-300 px-4 py-2">{{ $detail_baptis->komentar_baptis }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <!--TODO: tmbhin link ke form edit-->
                                     <a href="{{ route('PengajuanJemaat.ubah_baptis', $data_baptis) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>

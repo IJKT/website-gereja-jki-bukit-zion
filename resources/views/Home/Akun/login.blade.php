@@ -45,8 +45,11 @@
                 @endif
                 <div class="flex justify-between mt-4">
                     <!--TODO: LUPA PASSWORD-->
-                    {{-- <a href="/" class="text-sm font-bold underline hover:text-[#215773]">Lupa Password?</a> --}}
-                    <a href="/register" class="text-sm font-bold underline hover:text-[#215773]">Belum punya akun?
+                    <a href="{{ route('forgot_password') }}"
+                        class="text-sm font-bold underline hover:text-[#215773]">Lupa
+                        Password?</a>
+                    <a href="{{ route('Home.Akun.register') }}"
+                        class="text-sm font-bold underline hover:text-[#215773]">Belum punya akun?
                         Daftarkan dulu</a>
                 </div>
                 <div class="flex items-center justify-center">

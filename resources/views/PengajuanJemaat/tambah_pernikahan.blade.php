@@ -43,7 +43,7 @@
 
     <!-- Button -->
     <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-        <a href="{{ route('PengajuanJemaat.baptis') }}">
+        <a href="{{ route('PengajuanJemaat.pernikahan') }}">
             <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                 BATAL
             </button>
@@ -180,7 +180,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire("Perubahan disimpan", "", "success");
-                        // form.submit();
+                        form.submit();
                     } else if (result.isDenied) {
                         Swal.fire("Perubahan tidak disimpan", "", "info");
                     }
