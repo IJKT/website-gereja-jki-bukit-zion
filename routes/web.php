@@ -121,7 +121,7 @@ Route::middleware(['auth'])->group(function () {
                 'riwayat' => Riwayat::with('pelayan.jemaat')->latest('tgl_perubahan')->paginate(5)
             ]
         );
-    });
+    })->name('Manajemen.Riwayat');
     Route::prefix('pembukuan')
         ->name('Pembukuan')
         ->group(
@@ -142,6 +142,7 @@ Route::middleware(['auth'])->group(function () {
             function () {
                 Route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
                 Route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
+                Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
                 Route::get('search-pendeta', [JadwalIbadahController::class, 'searchPendeta'])->name('.search-pendeta');
                 Route::put('update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
                 Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
@@ -168,8 +169,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('pujian/ubah/{detail_lagu}/{lagu}', [DetailLaguPujianController::class, 'ubah_pujian'])->name('.ubah_pujian');
                 Route::get('pujian/tambah/{jadwal}', [DetailLaguPujianController::class, 'tambah_pujian'])->name('.tambah_pujian');
                 Route::get('pujian/{jadwal}', [DetailJadwalController::class, 'viewall_pujian'])->name('.viewall_pujian');
-
-                Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
             }
         );
 

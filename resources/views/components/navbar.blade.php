@@ -2,7 +2,7 @@
     <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         {{-- logo kiri --}}
         <div class="flex lg:flex-1">
-            <a href="/" class="-m-1.5 p-1.5">
+            <a href="{{ route('Home.home') }}" class="-m-1.5 p-1.5">
                 <img class="h-auto w-70" src="{{ asset('pics/logo_text.png') }}" alt="Logo">
             </a>
         </div>
@@ -53,7 +53,7 @@
         <div
             class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-[#31333B] px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-                <a href="/" class="-m-1.5 p-1.5">
+                <a href="{{ route('Home.home') }}" class="-m-1.5 p-1.5">
                     <img class="h-15 w-auto" src="{{ asset('pics/logo_pic.png') }}" alt="Logo">
                 </a>
                 <button type="button" class="-m-2.5 rounded-md p-2.5 text-white hover:text-blue-400"
@@ -71,16 +71,12 @@
                         <div class="-mx-3 font-semibold text-white">
                             <a href="{{ route('Home.home') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">HOME</a>
-                            {{-- <a href="{{ route('Home.about') }}"
-                                class="hover:text-blue-400 block rounded-lg px-3 py-2">ABOUT</a> --}}
                             <a href="{{ route('Home.sermons') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">SERMONS</a>
                             <a href="{{ route('Home.articles') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">ARTICLE</a>
                             <a href="{{ route('Home.devotions') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">DEVOTION</a>
-                            {{-- <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">GALLERY</a>
-                            <a href="/" class="hover:text-blue-400 block rounded-lg px-3 py-2">CONTACT</a> --}}
                         </div>
                         <div class="py-6">
                             @auth

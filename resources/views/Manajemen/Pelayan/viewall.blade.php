@@ -60,7 +60,7 @@
                                     </div>
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/manajemen/pelayan/{{ $_pelayan['id_pelayan'] }}">
+                                    <a href="{{ route('Manajemen.Pelayan.ubah', $_pelayan) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -79,7 +79,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/manajemen/pelayan/tambah">
+            <a href="{{ route('Manajemen.Pelayan.tambah') }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

@@ -76,7 +76,7 @@
                     KEMBALI
                 </button>
             </a>
-            <a href="/jadwal/musik/tambah/{{ $jadwal->id_jadwal }}">
+            <a href="{{ route('Jadwal.tambah_musik', $jadwal->id_jadwal) }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

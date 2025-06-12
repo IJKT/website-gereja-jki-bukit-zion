@@ -50,7 +50,7 @@
                         @foreach ($pembukuan as $_pembukuan)
                             <tr class="bg-white text-sm text-center">
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_pembukuan['tgl_pembukuan'])->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                                    {{ \Carbon\Carbon::parse($_pembukuan['tgl_pembukuan'])->isoFormat('dddd, DD MMMM Y') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2 text-left">
                                     {{ 'Rp. ' . number_format($_pembukuan['nominal_pembukuan'], 0, ',', '.') }}</td>
@@ -77,12 +77,12 @@
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/pembukuan/{{ $_pembukuan['id_pembukuan'] }}">
+                                    <a href="{{ route('Pembukuan.ubah', $_pembukuan) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
                                             @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
                                     </a>
-                                    <a href="/pembukuan/verifikasi/{{ $_pembukuan['id_pembukuan'] }}">
+                                    <a href="{{ route('Pembukuan.verifikasi', $_pembukuan) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
                                             @if (in_array($_pembukuan['verifikasi_pembukuan'], [1, 2])) hidden @endif">VERIF</button>

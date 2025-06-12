@@ -30,10 +30,10 @@
                                 <td class="border border-gray-300 px-4 py-2 text-left">
                                     {{ $_jadwal['jenis_ibadah'] }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_jadwal['tgl_ibadah'])->locale('id_ID')->isoFormat('dddd, DD MMMM Y HH:mm') }}
+                                    {{ \Carbon\Carbon::parse($_jadwal->tgl_ibadah)->isoFormat(' dddd, DD MMMM Y HH:mm') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/jadwal/{{ $_jadwal['id_jadwal'] }}">
+                                    <a href="{{ route('Jadwal.ubah', $_jadwal->id_jadwal) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -47,7 +47,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/jadwal/tambah">
+            <a href="{{ route('Jadwal.tambah') }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH
                 </button>

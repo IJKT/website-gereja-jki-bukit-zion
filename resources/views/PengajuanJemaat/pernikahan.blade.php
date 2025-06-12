@@ -43,7 +43,7 @@
                         @if ($data_pernikahan != null)
                             <tr class="bg-white text-sm text-center">
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($data_pernikahan->tanggal_pengajuan)->locale('id_ID')->isoFormat('DD MMMM Y') }}
+                                    {{ \Carbon\Carbon::parse($data_pernikahan->tanggal_pengajuan)->isoFormat('dddd, DD MMMM Y') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     @if ($data_pernikahan->verifikasi_pengajuan == 0)

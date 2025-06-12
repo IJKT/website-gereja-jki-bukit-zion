@@ -50,7 +50,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/pembukuan">
+            <a href="{{ route('Pembukuan.viewall') }}">
                 <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
                 </button>

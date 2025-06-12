@@ -22,7 +22,7 @@
                     <div>
                         <label class="block font-semibold mb-1">TANGGAL</label>
                         <input type="date" name="tgl_pembukuan" class="w-full p-2 rounded bg-gray-100" disabled
-                            value="{{ \Carbon\Carbon::parse($pembukuan->tgl_pembukuan)->translatedFormat('Y-m-d') }}">
+                            value="{{ \Carbon\Carbon::parse($pembukuan->tgl_pembukuan)->Format('Y-m-d') }}">
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TIPE</label>
@@ -40,7 +40,7 @@
 
             <!-- Button -->
             <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-                <a href="/pembukuan">
+                <a href="{{ route('Pembukuan.viewall') }}">
                     <button type="button"
                         class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                         BATAL

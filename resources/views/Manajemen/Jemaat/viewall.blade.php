@@ -45,7 +45,7 @@
                                         @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    <a href="/manajemen/jemaat/{{ $_jemaat['id_jemaat'] }}">
+                                    <a href="{{ route('Manajemen.Jemaat.ubah', $_jemaat) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
@@ -65,7 +65,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="/manajemen/pengajuan">
+            <a href="{{ route('Manajemen.Jemaat.Pengajuan.viewall') }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     LIHAT PENGAJUAN
                 </button>

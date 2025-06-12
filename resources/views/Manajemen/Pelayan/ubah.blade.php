@@ -96,7 +96,7 @@
                     AKTIF
                 </button>
             @endif
-            <a href="/manajemen/pelayan">
+            <a href="{{ route('Manajemen.Pelayan.viewall') }}">
                 <button class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
                 </button>
