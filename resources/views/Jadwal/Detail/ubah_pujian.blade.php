@@ -54,7 +54,7 @@
                 inputId: 'nama_lagu',
                 hiddenId: 'id_lagu',
                 suggestionBoxId: 'lagu-suggestions',
-                searchUrl: '/jadwal/search-pujian', // Adjust to your route
+                searchUrl: '{{ route('Jadwal.search-pujian') }}', // Adjust to your route
                 valueKeys: {
                     id: 'id_lagu',
                     name: 'nama_lagu'

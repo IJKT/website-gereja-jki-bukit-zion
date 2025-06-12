@@ -83,7 +83,7 @@
                 inputId: 'nama_pelayan',
                 hiddenId: 'id_pelayan',
                 suggestionBoxId: 'pelayan-suggestions',
-                searchUrl: '/jadwal/search-musik', // Adjust to your route
+                searchUrl: '{{ route('Jadwal.search-musik') }}', // Adjust to your route
                 valueKeys: {
                     id: 'id_pelayan',
                     name: 'nama_pelayan'

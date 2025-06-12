@@ -19,9 +19,9 @@ class detail_jadwal extends Model
         'peran_pelayan',
     ];
 
-    public function detail_jadwal(): BelongsTo
+    public function jadwal_ibadah(): BelongsTo
     {
-        return $this->belongsTo(detail_jadwal::class, 'id_jadwal', 'id_jadwal');
+        return $this->belongsTo(jadwal_ibadah::class, 'id_jadwal', 'id_jadwal');
     }
     public function pelayan(): BelongsTo
     {

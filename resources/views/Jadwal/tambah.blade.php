@@ -105,7 +105,7 @@
                 inputId: 'nama_pendeta',
                 hiddenId: 'id_pelayan',
                 suggestionBoxId: 'pendeta-suggestions',
-                searchUrl: '/jadwal/search-pendeta',
+                searchUrl: '{{ route('Jadwal.search-pendeta') }}',
                 valueKeys: {
                     id: 'id_pelayan',
                     name: 'nama_pendeta'

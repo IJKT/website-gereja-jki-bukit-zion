@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\detail_jadwal;
 use App\Models\jadwal_ibadah;
 use App\Models\detail_lagu_pujian;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class DetailLaguPujianController extends Controller
@@ -40,7 +41,19 @@ class DetailLaguPujianController extends Controller
             ]
         );
     }
+    public function hapus_pujian($id_jadwal, $id_lagu)
+    {
+        $deleted = DB::table('detail_lagu_pujian')
+            ->where('id_jadwal', $id_jadwal)
+            ->where('id_lagu', $id_lagu)
+            ->delete();
 
+        if ($deleted) {
+            return redirect()->back()->with('status', 'Lagu berhasil dihapus.');
+        }
+
+        return redirect()->back()->with('error', 'Data lagu tidak ditemukan.');
+    }
 
     public function AddLagu(Request $request)
     {

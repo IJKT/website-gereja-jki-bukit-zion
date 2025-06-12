@@ -60,7 +60,6 @@
                             required maxlength="20" pattern="\d*" inputmode="numeric" autocomplete="off"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,20);">
                     </div>
-                    <!-- TODO: tambahin input form buat pekerjaan dan wilayah komsel -->
                     <div>
                         <label class="block font-semibold mb-1">TANGGAL BAPTIS</label>
                         <input type="text"

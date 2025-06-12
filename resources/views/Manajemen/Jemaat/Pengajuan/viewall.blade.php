@@ -8,14 +8,14 @@
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-4">
                     <label class="font-semibold">MANAJEMEN PENGAJUAN JEMAAT</label>
-                    <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
+                    {{-- <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
                         <!-- Replace with icon if needed -->
                         <svg class="h-5 w-5 font-bold" viewBox="0 0 15 15" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 2.5H15M3 7.5H12M5 12.5H10" stroke="#ffffff" />
                         </svg>
                         <i class='bx  bx-angle'></i>
-                    </button>
+                    </button> --}}
                 </div>
                 <table class="w-full border-collapse ">
                     <thead>

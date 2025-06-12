@@ -156,7 +156,6 @@ class PengajuanJemaatController extends Controller
     }
     public function UpdatePernikahan(Request $request, Pernikahan $pernikahan)
     {
-        // TODO: kerjain ini untuk menambahkan data pernikahan yang sudah diambil dari form
         $jemaat = Auth::user()->jemaat;
         $id_pasangan = $request->id_jemaat;
 

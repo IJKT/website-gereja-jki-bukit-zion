@@ -11,7 +11,7 @@
 
                     {{-- filter button --}}
                     <!-- TODO:belum selesai bikin drop down'nya -->
-                    <x-filter-dropdown>
+                    {{-- <x-filter-dropdown>
                         <div>
                             <label for="cari" class="block text-sm font-medium text-gray-700">Cari Nama</label>
                             <input type="text" name="cari" id="cari"
@@ -31,7 +31,7 @@
                                 <option value="Pelayan Gereja">Pelayan Gereja</option>
                             </select>
                         </div>
-                    </x-filter-dropdown>
+                    </x-filter-dropdown> --}}
                 </div>
                 <table class="w-full border-collapse ">
                     <thead>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Riwayat;
 use App\Models\Pembukuan;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
@@ -62,7 +64,6 @@ class PembukuanController extends Controller
             ]
         );
     }
-
     public function tambah(): View
     {
         $id_pembukuan = Pembukuan::generateNextId();
@@ -74,6 +75,28 @@ class PembukuanController extends Controller
                 'id_pembukuan' => $id_pembukuan
             ]
         );
+    }
+    public function unduh(Request $request)
+    {
+        // Ambil awal dan akhir bulan ini
+        $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
+        $endOfMonth = Carbon::now()->endOfMonth()->toDateString();
+
+        $pembukuan = Pembukuan::whereBetween('tgl_pembukuan', [$startOfMonth, $endOfMonth])
+            ->orderBy('tgl_pembukuan')
+            ->get();
+
+        $total_pemasukan = $pembukuan->where('jenis_pembukuan', 'Uang Masuk')->sum('nominal_pembukuan');
+        $total_pengeluaran = $pembukuan->where('jenis_pembukuan', 'Uang Keluar')->sum('nominal_pembukuan');
+
+        $pdf = Pdf::loadView('exports.pembukuan_file', [
+            'pembukuan' => $pembukuan,
+            'total_pemasukan' => $total_pemasukan,
+            'total_pengeluaran' => $total_pengeluaran,
+            'total_simpanan' => $total_pemasukan - $total_pengeluaran,
+        ]);
+
+        return $pdf->download('Laporan_Pembukuan_Bulan_Ini.pdf');
     }
 
     public function add(Request $request)
@@ -131,4 +154,33 @@ class PembukuanController extends Controller
         // Redirect back with a success message
         return redirect()->route('Pembukuan.viewall');
     }
+
+    // public function preview(Request $request)
+    // {
+    //     $query = Pembukuan::query();
+
+    //     if ($request->tanggal_awal) {
+    //         $query->whereDate('tgl_pembukuan', '>=', $request->tanggal_awal);
+    //     }
+
+    //     if ($request->tanggal_akhir) {
+    //         $query->whereDate('tgl_pembukuan', '<=', $request->tanggal_akhir);
+    //     }
+
+    //     if ($request->jenis_pembukuan) {
+    //         $query->where('jenis_pembukuan', $request->jenis_pembukuan);
+    //     }
+
+    //     $pembukuan = $query->orderBy('tgl_pembukuan')->get();
+
+    //     $total_pemasukan = $pembukuan->where('jenis_pembukuan', 'Uang Masuk')->sum('nominal_pembukuan');
+    //     $total_pengeluaran = $pembukuan->where('jenis_pembukuan', 'Uang Keluar')->sum('nominal_pembukuan');
+
+    //     return view('exports.pembukuan_file', [
+    //         'pembukuan' => $pembukuan,
+    //         'total_pemasukan' => $total_pemasukan,
+    //         'total_pengeluaran' => $total_pengeluaran,
+    //         'total_simpanan' => $total_pemasukan - $total_pengeluaran,
+    //     ]);
+    // }
 }

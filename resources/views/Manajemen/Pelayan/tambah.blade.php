@@ -100,7 +100,7 @@
                 inputId: 'nama_jemaat',
                 hiddenId: 'id_jemaat',
                 suggestionBoxId: 'jemaat-suggestions',
-                searchUrl: '/manajemen/pelayan/search', // Adjust to your route
+                searchUrl: '{{ route('Manajemen.Pelayan.search') }}', // Adjust to your route
                 valueKeys: {
                     id: 'id_jemaat',
                     name: 'nama_jemaat'

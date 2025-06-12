@@ -44,7 +44,6 @@
                     <p class="text-center text-md">{{ session('gagal') }}</p>
                 @endif
                 <div class="flex justify-between mt-4">
-                    <!--TODO: LUPA PASSWORD-->
                     <a href="{{ route('forgot_password') }}"
                         class="text-sm font-bold underline hover:text-[#215773]">Lupa
                         Password?</a>

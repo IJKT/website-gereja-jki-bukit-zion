@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\detail_jadwal;
 use App\Models\jadwal_ibadah;
 use App\Models\detail_lagu_pujian;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class DetailJadwalController extends Controller
@@ -54,6 +55,20 @@ class DetailJadwalController extends Controller
             ]
         );
     }
+    public function hapus_musik($id_jadwal, $id_pelayan)
+    {
+        $deleted = DB::table('detail_jadwal')
+            ->where('id_jadwal', $id_jadwal)
+            ->where('id_pelayan', $id_pelayan)
+            ->where('peran_pelayan', '<', 8)
+            ->delete();
+
+        if ($deleted) {
+            return redirect()->back()->with('status', 'Pelayan musik berhasil dihapus.');
+        }
+
+        return redirect()->back()->with('error', 'Data pelayan tidak ditemukan.');
+    }
     public function viewall_multimedia(jadwal_ibadah $jadwal): View
     {
         $detailJadwal = detail_jadwal::where('id_jadwal', $jadwal->id_jadwal);
@@ -94,6 +109,20 @@ class DetailJadwalController extends Controller
                 'pelayan' => $data_pelayan, // single pelayan for this assignment
             ]
         );
+    }
+    public function hapus_multimedia($id_jadwal, $id_pelayan)
+    {
+        $deleted = DB::table('detail_jadwal')
+            ->where('id_jadwal', $id_jadwal)
+            ->where('id_pelayan', $id_pelayan)
+            ->where('peran_pelayan', '>=', 8)
+            ->delete();
+
+        if ($deleted) {
+            return redirect()->back()->with('status', 'Pelayan multimedia berhasil dihapus.');
+        }
+
+        return redirect()->back()->with('error', 'Data pelayan tidak ditemukan.');
     }
     public function viewall_pujian(jadwal_ibadah $jadwal): View
     {

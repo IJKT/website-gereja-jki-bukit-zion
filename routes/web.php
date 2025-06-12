@@ -25,13 +25,8 @@ use App\Models\PengajuanJemaat;
 use App\Models\Riwayat;
 
 
-// Route::get('/test-mail', function () {
-//     \Illuminate\Support\Facades\Mail::raw('Ini email test dari Laravel', function ($message) {
-//         $message->to('ishakjosephk@gmail.com')
-//             ->subject('Tes Email Laravel');
-//     });
-//     return 'Email terkirim!';
-// });
+// Route::get('/pembukuan/preview', [PembukuanController::class, 'preview'])->name('pembukuan.preview');
+
 
 Route::get('/login', [HomeController::class, 'Login'])->name('login');
 Route::get('/forgot-password', [HomeController::class, 'ForgotPassword'])->name('forgot_password');
@@ -56,7 +51,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('PengajuanJemaat')
         ->group(
             function () {
-                // TODO: kerjain add dan update + hapus komen submit di masing2 blade
                 Route::get('baptis', [PengajuanJemaatController::class, 'ViewBaptis'])->name('.baptis');
                 Route::get('pernikahan', [PengajuanJemaatController::class, 'ViewPernikahan'])->name('.pernikahan');
                 Route::get('baptis/tambah', [PengajuanJemaatController::class, 'TambahBaptis'])->name('.tambah_baptis');
@@ -128,11 +122,13 @@ Route::middleware(['auth'])->group(function () {
             function () {
                 Route::get('', [PembukuanController::class, 'viewall'])->name('.viewall');
                 Route::get('tambah', [PembukuanController::class, 'tambah'])->name('.tambah');
-                Route::get('{pembukuan}', [PembukuanController::class, 'ubah'])->name('.ubah');
-                Route::get('/verifikasi/{pembukuan}', [PembukuanController::class, 'verifikasi'])->name('.verifikasi');
+                Route::get('verifikasi/{pembukuan}', [PembukuanController::class, 'verifikasi'])->name('.verifikasi');
+                Route::get('unduh', [PembukuanController::class, 'unduh'])->name('.unduh');
                 Route::put('add', [PembukuanController::class, 'add'])->name('.add');
                 Route::put('update/{pembukuan}', [PembukuanController::class, 'update'])->name('.update');
                 Route::put('verify/{pembukuan}', [PembukuanController::class, 'verify'])->name('.verify');
+
+                Route::get('{pembukuan}', [PembukuanController::class, 'ubah'])->name('.ubah');
             }
         );
 
@@ -142,7 +138,6 @@ Route::middleware(['auth'])->group(function () {
             function () {
                 Route::get('', [JadwalIbadahController::class, 'viewall'])->name('.viewall');
                 Route::get('tambah', [JadwalIbadahController::class, 'tambah'])->name('.tambah');
-                Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
                 Route::get('search-pendeta', [JadwalIbadahController::class, 'searchPendeta'])->name('.search-pendeta');
                 Route::put('update/{jadwal}', [JadwalIbadahController::class, 'update'])->name('.update');
                 Route::put('add', [JadwalIbadahController::class, 'add'])->name('.add');
@@ -151,24 +146,28 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('search-musik', [JadwalIbadahController::class, 'searchMusik'])->name('.search-musik');
                 Route::get('search-pujian', [JadwalIbadahController::class, 'searchPujian'])->name('.search-pujian');
 
-
                 //DETAIL JADWAL
                 Route::put('pelayan/add', [DetailJadwalController::class, 'AddPelayan'])->name('.AddPelayan');
                 Route::put('pelayan/update', [DetailJadwalController::class, 'UpdatePelayan'])->name('.UpdatePelayan');
                 Route::put('lagu/add', [DetailLaguPujianController::class, 'AddLagu'])->name('.AddLagu');
                 Route::put('lagu/update', [DetailLaguPujianController::class, 'UpdateLagu'])->name('.UpdateLagu');
 
-                Route::get('musik/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_musik'])->name('.ubah_musik');
-                Route::get('musik/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_musik'])->name('.tambah_musik');
                 Route::get('musik/{jadwal}', [DetailJadwalController::class, 'viewall_musik'])->name('.viewall_musik');
+                Route::get('musik/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_musik'])->name('.tambah_musik');
+                Route::get('musik/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_musik'])->name('.ubah_musik');
+                Route::delete('musik/hapus/{id_jadwal}/{id_pelayan}', [DetailJadwalController::class, 'hapus_musik'])->name('.hapus_musik');
 
-                Route::get('multimedia/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_multimedia'])->name('.ubah_multimedia');
-                Route::get('multimedia/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_multimedia'])->name('.tambah_multimedia');
                 Route::get('multimedia/{jadwal}', [DetailJadwalController::class, 'viewall_multimedia'])->name('.viewall_multimedia');
+                Route::get('multimedia/tambah/{jadwal}', [DetailJadwalController::class, 'tambah_multimedia'])->name('.tambah_multimedia');
+                Route::get('multimedia/ubah/{detail_jadwal}/{pelayan}', [DetailJadwalController::class, 'ubah_multimedia'])->name('.ubah_multimedia');
+                Route::delete('multimedia/hapus/{id_jadwal}/{id_pelayan}', [DetailJadwalController::class, 'hapus_multimedia'])->name('.hapus_multimedia');
 
-                Route::get('pujian/ubah/{detail_lagu}/{lagu}', [DetailLaguPujianController::class, 'ubah_pujian'])->name('.ubah_pujian');
-                Route::get('pujian/tambah/{jadwal}', [DetailLaguPujianController::class, 'tambah_pujian'])->name('.tambah_pujian');
                 Route::get('pujian/{jadwal}', [DetailJadwalController::class, 'viewall_pujian'])->name('.viewall_pujian');
+                Route::get('pujian/tambah/{jadwal}', [DetailLaguPujianController::class, 'tambah_pujian'])->name('.tambah_pujian');
+                Route::get('pujian/ubah/{detail_lagu}/{lagu}', [DetailLaguPujianController::class, 'ubah_pujian'])->name('.ubah_pujian');
+                Route::delete('pujian/hapus/{id_jadwal}/{id_lagu}', [DetailLaguPujianController::class, 'hapus_pujian'])->name('.hapus_pujian');
+
+                Route::get('{jadwal}', [JadwalIbadahController::class, 'ubah'])->name('.ubah');
             }
         );
 

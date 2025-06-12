@@ -92,7 +92,7 @@
                     Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
                 <a href="{{ route('LaguPujian.viewall') }}">
                     <li
-                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]{{ request()->is('lagu', 'lagu/*') ? 'bg-[#215773]' : '' }}">
+                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is(['lagu', 'lagu/*']) ? 'bg-[#215773]' : '' }}">
                         Lagu</li>
                 </a>
             @endif
@@ -100,7 +100,8 @@
             {{-- jadwal --}}
             <a href="{{ route('Jadwal.viewall') }}">
                 <li
-                    class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is('jadwal', 'jadwal/*') ? 'bg-[#215773]' : '' }}">
+                    class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is(['jadwal', 'jadwal/*']) ? 'bg-[#215773]' : '' }}
+">
                     Jadwal</li>
             </a>
 
@@ -109,7 +110,7 @@
                     Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
                 <a href="{{ route('RangkumanFirman.viewall') }}">
                     <li
-                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d]{{ request()->is('sermons-articles', 'sermons-articles/*') ? 'bg-[#215773]' : '' }}">
+                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is(['sermons-articles', 'sermons-articles/*']) ? 'bg-[#215773]' : '' }}">
                         Sermons & Articles</li>
                 </a>
             @endif

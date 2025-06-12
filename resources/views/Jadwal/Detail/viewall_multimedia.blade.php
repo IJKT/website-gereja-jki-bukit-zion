@@ -1,5 +1,3 @@
-<!-- TODO: bikin biar bisa hapus file -->
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -11,13 +9,13 @@
                 <div class="flex justify-between items-center mb-4">
                     <label class="font-semibold">JADWAL MULTIMEDIA {{ $jadwal->jenis_ibadah }} -
                         {{ \Carbon\Carbon::parse($jadwal->tgl_ibadah)->isoFormat(' dddd, DD MMMM Y HH:mm') }}</label>
-                    <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
+                    {{-- <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
                         <!-- Replace with icon if needed -->
                         <svg class="h-5 w-5 font-bold" viewBox="0 0 15 15" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 2.5H15M3 7.5H12M5 12.5H10" stroke="#ffffff" />
                         </svg>
-                    </button>
+                    </button> --}}
                 </div>
                 <div class="mb-2">
                     <span class="font-semibold">PENDETA :</span>
@@ -58,6 +56,17 @@
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
                                     </a>
+                                    <form id="form-hapus-{{ $_pelayan_multimedia->id_pelayan }}"
+                                        action="{{ route('Jadwal.hapus_multimedia', [$jadwal->id_jadwal, $_pelayan_multimedia->id_pelayan]) }}"
+                                        method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button"
+                                            onclick="confirmDelete('{{ $_pelayan_multimedia->id_pelayan }}')"
+                                            class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">
+                                            HAPUS
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -68,7 +77,7 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="{{ url()->previous() }}">
+            <a href="{{ route('Jadwal.ubah', $jadwal->id_jadwal) }}">
                 <button class="text-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     KEMBALI
                 </button>
@@ -81,4 +90,23 @@
         </div>
     </div>
     </div>
+
+    <script>
+        function confirmDelete(idPelayan) {
+            Swal.fire({
+                title: 'Hapus Data?',
+                text: "Apakah Anda ingin menghapus data ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-hapus-' + idPelayan).submit();
+                }
+            });
+        }
+    </script>
 </x-layout_sistem_informasi>

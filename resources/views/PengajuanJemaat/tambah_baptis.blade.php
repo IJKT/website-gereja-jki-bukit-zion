@@ -65,7 +65,6 @@
                 inputId: 'nama_pengajar',
                 hiddenId: 'id_pelayan',
                 suggestionBoxId: 'pengajar_suggestions',
-                // TODO: ubah search'nya jadi kek gini semua aja
                 searchUrl: '{{ route('PengajuanJemaat.search_pengajar') }}',
                 valueKeys: {
                     id: 'id_pelayan',
