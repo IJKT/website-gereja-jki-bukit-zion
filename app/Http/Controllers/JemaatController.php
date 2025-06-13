@@ -17,18 +17,24 @@ use Illuminate\Support\Facades\Auth;
 class JemaatController extends Controller
 {
     // MENAMPILKAN HALAMAN
-    public function viewall(): View
+    public function viewall(Request $request): View
     {
+        $jemaat = Jemaat::with('user')
+            ->whereHas('user', function ($query) {
+                $query->where('verifikasi_user', '=', '1');
+            })
+            ->orderBy('nama_jemaat', 'asc');
+
+        // Filter by hak_akses if present and not empty
+        if ($request->filled('hak_akses_jemaat')) {
+            $jemaat->where('hak_akses_jemaat', $request->hak_akses_jemaat);
+        }
+
         return view(
             'Manajemen.Jemaat.viewall',
             [
                 'title' => 'Manajemen Jemaat',
-                'jemaat' => Jemaat::with('user')
-                    ->whereHas('user', function ($query) {
-                        $query->where('verifikasi_user', '=', '1');
-                    })
-                    ->orderBy('nama_jemaat', 'asc')
-                    ->paginate(5)
+                'jemaat' => $jemaat->paginate(5)->WithQueryString()
             ]
         );
     }
@@ -46,13 +52,20 @@ class JemaatController extends Controller
             ]
         );
     }
-    public function pengajuanViewall(): View
+    public function pengajuanViewall(Request $request): View
     {
+        $pengajuan_jemaat = PengajuanJemaat::with('jemaat');
+
+        // Filter by hak_akses if present and not empty
+        if ($request->filled('jenis_pengajuan')) {
+            $pengajuan_jemaat->where('jenis_pengajuan', $request->jenis_pengajuan);
+        }
+
         return view(
             'Manajemen.Jemaat.Pengajuan.viewall',
             [
                 'title' => 'Manajemen Pengajuan Jemaat',
-                'pengajuan_jemaat' => PengajuanJemaat::with('jemaat')->paginate(5)
+                'pengajuan_jemaat' => $pengajuan_jemaat->paginate(5)->withQueryString()
             ]
         );
     }

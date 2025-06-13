@@ -11,27 +11,23 @@
 
                     {{-- filter button --}}
                     <!-- TODO:belum selesai bikin drop down'nya -->
-                    {{-- <x-filter-dropdown>
-                        <div>
-                            <label for="cari" class="block text-sm font-medium text-gray-700">Cari Nama</label>
-                            <input type="text" name="cari" id="cari"
-                                class="pl-2 bg-white mt-1 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                placeholder="Masukkan Nama Pelayan">
-                        </div>
-                        <div>
-                            <label for="hak-akses" class="block text-sm font-medium text-gray-700">Hak Akses</label>
-                            <select name="status" id="status"
-                                class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                <option value="">Semua</option>
-                                <option value="Administrator">Administrator</option>
-                                <option value="Koordinator">Koordinator</option>
-                                <option value="Bendahara">Bendahara</option>
-                                <option value="Multimedia">Multimedia</option>
-                                <option value="Praise & Worship">Praise & Worship</option>
-                                <option value="Pelayan Gereja">Pelayan Gereja</option>
-                            </select>
-                        </div>
-                    </x-filter-dropdown> --}}
+                    <x-filter-dropdown>
+                        <form method="GET" action="{{ route('Manajemen.Pelayan.viewall') }}">
+                            <div class="mx-2 mt-2 mb-4">
+                                <label for="hak-akses" class="block text-sm font-medium text-gray-700">Hak
+                                    Akses</label>
+                                <select name="hak_akses" id="hak_akses"
+                                    class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="">Semua</option>
+                                    <option value="Administrator">Administrator</option>
+                                    <option value="Koordinator">Koordinator</option>
+                                    <option value="Bendahara">Bendahara</option>
+                                    <option value="Multimedia">Multimedia</option>
+                                    <option value="Praise & Worship">Praise & Worship</option>
+                                    <option value="Pelayan Gereja">Pelayan Gereja</option>
+                                </select>
+                            </div>
+                    </x-filter-dropdown>
                 </div>
                 <table class="w-full border-collapse ">
                     <thead>

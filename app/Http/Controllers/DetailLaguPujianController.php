@@ -49,6 +49,7 @@ class DetailLaguPujianController extends Controller
             ->delete();
 
         if ($deleted) {
+            Riwayat::logChange(3, $id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
             return redirect()->back()->with('status', 'Lagu berhasil dihapus.');
         }
 

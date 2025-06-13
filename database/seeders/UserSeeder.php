@@ -24,51 +24,28 @@ class UserSeeder extends Seeder
         );
 
         // TESTER
-        User::updateOrCreate(
-            ['username' => 'spousetest'],
-            [
-                'password' => bcrypt('test'),
-                // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
-                'verifikasi_user' => 1,
-            ]
-        );
-        User::updateOrCreate(
-            ['username' => 'registrationtest'],
-            [
-                'password' => bcrypt('test')
-            ]
-        );
-        User::updateOrCreate(
-            ['username' => 'pendetatest'],
-            [
-                'password' => bcrypt('pendeta'),
-                // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
-                'verifikasi_user' => 1,
-            ]
-        );
-        User::updateOrCreate(
-            ['username' => 'mulmedtest'],
-            [
-                'password' => bcrypt('multimedia'),
-                // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
-                'verifikasi_user' => 1,
-            ]
-        );
-        User::updateOrCreate(
-            ['username' => 'mulmedtest2'],
-            [
-                'password' => bcrypt('multimedia'),
-                // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
-                'verifikasi_user' => 1,
-            ]
-        );
-        User::updateOrCreate(
-            ['username' => 'pawtest'],
-            [
-                'password' => bcrypt('praiseworship'),
-                // TODO: nanti verifikasi_user'nya gak usa diisi kalau register sudah dibikin
-                'verifikasi_user' => 1,
-            ]
-        );
+        $users = [
+            'antoniussutardjo',
+            'lenawatiteguh',
+            'arumningsih',
+            'debora.sukidjo',
+            'djojosudigdo',
+            'emanuelnahak',
+            'elsyetansil',
+            'harjatitjahjani',
+            'hariwidhayani',
+            'hanshendrikpangkey',
+            'jonathanwantoro',
+            'liemindra',
+        ];
+        foreach ($users as $username) {
+            User::updateOrCreate(
+                ['username' => $username],
+                [
+                    'password' => bcrypt('password'),
+                    'verifikasi_user' => 1,
+                ]
+            );
+        }
     }
 }

@@ -12,17 +12,23 @@ use Illuminate\Support\Facades\Auth;
 class PelayanController extends Controller
 {
     // UNTUK SEMUA VIEW
-    public function viewall(): View
+    public function viewall(Request $request): View
     {
+        $pelayan = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
+            ->orderBy('jemaat.nama_jemaat', 'asc')
+            ->select('pelayan.*') // pilih hanya kolom dari pelayan
+            ->with('jemaat');       // tetap eager load jemaat
+
+        // Filter by hak_akses if present and not empty
+        if ($request->filled('hak_akses')) {
+            $pelayan->where('hak_akses_pelayan', $request->hak_akses);
+        }
+
         return view(
             'Manajemen.Pelayan.viewall',
             [
                 'title' => 'Manajemen Pelayan',
-                'pelayan' => $pelayan = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
-                    ->orderBy('jemaat.nama_jemaat', 'asc')
-                    ->select('pelayan.*') // pilih hanya kolom dari pelayan
-                    ->with('jemaat')       // tetap eager load jemaat
-                    ->paginate(5)
+                'pelayan' => $pelayan->paginate(5)->withQueryString()
 
             ]
         );

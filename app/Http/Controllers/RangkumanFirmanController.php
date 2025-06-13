@@ -11,13 +11,34 @@ use Illuminate\Support\Facades\Auth;
 
 class RangkumanFirmanController extends Controller
 {
-    public function viewall(): View
+    public function viewall(Request $request): View
     {
+        $rangkuman = rangkuman_firman::latest('tgl_rangkuman');
+
+        // Filter by date range if both tanggal_awal and tanggal_akhir are present
+        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
+            $rangkuman->whereBetween('tgl_rangkuman', [
+                $request->tanggal_awal,
+                $request->tanggal_akhir
+            ]);
+        } elseif ($request->filled('tanggal_awal')) {
+            // If only tanggal_awal is present, filter from that date onwards
+            $rangkuman->where('tgl_rangkuman', '>=', $request->tanggal_awal);
+        } elseif ($request->filled('tanggal_akhir')) {
+            // If only tanggal_akhir is present, filter up to that date
+            $rangkuman->where('tgl_rangkuman', '<=', $request->tanggal_akhir);
+        }
+
+        // Filter by tipe_rangkuman if present and not empty
+        if ($request->filled('tipe_rangkuman')) {
+            $rangkuman->where('tipe_rangkuman', $request->tipe_rangkuman);
+        }
+
         return view(
             'RangkumanFirman.viewall',
             [
                 'title' => 'Halaman Rangkuman Firman',
-                'rangkuman' => rangkuman_firman::latest('tgl_rangkuman')->paginate(5),
+                'rangkuman' => $rangkuman->paginate(5)->WithQueryString(),
             ]
         );
     }

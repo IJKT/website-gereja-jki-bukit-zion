@@ -16,8 +16,8 @@ class PernikahanSeeder extends Seeder
         Pernikahan::updateOrCreate(
             [
                 'id_pernikahan' => 'PJ010125A2',
-                'id_jemaat_p' => 'JM180903A1',
-                'id_jemaat_w' => 'JM010125A1',
+                'id_jemaat_p' => 'JM010125A1',
+                'id_jemaat_w' => 'JM010125A2',
                 'tgl_pernikahan' => now(),
                 'tempat_pernikahan' => fake()->city()
             ]

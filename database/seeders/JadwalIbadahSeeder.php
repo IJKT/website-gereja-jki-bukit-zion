@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\jadwal_ibadah;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class JadwalIbadahSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class JadwalIbadahSeeder extends Seeder
             [
                 'id_jadwal' => ('JI010125A1'),
                 'jenis_ibadah' => ('Sunday Service'),
-                'tgl_ibadah' => now(),
+                'tgl_ibadah' => Carbon::create(2025, 6, 8, 9, 0, 0),
             ]
         );
     }

@@ -23,7 +23,7 @@ use App\Models\detail_lagu_pujian;
 use App\Models\Pembukuan;
 use App\Models\PengajuanJemaat;
 use App\Models\Riwayat;
-
+use Illuminate\Http\Request;
 
 // Route::get('/pembukuan/preview', [PembukuanController::class, 'preview'])->name('pembukuan.preview');
 
@@ -107,12 +107,33 @@ Route::middleware(['auth'])->group(function () {
             }
         );
 
-    Route::get('/manajemen/riwayat', function () {
+    Route::get('/manajemen/riwayat', function (Request $request) {
+        $riwayat = Riwayat::with('pelayan.jemaat')->latest('tgl_perubahan');
+
+        // Filter by date range if both tanggal_awal and tanggal_akhir are present
+        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
+            $riwayat->whereBetween('tgl_perubahan', [
+                $request->tanggal_awal,
+                $request->tanggal_akhir
+            ]);
+        } elseif ($request->filled('tanggal_awal')) {
+            // If only tanggal_awal is present, filter from that date onwards
+            $riwayat->where('tgl_perubahan', '>=', $request->tanggal_awal);
+        } elseif ($request->filled('tanggal_akhir')) {
+            // If only tanggal_akhir is present, filter up to that date
+            $riwayat->where('tgl_perubahan', '<=', $request->tanggal_akhir);
+        }
+
+        // Filter by jenis_riwayat if present and not empty
+        if ($request->filled('jenis_riwayat')) {
+            $riwayat->where('jenis_perubahan', $request->jenis_riwayat);
+        }
+
         return view(
             'Manajemen.riwayat',
             [
                 'title' => 'Manajemen Riwayat',
-                'riwayat' => Riwayat::with('pelayan.jemaat')->latest('tgl_perubahan')->paginate(5)
+                'riwayat' => $riwayat->paginate(5)->withQueryString()
             ]
         );
     })->name('Manajemen.Riwayat');

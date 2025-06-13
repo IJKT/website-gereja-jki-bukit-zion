@@ -17,13 +17,34 @@ use Illuminate\Support\Facades\Schema;
 class JadwalIbadahController extends Controller
 {
     // GET FUNCTIONS
-    public function viewall(): View
+    public function viewall(Request $request): View
     {
+        $jadwal = jadwal_ibadah::query();
+
+        // Filter by date range if both tanggal_awal and tanggal_akhir are present
+        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
+            $jadwal->whereBetween('tgl_ibadah', [
+                $request->tanggal_awal,
+                $request->tanggal_akhir
+            ]);
+        } elseif ($request->filled('tanggal_awal')) {
+            // If only tanggal_awal is present, filter from that date onwards
+            $jadwal->where('tgl_ibadah', '>=', $request->tanggal_awal);
+        } elseif ($request->filled('tanggal_akhir')) {
+            // If only tanggal_akhir is present, filter up to that date
+            $jadwal->where('tgl_ibadah', '<=', $request->tanggal_akhir);
+        }
+
+        // Filter by jenis_ibadah if present and not empty
+        if ($request->filled('jenis_ibadah')) {
+            $jadwal->where('jenis_ibadah', $request->jenis_ibadah);
+        }
+
         return view(
             'Jadwal.viewall',
             [
                 'title' => 'Halaman Jadwal Ibadah',
-                'jadwal' => jadwal_ibadah::query()->paginate(5)
+                'jadwal' => $jadwal->paginate(5)->withQueryString()
             ]
         );
     }
@@ -142,7 +163,7 @@ class JadwalIbadahController extends Controller
             'nama_pendeta_undangan' => $request->filled('id_pelayan') ? null : $request->nama_pendeta
         ]);
 
-        Riwayat::logChange(1, $jadwal->id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
+        Riwayat::logChange(1, $new_id, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('Jadwal.viewall');
     }
 

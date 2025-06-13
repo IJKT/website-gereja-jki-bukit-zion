@@ -8,14 +8,21 @@
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-4">
                     <label class="font-semibold">MANAJEMEN JEMAAT</label>
-                    {{-- <button class="bg-[#215773] text-white px-2 py-2 rounded hover:bg-[#1a4a60]">
-                        <!-- Replace with icon if needed -->
-                        <svg class="h-5 w-5 font-bold" viewBox="0 0 15 15" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 2.5H15M3 7.5H12M5 12.5H10" stroke="#ffffff" />
-                        </svg>
-                        <i class='bx  bx-angle'></i>
-                    </button> --}}
+
+                    {{-- filter button --}}
+                    <x-filter-dropdown>
+                        <form method="GET" action="{{ route('Manajemen.Jemaat.viewall') }}">
+                            <div class="mx-2 mt-2 mb-4">
+                                <label for="hak_akses_jemaat" class="block text-sm font-medium text-gray-700">Jenis
+                                    Pembukuan</label>
+                                <select name="hak_akses_jemaat" id="hak_akses_jemaat"
+                                    class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="">Semua</option>
+                                    <option value="Jemaat">Jemaat</option>
+                                    <option value="Pelayan">Pelayan</option>
+                                </select>
+                            </div>
+                    </x-filter-dropdown>
                 </div>
                 <table class="w-full border-collapse ">
                     <thead>

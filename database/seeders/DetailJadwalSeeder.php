@@ -20,7 +20,7 @@ class DetailJadwalSeeder extends Seeder
         detail_jadwal::updateOrCreate(
             [
                 'id_jadwal' => ('JI010125A1'),
-                'id_pelayan' => ('PL180903A1'),
+                'id_pelayan' => ('PL010125A4'),
                 'peran_pelayan' => ('5')
             ]
         );

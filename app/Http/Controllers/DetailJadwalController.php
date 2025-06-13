@@ -64,6 +64,7 @@ class DetailJadwalController extends Controller
             ->delete();
 
         if ($deleted) {
+            Riwayat::logChange(3, $id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
             return redirect()->back()->with('status', 'Pelayan musik berhasil dihapus.');
         }
 
@@ -119,6 +120,7 @@ class DetailJadwalController extends Controller
             ->delete();
 
         if ($deleted) {
+            Riwayat::logChange(3, $id_jadwal, Auth::user()->jemaat->pelayan->id_pelayan);
             return redirect()->back()->with('status', 'Pelayan multimedia berhasil dihapus.');
         }
 
