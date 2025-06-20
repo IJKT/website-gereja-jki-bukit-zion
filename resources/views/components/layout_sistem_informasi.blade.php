@@ -8,7 +8,7 @@
     <title>{{ $title }}</title>
 
     {{-- Vite CSS --}}
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro&display=swap" rel="stylesheet">
