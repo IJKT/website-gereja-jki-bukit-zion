@@ -1,3 +1,6 @@
+<!-- TODO: buat tutup buku-->
+<!-- TODO: buat kalau mau tambah atau update, bisa dicantumkan jenis pembukuan'nya-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -69,11 +72,11 @@
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2 font-bold">
                                     @if ($_pembukuan['verifikasi_pembukuan'] == 1)
-                                        <div class="text-green-600">VERIF</div>
+                                        <div class="text-green-600">Diverifikasi</div>
                                     @elseif($_pembukuan['verifikasi_pembukuan'] == 0)
-                                        <div class="text-yellow-600">TUNGGU</div>
+                                        <div class="text-yellow-600">Menunggu Verifikasi</div>
                                     @elseif($_pembukuan['verifikasi_pembukuan'] == 2)
-                                        <div class="text-red-600">TOLAK</div>
+                                        <div class="text-red-600">Ditolak</div>
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">

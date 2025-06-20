@@ -5,6 +5,7 @@
 // use App\Models\Pelayan;
 // use App\Models\DataPelayan;
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailJadwalController;
 use App\Http\Controllers\DetailLaguPujianController;
 use App\Http\Controllers\HomeController;
@@ -25,8 +26,6 @@ use App\Models\PengajuanJemaat;
 use App\Models\Riwayat;
 use Illuminate\Http\Request;
 
-// Route::get('/pembukuan/preview', [PembukuanController::class, 'preview'])->name('pembukuan.preview');
-
 
 Route::get('/login', [HomeController::class, 'Login'])->name('login');
 Route::get('/forgot-password', [HomeController::class, 'ForgotPassword'])->name('forgot_password');
@@ -37,6 +36,14 @@ Route::post('/forgot-password', [HomeController::class, 'ForgotPasswordAuthentic
 Route::post('/reset-password', [HomeController::class, 'ResetPasswordAuthenticate'])->name('reset_password_auth');
 
 Route::middleware(['auth'])->group(function () {
+    Route::prefix('dashboard')
+        ->name('Dashboard')
+        ->group(
+            function () {
+                Route::get('', [DashboardController::class, 'index'])->name('.index');
+            }
+        );
+
     Route::prefix('profil')
         ->name('Profil')
         ->group(

@@ -1,3 +1,6 @@
+<!-- TODO: buat print biar bisa mencetak setiap list jemaat-->
+<!-- TODO: buat biar admin bisa mengatur baptis atau pernikahan kalau user adalah orang yang cukup berumur-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

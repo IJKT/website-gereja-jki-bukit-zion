@@ -1,5 +1,15 @@
+<!-- TODO: buat logout button-->
+<!-- TODO: buat dashboard button-->
+<!-- TODO: buat biar lebih dinamis dengan tampilan hp-->
+
 <div class="w-1/5 bg-[#424242] text-white p-4 h-screen" x-data="{ openSub1: false, openSub2: false }">
     <ul class="space-y-2 relative">
+        <a href="{{ route('Dashboard.index') }}">
+            <li
+                class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] 
+            {{ request()->is('dashboard') ? 'bg-[#215773]' : '' }}">
+                Dashboard</li>
+        </a>
         <a href="{{ route('Profil.profil') }}">
             <li
                 class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] 

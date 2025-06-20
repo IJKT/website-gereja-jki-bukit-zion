@@ -22,7 +22,7 @@
                             <tr class="bg-white text-sm text-center">
                                 <td class="border border-gray-300 px-4 py-2 text-left">
                                     {{ $_lagu['nama_lagu'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
+                                <td class="border border-gray-300 px-4 py-2 text-left">
                                     <a href="{{ $_lagu->link_lagu }}" class="hover:underline" target="_blank">
                                         {{ $_lagu->link_lagu }}
                                     </a>

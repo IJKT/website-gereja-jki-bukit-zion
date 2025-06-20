@@ -1,3 +1,5 @@
+<!-- TODO: apa saja kebijakan yang bisa diubah di halaman profil?-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -76,7 +78,7 @@
             </a>
             </button>
             <button class="bg-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60]" id="simpanBtn"
-                onclick="showAlertSave()">UBAH
+                onclick="showAlertSave()">SIMPAN
             </button>
         </div>
     </div>

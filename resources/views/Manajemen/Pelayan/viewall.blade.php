@@ -1,3 +1,5 @@
+<!-- TODO: buat print biar bisa mencetak setiap list pelayan-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

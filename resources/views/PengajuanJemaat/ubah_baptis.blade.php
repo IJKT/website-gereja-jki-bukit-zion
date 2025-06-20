@@ -1,3 +1,5 @@
+<!-- TODO: buat biar simpan buttonnya dihilangkan kalau sudah diverifikasi datanya-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

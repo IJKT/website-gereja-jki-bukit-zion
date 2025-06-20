@@ -1,3 +1,5 @@
+<!--TODO: buat ditengah aja formnya-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +51,7 @@
                         Password?</a>
                     <a href="{{ route('Home.Akun.register') }}"
                         class="text-sm font-bold underline hover:text-[#215773]">Belum punya akun?
-                        Daftarkan dulu</a>
+                        Daftar disini</a>
                 </div>
                 <div class="flex items-center justify-center">
                     <button type="submit"

@@ -1,3 +1,5 @@
+<!-- TODO: buat biar tombol simpannya dihilangkan kalo data pernikahan sudah diverifikasi-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

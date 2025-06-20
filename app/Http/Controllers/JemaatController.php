@@ -65,7 +65,7 @@ class JemaatController extends Controller
             'Manajemen.Jemaat.Pengajuan.viewall',
             [
                 'title' => 'Manajemen Pengajuan Jemaat',
-                'pengajuan_jemaat' => $pengajuan_jemaat->paginate(5)->withQueryString()
+                'pengajuan_jemaat' => $pengajuan_jemaat->orderBy('verifikasi_pengajuan', 'asc')->paginate(5)->withQueryString()
             ]
         );
     }

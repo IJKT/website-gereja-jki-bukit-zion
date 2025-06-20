@@ -1,3 +1,6 @@
+<!-- TODO: lebih didetailkan lagi apa yang sudah ditolak ex:
+detail revisi baptis, detail revisi pernikahan, dll-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

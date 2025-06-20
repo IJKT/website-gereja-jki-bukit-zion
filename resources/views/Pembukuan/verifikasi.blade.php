@@ -79,7 +79,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     const catatan_pembukuan = result.value;
-                    Swal.fire("Data Ditolak", "Catatan: " + catatan_pembukuan, "success");
+                    Swal.fire("Data Penolakan Berhasil Disimpan", "Catatan: " + catatan_pembukuan, "success");
                     // Submit the form
                     document.getElementById('catatan_pembukuan').value = catatan_pembukuan;
                     document.getElementById('verifikasi_pembukuan').value = 2;

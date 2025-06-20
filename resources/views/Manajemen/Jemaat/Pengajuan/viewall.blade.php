@@ -1,3 +1,6 @@
+<!-- TODO: buat print biar bisa mencetak setiap list pengajuan dari jemaat-->
+<!-- TODO: buat filter untuk melihat status-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -43,11 +46,11 @@
                                     {{ $_pengajuan_jemaat['jenis_pengajuan'] }}</td>
                                 <td class="border border-gray-300 px-4 py-2 font-bold">
                                     @if ($_pengajuan_jemaat['verifikasi_pengajuan'] == 0)
-                                        <div class="text-yellow-600">TUNGGU</div>
+                                        <div class="text-yellow-600">Menunggu Verifikasi</div>
                                     @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 1)
-                                        <div class="text-green-600">VERIF</div>
+                                        <div class="text-green-600">Diverifikasi</div>
                                     @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 2)
-                                        <div class="text-red-600">TOLAK</div>
+                                        <div class="text-red-600">Ditolak</div>
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">

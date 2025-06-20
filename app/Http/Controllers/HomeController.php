@@ -107,7 +107,7 @@ class   HomeController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('Profil.profil'));
+            return redirect()->intended(route('Dashboard.index'));
         } else {
             return redirect()->back()->with('gagal', 'Username atau password anda salah');
         };

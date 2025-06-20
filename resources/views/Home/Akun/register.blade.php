@@ -1,3 +1,6 @@
+<!--TODO: buat link untuk balik ke halaman login kalo sudah punya akun-->
+<!--TODO: buat pengecekan apakah username sudah pernah ter-register sebelumnya atau tidak-->
+
 <!DOCTYPE html>
 <html lang="en">
 

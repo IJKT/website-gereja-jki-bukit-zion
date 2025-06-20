@@ -34,7 +34,7 @@
                                     {{ $_urutan_lagu->urutan_lagu }}</td>
                                 <td class="border border-gray-300 px-4 py-2 text-left">
                                     {{ $_urutan_lagu->lagu_pujian->nama_lagu }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
+                                <td class="border border-gray-300 px-4 py-2 text-left">
                                     <a class="hover:underline" href="{{ $_urutan_lagu->lagu_pujian->link_lagu }}"
                                         target="_blank">
                                         {{ $_urutan_lagu->lagu_pujian->link_lagu }}

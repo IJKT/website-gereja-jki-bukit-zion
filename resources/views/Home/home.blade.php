@@ -1,3 +1,5 @@
+<!--TODO: buat tombolnya lebih konsisten lagi-->
+
 <x-layout_home>
     <x-slot:title>{{ $title }}</x-slot:title>
     <section class="relative text-white py-20 px-4">
