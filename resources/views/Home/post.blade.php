@@ -22,8 +22,8 @@
                 </header>
                 <figure>
                     @if ($rangkuman->gambar_rangkuman)
-                        <img src="{{ asset('storage/' . $rangkuman->gambar_rangkuman) }}" alt="Gambar Rangkuman"
-                            class="w-full object-cover rounded-md mb-4 p-1 bg-white">
+                        <img src="{{ asset('storage/app/public/' . $rangkuman->gambar_rangkuman) }}"
+                            alt="Gambar Rangkuman" class="w-full object-cover rounded-md mb-4 p-1 bg-white">
                     @else
                         <img src="{{ asset('pics/placeholder.webp') }}" alt="Placeholder"
                             class="w-full object-cover rounded-md mb-4 p-1 bg-white">

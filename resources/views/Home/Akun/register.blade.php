@@ -18,7 +18,7 @@
 <body style="font-family: 'Kantumruy Pro', sans-serif;">
     <div>
         {{-- BG IMG --}}
-        <img src="pics/background.png" class="fixed inset-0 w-full h-full object-cover filter blur-xs"
+        <img src="{{ asset('pics/Background.png') }}" class="fixed inset-0 w-full h-full object-cover filter blur-xs"
             style="z-index: -1;">
 
         {{-- register form --}}
