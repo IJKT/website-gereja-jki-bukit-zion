@@ -195,7 +195,7 @@ class JadwalIbadahController extends Controller
         $results = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
             ->where('jemaat.nama_jemaat', 'like', "%$query%")
             ->where('pelayan.hak_akses_pelayan', 'Multimedia')
-            ->whereNotIn('pelayan.id_pelayan', $excludedPelayanIds)
+            // ->whereNotIn('pelayan.id_pelayan', $excludedPelayanIds)
             ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat as nama_pelayan')
             ->get();
 
@@ -218,7 +218,7 @@ class JadwalIbadahController extends Controller
         $results = Pelayan::join('jemaat', 'pelayan.id_jemaat', '=', 'jemaat.id_jemaat')
             ->where('jemaat.nama_jemaat', 'like', "%$query%")
             ->where('pelayan.hak_akses_pelayan', 'Praise & Worship')
-            ->whereNotIn('pelayan.id_pelayan', $excludedPelayanIds)
+            // ->whereNotIn('pelayan.id_pelayan', $excludedPelayanIds)
             ->select('pelayan.id_pelayan', 'jemaat.nama_jemaat as nama_pelayan')
             ->get();
 

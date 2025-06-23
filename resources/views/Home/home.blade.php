@@ -1,20 +1,20 @@
-<!--TODO: buat tombolnya lebih konsisten lagi-->
-
 <x-layout_home>
     <x-slot:title>{{ $title }}</x-slot:title>
-    <section class="relative text-white py-20 px-4">
-        <!-- Background -->
-        <div class="absolute inset-0">
-            <img src="{{ asset('pics/DSC07426.jpg') }}" alt="Background" class="w-full h-[90vh] object-cover opacity-50">
+    <section class="text-white py-20 px-4">
+        <!-- Background Layer -->
+        <div class="fixed top-0 left-0 w-full h-full -z-10">
+            <img src="{{ asset('pics/DSC07426.jpg') }}" alt="Background" class="w-full h-full object-cover" />
+            <div class="absolute inset-0"></div>
         </div>
 
-        <div class="relative z-10 max-w-6xl mx-auto">
-            <!-- Black header background for "OUR SERVICE" -->
-            <div class="bg-black/90 py-6 text-center rounded-md mb-12">
+        <!-- Foreground Content -->
+        <div class="max-w-6xl mx-auto">
+            <!-- Black header -->
+            <div class="bg-black py-6 text-center rounded-md mb-12">
                 <h2 class="text-4xl md:text-5xl font-bold text-orange-600">OUR SERVICE</h2>
             </div>
 
-            <!-- Semi-transparent background for the schedule grid -->
+            <!-- Schedule grid -->
             <div class="bg-black/60 p-6 rounded-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-center">
                 <!-- Sunday Service -->
                 <div>

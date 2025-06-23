@@ -14,7 +14,7 @@
             <a href="{{ route('Home.articles') }}" class="hover:text-blue-400">ARTICLE</a>
             <a href="{{ route('Home.devotions') }}" class="hover:text-blue-400">DEVOTION</a>
             @auth
-                <a href="{{ route('Profil.profil') }}" class="hover:text-blue-400">ACCOUNT</a>
+                <a href="{{ route('Dashboard.index') }}" class="hover:text-blue-400">ACCOUNT</a>
             @else
                 <a href="{{ route('login') }}" class="hover:text-blue-400" target="_blank">LOGIN</a>
             @endauth
@@ -80,7 +80,7 @@
                         </div>
                         <div class="py-6">
                             @auth
-                                <a href="{{ route('Profil.profil') }}"
+                                <a href="{{ route('Dashboard.index') }}"
                                     class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:underline hover:text-blue-400">ACCOUNT</a>
                             @else
                                 <a href="{{ route('login') }}"

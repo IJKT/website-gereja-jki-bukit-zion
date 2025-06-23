@@ -114,11 +114,20 @@ class   HomeController extends Controller
     }
     public function cekUsername(Request $request)
     {
-        $exists = DB::table('users')->where('username', $request->username)->exists();
+        $exists = User::where('username', $request->username)->exists();
         return response()->json(['exists' => $exists]);
     }
+    public function cekEmail(Request $request)
+    {
+        $exists = Jemaat::where('email_jemaat', $request->email)->exists();
+        return response()->json(['exists' => $exists]);
+    }
+
     public function register_authenticate(Request $request)
     {
+        $request->validate([
+            'username' => 'required|unique:users,username',
+        ]);
         $user = new User();
         $user->username = $request->username;
         $user->password = bcrypt($request->password);
