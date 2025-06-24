@@ -89,7 +89,7 @@ class PembukuanController extends Controller
         $total_pemasukan = $pembukuan->where('jenis_pembukuan', 'Uang Masuk')->sum('nominal_pembukuan');
         $total_pengeluaran = $pembukuan->where('jenis_pembukuan', 'Uang Keluar')->sum('nominal_pembukuan');
 
-        $pdf = Pdf::loadView('exports.pembukuan_file', [
+        $pdf = Pdf::loadView('Exports.pembukuan_file', [
             'pembukuan' => $pembukuan,
             'total_pemasukan' => $total_pemasukan,
             'total_pengeluaran' => $total_pengeluaran,

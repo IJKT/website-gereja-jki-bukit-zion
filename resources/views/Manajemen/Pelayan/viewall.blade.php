@@ -12,7 +12,6 @@
                     <label class="font-semibold">MANAJEMEN PELAYAN</label>
 
                     {{-- filter button --}}
-                    <!-- TODO:belum selesai bikin drop down'nya -->
                     <x-filter-dropdown>
                         <form method="GET" action="{{ route('Manajemen.Pelayan.viewall') }}">
                             <div class="mx-2 mt-2 mb-4">

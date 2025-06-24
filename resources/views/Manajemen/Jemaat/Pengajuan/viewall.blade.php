@@ -1,5 +1,5 @@
 <!-- TODO: buat print biar bisa mencetak setiap list pengajuan dari jemaat-->
-<!-- TODO: buat filter untuk melihat status-->
+<!-- TODO: buat filter untuk melihat status -> kalau misalnya difilter dimana yang menunggu verifikasi diatas bagaimana?-->
 
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>

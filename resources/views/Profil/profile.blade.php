@@ -90,7 +90,7 @@
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
-                denyButtonText: 'batal'
+                denyButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Remove commas before submit

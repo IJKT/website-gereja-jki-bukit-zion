@@ -1,3 +1,6 @@
+<!-- TODO: buat field untuk detail pemasukan-->
+<!-- TODO: buat field untuk detail pengeluaran -> apakah perlu?-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}

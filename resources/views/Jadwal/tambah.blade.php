@@ -82,15 +82,15 @@
 
     <!-- Button -->
     <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
+        <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
+            class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+            SIMPAN
+        </button>
         <a href="{{ route('Jadwal.viewall') }}">
             <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                 BATAL
             </button>
         </a>
-        <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-            class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
-            SIMPAN
-        </button>
     </div>
     </div>
 

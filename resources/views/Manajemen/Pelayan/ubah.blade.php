@@ -96,16 +96,16 @@
                     AKTIF
                 </button>
             @endif
-            <a href="{{ route('Manajemen.Pelayan.viewall') }}">
-                <button class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
-                    BATAL
-                </button>
-            </a>
             <button
                 class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200"
                 onclick="showAlertSave()">
                 SIMPAN
             </button>
+            <a href="{{ route('Manajemen.Pelayan.viewall') }}">
+                <button class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                    BATAL
+                </button>
+            </a>
         </div>
     </div>
     </div>
@@ -117,7 +117,7 @@
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
-                denyButtonText: 'batal'
+                denyButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Remove commas before submit
@@ -136,7 +136,7 @@
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
-                denyButtonText: 'batal'
+                denyButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire("Pelayan Dinonaktifkan", "", "success");
@@ -154,7 +154,7 @@
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
-                denyButtonText: 'batal'
+                denyButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire("Pelayan Diaktifkan", "", "success");
