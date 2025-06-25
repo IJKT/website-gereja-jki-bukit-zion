@@ -43,6 +43,9 @@
     {{-- Trix JS --}}
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
 
+    {{-- Flowbite JS --}}
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+
     {{-- Custom Script Stack --}}
     @stack('scripts')
 

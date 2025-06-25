@@ -1,5 +1,3 @@
-<!-- TODO: buat biar tombol simpannya dihilangkan kalo data pernikahan sudah diverifikasi-->
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -52,10 +50,12 @@
 
     <!-- Button -->
     <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-        <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-            class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
-            SIMPAN
-        </button>
+        @if (Auth::user()->jemaat->pengajuan_jemaat->firstWhere('jenis_pengajuan', 'Pernikahan')->verifikasi_pengajuan != 1)
+            <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
+                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+                SIMPAN
+            </button>
+        @endif
         <a href="{{ route('PengajuanJemaat.pernikahan') }}">
             <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                 BATAL

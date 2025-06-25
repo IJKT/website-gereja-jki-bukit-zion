@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Mail\ResetPasswordMail;
 use App\Models\PengajuanJemaat;
 use App\Models\rangkuman_firman;
 use Illuminate\Support\Facades\DB;
@@ -184,9 +185,8 @@ class   HomeController extends Controller
         $resetLink = url("/reset-password/{$token}");
 
         // Contoh pengiriman via Laravel Mail (jika tidak pakai Mail, cukup dd link dulu)
-        Mail::raw("Klik link berikut untuk reset password Anda: $resetLink", function ($message) use ($email) {
-            $message->to($email)->subject('Reset Password');
-        });
+        Mail::to($email)->send(new ResetPasswordMail($resetLink));
+
 
         return back()->with('status', 'Link reset password telah dikirim ke email Anda.');
     }

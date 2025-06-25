@@ -1,4 +1,4 @@
-<!-- TODO: buat biar simpan buttonnya dihilangkan kalau sudah diverifikasi datanya-->
+<!-- TODO: buat biar simpan buttonnya dihilangkan kalau sudah diverifikasi datanya, dan ditempat2 lain yang dibutuhkan hak akses ex: hak akses worship leader, dkk-->
 
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
@@ -48,10 +48,12 @@
 
     <!-- Button -->
     <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-        <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-            class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
-            SIMPAN
-        </button>
+        @if (Auth::user()->jemaat->pengajuan_jemaat->firstWhere('jenis_pengajuan', 'Baptis')->verifikasi_pengajuan != 1)
+            <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
+                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+                SIMPAN
+            </button>
+        @endif
         <a href="{{ route('PengajuanJemaat.baptis') }}">
             <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                 BATAL

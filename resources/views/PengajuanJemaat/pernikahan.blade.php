@@ -51,7 +51,7 @@
                                     @if ($data_pernikahan->verifikasi_pengajuan == 0)
                                         <div class="font-bold text-yellow-500">Menunggu Verifikasi</div>
                                     @elseif ($data_pernikahan->verifikasi_pengajuan == 1)
-                                        <div class="font-bold text-green-500">Diverifikasi</div>kw
+                                        <div class="font-bold text-green-500">Diverifikasi</div>
                                     @elseif ($data_pernikahan->verifikasi_pengajuan == 2)
                                         <div class="font-bold text-red-500">Ditolak</div>
                                     @endif

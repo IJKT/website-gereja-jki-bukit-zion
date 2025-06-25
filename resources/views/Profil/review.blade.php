@@ -78,11 +78,8 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="{{ route('logout') }}">
-                <button class="bg-red-500 px-6 py-2 rounded-md hover:bg-red-600">LOGOUT</button>
-            </a>
             <button class="bg-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60]" id="simpanBtn"
-                onclick="showAlertSave()">UBAH</button>
+                onclick="showAlertSave()">SIMPAN</button>
         </div>
     </div>
 

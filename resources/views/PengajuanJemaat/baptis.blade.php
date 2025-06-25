@@ -39,9 +39,9 @@
                                     @if ($data_baptis->verifikasi_pengajuan == 0)
                                         <div class="font-bold text-yellow-500">Menunggu Verifikasi</div>
                                     @elseif ($data_baptis->verifikasi_pengajuan == 1)
-                                        <div class="font-bold text-green-500">VERIF</div>
+                                        <div class="font-bold text-green-500">Diverifikasi</div>
                                     @elseif ($data_baptis->verifikasi_pengajuan == 2)
-                                        <div class="font-bold text-red-500">TOLAK</div>
+                                        <div class="font-bold text-red-500">Ditolak</div>
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">{{ $detail_baptis->komentar_baptis }}

@@ -26,6 +26,11 @@ use App\Models\PengajuanJemaat;
 use App\Models\Riwayat;
 use Illuminate\Http\Request;
 
+// Route::get('/tes_forgot_password', function () {
+//     return view(
+//         'Home.Akun.reset_mail',
+//     );
+// });
 
 Route::get('/login', [HomeController::class, 'Login'])->name('login');
 Route::get('/forgot-password', [HomeController::class, 'ForgotPassword'])->name('forgot_password');

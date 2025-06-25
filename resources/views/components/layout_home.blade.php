@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </head>
 
 <body style="font-family: 'Kantumruy Pro', sans-serif;">

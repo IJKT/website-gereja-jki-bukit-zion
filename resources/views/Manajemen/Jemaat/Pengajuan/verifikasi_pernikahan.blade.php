@@ -237,7 +237,7 @@
                     } = result.value;
                     Swal.fire({
                         title: "Data Diverifikasi",
-                        text: `Nama pembaptis: ${document.getElementById('swal-nama_pendeta').value}`,
+                        text: `Nama pendeta: ${document.getElementById('swal-nama_pendeta').value}`,
                         icon: "success",
                         timer: 2000,
                         showConfirmButton: false
