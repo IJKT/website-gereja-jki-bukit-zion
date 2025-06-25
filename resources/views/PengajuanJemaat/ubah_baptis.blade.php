@@ -1,5 +1,3 @@
-<!-- TODO: buat biar simpan buttonnya dihilangkan kalau sudah diverifikasi datanya, dan ditempat2 lain yang dibutuhkan hak akses ex: hak akses worship leader, dkk-->
-
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
@@ -41,6 +39,18 @@
                                 Yunani</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block font-semibold my-1">AKTA KELAHIRAN</label>
+                        <div class="relative">
+                            <input type="file" name="akta" id="akta" accept=".pdf" class="hidden"
+                                onchange="updateAktaLabel()" value="{{ $baptis->akta_kelahiran }}">
+                            <label for="akta" id="akta-label"
+                                class="w-full p-2 rounded bg-white cursor-pointer block text-black ">
+                                {{ \Illuminate\Support\Str::after($baptis->akta_kelahiran ?? '', 'baptis/') }}
+                            </label>
+                        </div>
+                        <span id="akta-filename" class="block text-sm text-gray-700 mt-1"></span>
+                    </div>
                 </div>
             </div>
         </form>
@@ -64,6 +74,26 @@
 
     @stack('scripts')
     <script>
+        // Update label file input
+        window.updateAktaLabel = function() {
+            const input = document.getElementById('akta');
+            const label = document.getElementById('akta-label');
+            const filenameSpan = document.getElementById('akta-filename');
+
+            if (input.files && input.files.length > 0) {
+                label.textContent = input.files[0].name;
+                label.classList.remove('text-gray-500');
+                label.classList.add('text-black');
+            } else {
+                filenameSpan.textContent = '';
+                label.textContent = 'File Akta Kelahiran Belum Ditemukan';
+                label.classList.remove('text-black');
+                label.classList.add('text-gray-500');
+            }
+
+            checkRequiredFields(); // Recheck on file change
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('pengajuanForm');
             const simpanBtn = document.getElementById('simpanBtn');

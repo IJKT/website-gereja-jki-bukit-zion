@@ -36,8 +36,6 @@ Route::get('/login', [HomeController::class, 'Login'])->name('login');
 Route::get('/forgot-password', [HomeController::class, 'ForgotPassword'])->name('forgot_password');
 Route::get('/reset-password/{token}', [HomeController::class, 'ResetPassword'])->name('reset_password');
 Route::get('/logout', [HomeController::class, 'Logout'])->name('logout');
-// Route::get('/cek-username', [HomeController::class, 'cekUsername'])->name('cek_username');
-// Route::get('/cek-email', [HomeController::class, 'cekEmail'])->name('cek_email');
 Route::post('/login/authenticate', [HomeController::class, 'LoginAuthenticate'])->name('login_authenticate');
 Route::post('/forgot-password', [HomeController::class, 'ForgotPasswordAuthenticate'])->name('forgot_password_auth');
 Route::post('/reset-password', [HomeController::class, 'ResetPasswordAuthenticate'])->name('reset_password_auth');

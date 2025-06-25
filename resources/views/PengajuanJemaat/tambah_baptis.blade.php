@@ -2,7 +2,8 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
     <div class="flex-1 bg-white p-10">
-        <form id="pengajuanForm" action="{{ route('PengajuanJemaat.add_baptis') }}" method="POST">
+        <form id="pengajuanForm" action="{{ route('PengajuanJemaat.add_baptis') }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
@@ -35,6 +36,18 @@
                             <option value="Bahasa Yunani">Bahasa Yunani</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block font-semibold my-1">AKTA KELAHIRAN</label>
+                        <div class="relative">
+                            <input type="file" name="akta" id="akta" accept=".pdf" class="hidden"
+                                onchange="updateAktaLabel()" required>
+                            <label for="akta" id="akta-label"
+                                class="w-full p-2 rounded bg-white cursor-pointer block text-gray-500 ">
+                                Masukkan File Dalam Bentuk PDF
+                            </label>
+                        </div>
+                        <span id="akta-filename" class="block text-sm text-gray-700 mt-1"></span>
+                    </div>
                 </div>
             </div>
         </form>
@@ -56,6 +69,26 @@
 
     @stack('scripts')
     <script>
+        // Update label file input
+        window.updateAktaLabel = function() {
+            const input = document.getElementById('akta');
+            const label = document.getElementById('akta-label');
+            const filenameSpan = document.getElementById('akta-filename');
+
+            if (input.files && input.files.length > 0) {
+                label.textContent = input.files[0].name;
+                label.classList.remove('text-gray-500');
+                label.classList.add('text-black');
+            } else {
+                filenameSpan.textContent = '';
+                label.textContent = 'File Akta Kelahiran Belum Ditemukan';
+                label.classList.remove('text-black');
+                label.classList.add('text-gray-500');
+            }
+
+            checkRequiredFields(); // Recheck on file change
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('pengajuanForm');
             const simpanBtn = document.getElementById('simpanBtn');

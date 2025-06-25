@@ -88,23 +88,6 @@
 
                 <div class="grid grid-cols-2 gap-x-10">
                     <div>
-                        <label class="block font-semibold my-1">HAK AKSES</label>
-                        <div class="grid grid-cols-2 gap-x-10 gap-y-4 w-1/2">
-                            <label class="flex items-center space-x-2">
-                                <input type="radio" name="hak_akses_jemaat" value="Jemaat"
-                                    class="form-radio text-[#215773]"
-                                    {{ old('hak_akses_jemaat', $jemaat->hak_akses_jemaat) == 'Jemaat' ? 'checked' : '' }}>
-                                <span :class="hak_akses == 'Jemaat' ? 'font-semibold' : 'font-normal'">Jemaat</span>
-                            </label>
-                            <label class="flex items-center space-x-2">
-                                <input type="radio" name="hak_akses_jemaat" value="Pelayan"
-                                    class="form-radio text-[#215773]"
-                                    {{ old('hak_akses_jemaat', $jemaat->hak_akses_jemaat) == 'Pelayan' ? 'checked' : '' }}>
-                                <span :class="hak_akses == 'Pelayan' ? 'font-semibold' : 'font-normal'">Pelayan</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div>
                         <label class="block font-semibold my-1">JENIS KELAMIN</label>
                         <div class="grid grid-cols-2 gap-x-10 gap-y-4 w-1/2">
                             <label class="flex items-center space-x-2">
@@ -113,8 +96,7 @@
                                 <span :class="hak_akses == 'P' ? 'font-semibold' : 'font-normal'">Pria</span>
                             </label>
                             <label class="flex items-center space-x-2">
-                                <input type="radio" name="jk_jemaat" value="W"
-                                    class="form-radio text-[#215773]"
+                                <input type="radio" name="jk_jemaat" value="W" class="form-radio text-[#215773]"
                                     {{ old('jk_jemaat', $jemaat->jk_jemaat) == 'W' ? 'checked' : '' }}>
                                 <span :class="hak_akses == 'W' ? 'font-semibold' : 'font-normal'">Wanita</span>
                             </label>

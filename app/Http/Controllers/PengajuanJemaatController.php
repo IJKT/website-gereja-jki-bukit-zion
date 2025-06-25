@@ -48,6 +48,10 @@ class PengajuanJemaatController extends Controller
     }
     public function AddBaptis(Request $request)
     {
+        // dd($request->all());
+        $request->validate([
+            'akta' => 'nullable|file|mimes:pdf',
+        ]);
         $id_pengajuan = PengajuanJemaat::generateNextId();
         // tambah pengajuan jemaat
         $pengajuanjemaat = new PengajuanJemaat();
@@ -62,6 +66,23 @@ class PengajuanJemaatController extends Controller
         $baptis->id_baptis = $id_pengajuan;
         $baptis->preferensi_nama_baptis = $request->preferensi_nama;
         $baptis->id_pengajar = $request->id_pelayan;
+        if ($request->hasFile('akta')) {
+            $file = $request->file('akta');
+            $originalName = $file->getClientOriginalName();
+            $targetDir = 'baptis';
+
+            // Prevent filename collisions by prefixing with a timestamp if file exists
+            $storagePath = storage_path("app/public/{$targetDir}/{$originalName}");
+            if (file_exists($storagePath)) {
+                $filenameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $originalName = $filenameWithoutExt . '_' . time() . '.' . $extension;
+            }
+
+            // Store the file with its (possibly modified) original name
+            $path = $file->storeAs($targetDir, $originalName, 'public');
+            $baptis->akta_kelahiran = $path; // Save the relative path as a string
+        }
         $baptis->save();
 
         return redirect()->route('PengajuanJemaat.baptis');

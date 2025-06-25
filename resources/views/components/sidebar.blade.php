@@ -17,8 +17,8 @@
                         <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
                     </svg>
                 </span>
-                <ul class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub1"
-                    :class="{ 'block': openSub1, 'hidden': !openSub1 }">
+                <ul x-cloak class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg"
+                    :aria-checked="openSub1" :class="{ 'block': openSub1, 'hidden': !openSub1 }">
                     <a href="{{ route('PengajuanJemaat.baptis') }}">
                         <li
                             class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
@@ -48,8 +48,8 @@
                             <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
                         </svg>
                     </span>
-                    <ul class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub2"
-                        :class="{ 'block': openSub2, 'hidden': !openSub2 }">
+                    <ul x-cloak class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg"
+                        :aria-checked="openSub2" :class="{ 'block': openSub2, 'hidden': !openSub2 }">
                         <a href="{{ route('Manajemen.Pelayan.viewall') }}">
                             <li
                                 class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]
@@ -124,8 +124,8 @@
                         <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
                     </svg>
                 </span>
-                <ul class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub3"
-                    :class="{ 'block': openSub3, 'hidden': !openSub3 }">
+                <ul x-cloak class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg"
+                    :aria-checked="openSub3" :class="{ 'block': openSub3, 'hidden': !openSub3 }">
                     <a href="{{ route('Profil.profil') }}">
                         <li class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]">
                             Profil
