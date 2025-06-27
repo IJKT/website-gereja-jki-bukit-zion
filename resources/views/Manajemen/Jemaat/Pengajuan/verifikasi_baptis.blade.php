@@ -1,3 +1,5 @@
+<!-- TODO: buat biar bisa dilihat lagi setelah di verif, tapi tidak usah bisa dibuat bisa diverif lagi -->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- Main Content --}}
@@ -79,15 +81,15 @@
                 onclick="showAlertVerify()">
                 VERIFIKASI
             </button>
+            <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
+                onclick="showAlertDecline()">
+                TOLAK
+            </button>
             <a href="{{ route('Manajemen.Jemaat.Pengajuan.viewall') }}">
                 <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
                 </button>
             </a>
-            <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
-                onclick="showAlertDecline()">
-                TOLAK
-            </button>
         </div>
     </div>
 

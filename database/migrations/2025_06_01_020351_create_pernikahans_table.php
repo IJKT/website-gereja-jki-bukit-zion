@@ -21,6 +21,8 @@ return new class extends Migration
             $table->dateTime('tgl_pernikahan');
             $table->string('tempat_pernikahan', 100);
             $table->string('id_pendeta', 10)->nullable();
+            $table->string('berkas_pernikahan', 100);
+            $table->integer('nomor_cetak')->nullable();
             $table->foreign('id_pendeta', 'pernikahan_pelayan_id')->references('id_pelayan')->on('pelayan');
             $table->text('komentar_pernikahan')->nullable();
             $table->unique(['id_pernikahan', 'id_jemaat_p', 'id_jemaat_w'], 'unique_pernikahan');

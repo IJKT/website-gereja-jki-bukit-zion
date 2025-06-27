@@ -54,26 +54,24 @@
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    @if ($_pengajuan_jemaat['verifikasi_pengajuan'] == 0)
-                                        @if ($_pengajuan_jemaat['jenis_pengajuan'] == 'Baptis')
-                                            <a
-                                                href="/manajemen/pengajuan/baptis/{{ $_pengajuan_jemaat['id_pengajuan'] }}">
-                                                <button
-                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                            </a>
-                                        @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Pernikahan')
-                                            <a
-                                                href="/manajemen/pengajuan/pernikahan/{{ $_pengajuan_jemaat['id_pengajuan'] }}">
-                                                <button
-                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                            </a>
-                                        @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Registrasi')
-                                            <a
-                                                href="/manajemen/pengajuan/registrasi/{{ $_pengajuan_jemaat['id_pengajuan'] }}">
-                                                <button
-                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                            </a>
-                                        @endif
+                                    @if ($_pengajuan_jemaat['jenis_pengajuan'] == 'Baptis')
+                                        <a
+                                            href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_baptis', $_pengajuan_jemaat->id_pengajuan) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                    @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Pernikahan')
+                                        <a
+                                            href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_pernikahan', $_pengajuan_jemaat->id_pengajuan) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                    @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Registrasi')
+                                        <a
+                                            href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_registrasi', $_pengajuan_jemaat->id_pengajuan) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
                                     @endif
                                 </td>
                             </tr>
@@ -90,6 +88,11 @@
         </div>
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
+            <a href="{{ route('Manajemen.Jemaat.Pengajuan.unduh', request()->query()) }}">
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    UNDUH
+                </button>
+            </a>
             <a href="{{ route('Manajemen.Jemaat.viewall') }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     KEMBALI

@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
             function () {
                 Route::get('', [PelayanController::class, 'viewall'])->name('.viewall');
                 Route::get('tambah', [PelayanController::class, 'tambah'])->name('.tambah');
+                Route::get('unduh', [PelayanController::class, 'unduh'])->name('.unduh');
                 Route::get('search', [PelayanController::class, 'search'])->name('.search');
                 Route::get('{pelayan}', [PelayanController::class, 'ubah'])->name('.ubah');
                 Route::put('add', [PelayanController::class, 'add'])->name('.add');
@@ -98,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
             function () {
                 // MANAJEMEN JEMAAT
                 Route::get('', [JemaatController::class, 'viewall'])->name('.viewall');
+                Route::get('unduh', [JemaatController::class, 'unduh'])->name('.unduh');
                 Route::get('{jemaat}', [JemaatController::class, 'ubah'])->name('.ubah');
                 Route::put('update/{jemaat}', [JemaatController::class, 'update'])->name('.update');
                 Route::put('status/{jemaat}', [JemaatController::class, 'status'])->name('.status');
@@ -109,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
             function () {
                 //MANAJEMEN PENGAJUAN JEMAAT
                 Route::get('', [JemaatController::class, 'pengajuanViewall'])->name('.viewall');
+                Route::get('unduh', [JemaatController::class, 'pengajuanUnduh'])->name('.unduh');
                 Route::get('baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiBaptis'])->name('.verifikasi_baptis');
                 Route::get('pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiPernikahan'])->name('.verifikasi_pernikahan');
                 Route::get('registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiRegistrasi'])->name('.verifikasi_registrasi');

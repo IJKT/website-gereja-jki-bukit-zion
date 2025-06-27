@@ -36,6 +36,8 @@ detail revisi baptis, detail revisi pernikahan, dll-->
                                     <option value="1">Tambah</option>
                                     <option value="2">Ubah</option>
                                     <option value="3">Hapus</option>
+                                    <option value="3">Verifikasi</option>
+                                    <option value="3">Tolak</option>
                                 </select>
                             </div>
                     </x-filter-dropdown>
@@ -58,32 +60,40 @@ detail revisi baptis, detail revisi pernikahan, dll-->
                                 <td class="border border-gray-300 px-4 py-2 text-left">
                                     {{ $_riwayat->pelayan->jemaat->nama_jemaat }}</td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{-- @dd($_riwayat->id_tabel_ubah) --}}
-                                    @if (substr($_riwayat->id_tabel_ubah, 0, 2) == 'LI')
-                                        LAGU
-                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'PG')
-                                        PEMBUKUAN
-                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'JI')
-                                        JADWAL
-                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'RF')
-                                        RANGKUMAN
-                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'PL')
-                                        PELAYAN
-                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'JM')
-                                        JEMAAT
-                                    @elseif (substr($_riwayat['id_tabel_ubah'], 0, 2) == 'PJ')
-                                        PENGAJUAN JEMAAT
-                                    @endif
-                                    - ({{ $_riwayat['id_tabel_ubah'] }})
+                                    @php
+                                        $prefix = substr($_riwayat->id_tabel_ubah, 0, 2);
+
+                                        $labelMap = [
+                                            'LI' => 'LAGU',
+                                            'PG' => 'PEMBUKUAN',
+                                            'JI' => 'JADWAL',
+                                            'RF' => 'RANGKUMAN',
+                                            'PL' => 'PELAYAN',
+                                            'JM' => 'JEMAAT',
+                                            'PJ' => 'PENGAJUAN JEMAAT',
+                                        ];
+
+                                        $label = $labelMap[$prefix] ?? 'UNKNOWN';
+                                    @endphp
+
+                                    {{ $label }} - ({{ $_riwayat->id_tabel_ubah }})
+
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2 font-semibold">
-                                    @if ($_riwayat['jenis_perubahan'] == 1)
-                                        Tambah
-                                    @elseif ($_riwayat['jenis_perubahan'] == 2)
-                                        Ubah
-                                    @elseif ($_riwayat['jenis_perubahan'] == 3)
-                                        Hapus
-                                    @endif
+                                    @php
+                                        $jenisMap = [
+                                            1 => 'Tambah',
+                                            2 => 'Ubah',
+                                            3 => 'Hapus',
+                                            4 => 'Verifikasi',
+                                            5 => 'Penolakan',
+                                        ];
+
+                                        $labelJenis = $jenisMap[$_riwayat->jenis_perubahan] ?? 'Unknown';
+                                    @endphp
+
+                                    {{ $labelJenis }}
+
                                 </td>
                             </tr>
                         @endforeach

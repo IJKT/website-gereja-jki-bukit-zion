@@ -7,6 +7,7 @@ use App\Models\Pelayan;
 use App\Models\Riwayat;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 
 class PelayanController extends Controller
@@ -54,6 +55,16 @@ class PelayanController extends Controller
                 'id_pelayan' => $id_pelayan
             ]
         );
+    }
+    public function unduh(Request $request)
+    {
+        $pelayan = Pelayan::orderBy('hak_akses_pelayan')->get();
+
+        $pdf = Pdf::loadView('Exports.pelayan_file', [
+            'pelayan' => $pelayan,
+        ]);
+
+        return $pdf->download('Daftar Pelayan JKI Bukit Zion.pdf');
     }
 
     // UNTUK SEMUA PUT FUNCTION

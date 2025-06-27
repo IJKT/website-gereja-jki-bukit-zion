@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('id_pelayan_creator')->references('id_pelayan')->on('pelayan');
             $table->string('id_tabel_ubah', 10);
             $table->string('jenis_perubahan', 6);
+            $table->text('detail_riwayat')->nullable();
             $table->dateTime('tgl_perubahan');
         });
     }

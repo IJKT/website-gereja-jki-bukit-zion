@@ -13,18 +13,6 @@
                         <input type="text" name="id_jadwal" value="{{ $baptis->id_baptis }}"
                             class="w-full p-2 rounded bg-gray-100" readonly>
                     </div>
-                    <div class="relative">
-                        <label class="block font-semibold mb-1">PENGAJAR KELAS BAPTIS</label>
-                        <input type="text" id="nama_pengajar" value="{{ $baptis->pengajar->jemaat->nama_jemaat }}"
-                            name="nama_pengajar" class="w-full p-2 rounded bg-white" autocomplete="off" required>
-                        <div id="pengajar_suggestions"
-                            class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
-                            <!-- Suggestions will appear here -->
-                        </div>
-                        <!-- Hidden input to store pelayan ID -->
-                        <input type="hidden" id="id_pelayan" value="{{ $baptis->id_pengajar }}" name="id_pelayan"
-                            required />
-                    </div>
                     <div>
                         <label class="block font-semibold my-1">PREFERENSI NAMA</label>
                         <select name="preferensi_nama" class="w-full p-2 rounded bg-white">
@@ -39,7 +27,19 @@
                                 Yunani</option>
                         </select>
                     </div>
-                    <div>
+                    <div class="relative">
+                        <label class="block font-semibold mb-1">PENGAJAR KELAS BAPTIS</label>
+                        <input type="text" id="nama_pengajar" value="{{ $baptis->pengajar->jemaat->nama_jemaat }}"
+                            name="nama_pengajar" class="w-full p-2 rounded bg-white" autocomplete="off" required>
+                        <div id="pengajar_suggestions"
+                            class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
+                            <!-- Suggestions will appear here -->
+                        </div>
+                        <!-- Hidden input to store pelayan ID -->
+                        <input type="hidden" id="id_pelayan" value="{{ $baptis->id_pengajar }}" name="id_pelayan"
+                            required />
+                    </div>
+                    {{-- <div>
                         <label class="block font-semibold my-1">AKTA KELAHIRAN</label>
                         <div class="relative">
                             <input type="file" name="akta" id="akta" accept=".pdf" class="hidden"
@@ -50,7 +50,7 @@
                             </label>
                         </div>
                         <span id="akta-filename" class="block text-sm text-gray-700 mt-1"></span>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </form>
@@ -74,25 +74,25 @@
 
     @stack('scripts')
     <script>
-        // Update label file input
-        window.updateAktaLabel = function() {
-            const input = document.getElementById('akta');
-            const label = document.getElementById('akta-label');
-            const filenameSpan = document.getElementById('akta-filename');
+        // // Update label file input
+        // window.updateAktaLabel = function() {
+        //     const input = document.getElementById('akta');
+        //     const label = document.getElementById('akta-label');
+        //     const filenameSpan = document.getElementById('akta-filename');
 
-            if (input.files && input.files.length > 0) {
-                label.textContent = input.files[0].name;
-                label.classList.remove('text-gray-500');
-                label.classList.add('text-black');
-            } else {
-                filenameSpan.textContent = '';
-                label.textContent = 'File Akta Kelahiran Belum Ditemukan';
-                label.classList.remove('text-black');
-                label.classList.add('text-gray-500');
-            }
+        //     if (input.files && input.files.length > 0) {
+        //         label.textContent = input.files[0].name;
+        //         label.classList.remove('text-gray-500');
+        //         label.classList.add('text-black');
+        //     } else {
+        //         filenameSpan.textContent = '';
+        //         label.textContent = 'File Akta Kelahiran Belum Ditemukan';
+        //         label.classList.remove('text-black');
+        //         label.classList.add('text-gray-500');
+        //     }
 
-            checkRequiredFields(); // Recheck on file change
-        };
+        //     checkRequiredFields(); // Recheck on file change
+        // };
 
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('pengajuanForm');

@@ -14,6 +14,16 @@
                         <input type="text" name="id_jadwal" value="{{ $id_baptis }}"
                             class="w-full p-2 rounded bg-gray-100" readonly>
                     </div>
+                    <div>
+                        <label class="block font-semibold my-1">PREFERENSI NAMA</label>
+                        <select name="preferensi_nama" class="w-full p-2 rounded bg-white">
+                            <option value="" selected>Tidak Ada Preferensi</option>
+                            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                            <option value="Bahasa Inggris">Bahasa Inggris</option>
+                            <option value="Bahasa Ibrani">Bahasa Ibrani</option>
+                            <option value="Bahasa Yunani">Bahasa Yunani</option>
+                        </select>
+                    </div>
                     <div class="relative">
                         <label class="block font-semibold mb-1">PENGAJAR KELAS BAPTIS</label>
                         <input type="text" id="nama_pengajar" name="nama_pengajar"
@@ -25,29 +35,13 @@
                         </div>
                         <!-- Hidden input to store pelayan ID -->
                         <input type="hidden" id="id_pelayan" name="id_pelayan" required />
+                        <span class="text-sm">
+                            Kontak PIC terlebih dahulu untuk mendapatkan kelas pengajar <br>
+                            <a href="https://wa.me/6285176831891" class="hover:underline" target="blank ">Sari:
+                                (notelp)</a>
+                        </span>
                     </div>
-                    <div>
-                        <label class="block font-semibold my-1">PREFERENSI NAMA</label>
-                        <select name="preferensi_nama" class="w-full p-2 rounded bg-white">
-                            <option value="" selected>Tidak Ada Preferensi</option>
-                            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                            <option value="Bahasa Inggris">Bahasa Inggris</option>
-                            <option value="Bahasa Ibrani">Bahasa Ibrani</option>
-                            <option value="Bahasa Yunani">Bahasa Yunani</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-semibold my-1">AKTA KELAHIRAN</label>
-                        <div class="relative">
-                            <input type="file" name="akta" id="akta" accept=".pdf" class="hidden"
-                                onchange="updateAktaLabel()" required>
-                            <label for="akta" id="akta-label"
-                                class="w-full p-2 rounded bg-white cursor-pointer block text-gray-500 ">
-                                Masukkan File Dalam Bentuk PDF
-                            </label>
-                        </div>
-                        <span id="akta-filename" class="block text-sm text-gray-700 mt-1"></span>
-                    </div>
+
                 </div>
             </div>
         </form>
@@ -69,25 +63,25 @@
 
     @stack('scripts')
     <script>
-        // Update label file input
-        window.updateAktaLabel = function() {
-            const input = document.getElementById('akta');
-            const label = document.getElementById('akta-label');
-            const filenameSpan = document.getElementById('akta-filename');
+        // // Update label file input
+        // window.updateAktaLabel = function() {
+        //     const input = document.getElementById('akta');
+        //     const label = document.getElementById('akta-label');
+        //     const filenameSpan = document.getElementById('akta-filename');
 
-            if (input.files && input.files.length > 0) {
-                label.textContent = input.files[0].name;
-                label.classList.remove('text-gray-500');
-                label.classList.add('text-black');
-            } else {
-                filenameSpan.textContent = '';
-                label.textContent = 'File Akta Kelahiran Belum Ditemukan';
-                label.classList.remove('text-black');
-                label.classList.add('text-gray-500');
-            }
+        //     if (input.files && input.files.length > 0) {
+        //         label.textContent = input.files[0].name;
+        //         label.classList.remove('text-gray-500');
+        //         label.classList.add('text-black');
+        //     } else {
+        //         filenameSpan.textContent = '';
+        //         label.textContent = 'File Akta Kelahiran Belum Ditemukan';
+        //         label.classList.remove('text-black');
+        //         label.classList.add('text-gray-500');
+        //     }
 
-            checkRequiredFields(); // Recheck on file change
-        };
+        //     checkRequiredFields(); // Recheck on file change
+        // };
 
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('pengajuanForm');

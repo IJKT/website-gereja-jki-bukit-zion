@@ -57,37 +57,45 @@
 
         <h2>GEREJA JKI BUKIT ZION</h2>
         <h4>Jl. Manyar Kartika Timur No.2, RW.6, Menur Pumpungan, Kec. Sukolilo, Surabaya, Jawa Timur 60118</h4>
-        <p><strong>Laporan Pembukuan {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</strong></p>
+        <p><strong>Daftar Pengajuan Jemaat Bukit Zion {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</strong></p>
     </div>
 
     {{-- TABEL --}}
     <table>
         <thead>
             <tr>
-                <th>TANGGAL</th>
-                <th>NOMINAL</th>
-                <th>TIPE</th>
-                <th>DESKRIPSI</th>
+                <th>TANGGAL PENGAJUAN</th>
+                <th>NAMA JEMAAT</th>
+                <th>JENIS PENGAJUAN</th>
+                <th>STATUS PENGAJUAN</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($pembukuan as $item)
+            @foreach ($pengajuan as $item)
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($item->tgl_pembukuan)->translatedFormat('d F Y') }}</td>
-                    <td>Rp. {{ number_format($item->nominal_pembukuan, 0, ',', '.') }}</td>
-                    <td>{{ $item->jenis_pembukuan }}</td>
-                    <td>{{ $item->deskripsi_pembukuan }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->tanggal_pengajuan)->translatedFormat('l, d F Y') }}</td>
+                    <td>{{ $item->jemaat->nama_jemaat }}</td>
+                    <td>{{ $item->jenis_pengajuan }}</td>
+                    <td>
+                        @php
+                            $statusMap = [
+                                0 => 'Menunggu Verifikasi',
+                                1 => 'Diverifikasi',
+                                2 => 'Ditolak',
+                                3 => 'Dicetak',
+                                4 => 'Diberikan',
+                            ];
+
+                            $status = $statusMap[$item->verifikasi_pengajuan] ?? 'Unknown';
+                        @endphp
+
+                        {{ $status }}
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    {{-- TOTAL --}}
-    <div class="total">
-        <p>TOTAL PEMASUKAN: Rp. {{ number_format($total_pemasukan, 0, ',', '.') }}</p>
-        <p>TOTAL PENGELUARAN: Rp. {{ number_format($total_pengeluaran, 0, ',', '.') }}</p>
-        <p>TOTAL SIMPANAN: Rp. {{ number_format($total_simpanan, 0, ',', '.') }}</p>
-    </div>
 </body>
 
 </html>

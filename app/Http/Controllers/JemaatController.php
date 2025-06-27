@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Baptis;
 use App\Models\Jemaat;
@@ -10,6 +11,7 @@ use Illuminate\View\View;
 use App\Models\Pernikahan;
 use Illuminate\Http\Request;
 use App\Models\PengajuanJemaat;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +54,20 @@ class JemaatController extends Controller
             ]
         );
     }
+
+
+    public function unduh(Request $request)
+    {
+        $jemaat = Jemaat::orderBy('nama_jemaat')->get();
+
+
+        $pdf = Pdf::loadView('Exports.jemaat_file', [
+            'jemaat' => $jemaat,
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download('Daftar Jemaat JKI Bukit Zion.pdf');
+    }
+
     public function pengajuanViewall(Request $request): View
     {
         $pengajuan_jemaat = PengajuanJemaat::with('jemaat');
@@ -103,6 +119,22 @@ class JemaatController extends Controller
             ]
         );
     }
+    public function pengajuanUnduh(Request $request)
+    {
+        $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
+        $endOfMonth = Carbon::now()->endOfMonth()->toDateString();
+
+        $pengajuan = PengajuanJemaat::whereBetween('tanggal_pengajuan', [$startOfMonth, $endOfMonth])
+            ->orderBy('tanggal_pengajuan')
+            ->get();
+
+
+        $pdf = Pdf::loadView('Exports.pengajuan_file', [
+            'pengajuan' => $pengajuan,
+        ]);
+
+        return $pdf->download('Daftar Pengajuan Jemaat JKI Bukit Zion.pdf');
+    }
 
     // UNTUK SEMUA PUT FUNCTION
     public function update(Request $request, Jemaat $jemaat)
@@ -149,7 +181,14 @@ class JemaatController extends Controller
                 'verifikasi_pengajuan' => $request->verifikasi_pengajuan
             ]);
         }
-        Riwayat::logChange(2, $baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan);
+        if ($request->verifikasi_pengajuan == 1) {
+            // apabila verifikasi diterima
+            Riwayat::logChange(4, $baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan);
+        } else {
+            // apabila verifikasi ditolak
+            // TODO: tambahkan alasan penolakan di detail riwayat
+            Riwayat::logChange(5, $baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan);
+        }
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
@@ -168,7 +207,15 @@ class JemaatController extends Controller
             ]);
         }
 
-        Riwayat::logChange(2, $pernikahan->id_pernikahan, Auth::user()->jemaat->pelayan->id_pelayan);
+        if ($request->verifikasi_pengajuan == 1) {
+            // apabila verifikasi diterima
+            Riwayat::logChange(4, $pernikahan->id_pernikahan, Auth::user()->jemaat->pelayan->id_pelayan);
+        } else {
+            // apabila verifikasi ditolak
+            // TODO: tambahkan alasan penolakan di detail riwayat
+            Riwayat::logChange(5, $pernikahan->id_pernikahan, Auth::user()->jemaat->pelayan->id_pelayan);
+        }
+
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
@@ -187,7 +234,15 @@ class JemaatController extends Controller
             ]);
         }
 
-        Riwayat::logChange(2, $pengajuan_jemaat->id_pengajuan, Auth::user()->jemaat->pelayan->id_pelayan);
+        if ($request->verifikasi_pengajuan == 1) {
+            // apabila verifikasi diterima
+            Riwayat::logChange(4, $pengajuan_jemaat->id_pengajuan, Auth::user()->jemaat->pelayan->id_pelayan);
+        } else {
+            // apabila verifikasi ditolak
+            // TODO: tambahkan alasan penolakan di detail riwayat
+            Riwayat::logChange(5, $pengajuan_jemaat->id_pengajuan, Auth::user()->jemaat->pelayan->id_pelayan);
+        }
+
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
     }
 

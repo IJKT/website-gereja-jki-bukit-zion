@@ -76,6 +76,11 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
+            <a href="{{ route('Manajemen.Pelayan.unduh', request()->query()) }}">
+                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                    UNDUH
+                </button>
+            </a>
             <a href="{{ route('Manajemen.Pelayan.tambah') }}">
                 <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
                     TAMBAH

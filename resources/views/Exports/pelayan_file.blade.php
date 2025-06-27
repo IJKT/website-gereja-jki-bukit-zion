@@ -57,37 +57,29 @@
 
         <h2>GEREJA JKI BUKIT ZION</h2>
         <h4>Jl. Manyar Kartika Timur No.2, RW.6, Menur Pumpungan, Kec. Sukolilo, Surabaya, Jawa Timur 60118</h4>
-        <p><strong>Laporan Pembukuan {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</strong></p>
+        <p><strong>Daftar Pelayan Bukit Zion {{ \Carbon\Carbon::now()->translatedFormat('F Y') }}</strong></p>
     </div>
 
     {{-- TABEL --}}
     <table>
         <thead>
             <tr>
-                <th>TANGGAL</th>
-                <th>NOMINAL</th>
-                <th>TIPE</th>
-                <th>DESKRIPSI</th>
+                <th>NO</th>
+                <th>NAMA PELAYAN</th>
+                <th>HAK AKSES</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($pembukuan as $item)
+            @foreach ($pelayan as $item)
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($item->tgl_pembukuan)->translatedFormat('d F Y') }}</td>
-                    <td>Rp. {{ number_format($item->nominal_pembukuan, 0, ',', '.') }}</td>
-                    <td>{{ $item->jenis_pembukuan }}</td>
-                    <td>{{ $item->deskripsi_pembukuan }}</td>
+                    <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $item->jemaat->nama_jemaat }}</td>
+                    <td>{{ $item->hak_akses_pelayan }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    {{-- TOTAL --}}
-    <div class="total">
-        <p>TOTAL PEMASUKAN: Rp. {{ number_format($total_pemasukan, 0, ',', '.') }}</p>
-        <p>TOTAL PENGELUARAN: Rp. {{ number_format($total_pengeluaran, 0, ',', '.') }}</p>
-        <p>TOTAL SIMPANAN: Rp. {{ number_format($total_simpanan, 0, ',', '.') }}</p>
-    </div>
 </body>
 
 </html>

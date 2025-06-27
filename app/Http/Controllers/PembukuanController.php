@@ -150,37 +150,15 @@ class PembukuanController extends Controller
             'verifikasi_pembukuan' => $validated['verifikasi_pembukuan']
         ]);
 
-        Riwayat::logChange(2, $pembukuan->id_pembukuan, Auth::user()->jemaat->pelayan->id_pelayan);
+        if ($request->verifikasi_pembukuan == 1) {
+            // apabila verifikasi diterima
+            Riwayat::logChange(4, $pembukuan->id_pembukuan, Auth::user()->jemaat->pelayan->id_pelayan);
+        } else {
+            // apabila verifikasi ditolak
+            // TODO: tambahkan alasan penolakan di detail riwayat
+            Riwayat::logChange(5, $pembukuan->id_pembukuan, Auth::user()->jemaat->pelayan->id_pelayan);
+        }
         // Redirect back with a success message
         return redirect()->route('Pembukuan.viewall');
     }
-
-    // public function preview(Request $request)
-    // {
-    //     $query = Pembukuan::query();
-
-    //     if ($request->tanggal_awal) {
-    //         $query->whereDate('tgl_pembukuan', '>=', $request->tanggal_awal);
-    //     }
-
-    //     if ($request->tanggal_akhir) {
-    //         $query->whereDate('tgl_pembukuan', '<=', $request->tanggal_akhir);
-    //     }
-
-    //     if ($request->jenis_pembukuan) {
-    //         $query->where('jenis_pembukuan', $request->jenis_pembukuan);
-    //     }
-
-    //     $pembukuan = $query->orderBy('tgl_pembukuan')->get();
-
-    //     $total_pemasukan = $pembukuan->where('jenis_pembukuan', 'Uang Masuk')->sum('nominal_pembukuan');
-    //     $total_pengeluaran = $pembukuan->where('jenis_pembukuan', 'Uang Keluar')->sum('nominal_pembukuan');
-
-    //     return view('exports.pembukuan_file', [
-    //         'pembukuan' => $pembukuan,
-    //         'total_pemasukan' => $total_pemasukan,
-    //         'total_pengeluaran' => $total_pengeluaran,
-    //         'total_simpanan' => $total_pemasukan - $total_pengeluaran,
-    //     ]);
-    // }
 }
