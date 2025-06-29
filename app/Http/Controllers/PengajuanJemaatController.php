@@ -32,75 +32,6 @@ class PengajuanJemaatController extends Controller
             'detail_baptis' => Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first()
         ]);
     }
-    public function TambahBaptis(): View
-    {
-        return view('PengajuanJemaat.tambah_baptis', [
-            'title' => "Tambah Pengajuan Baptis",
-            'id_baptis' => PengajuanJemaat::generateNextId(),
-        ]);
-    }
-    public function UbahBaptis(Baptis $baptis): View
-    {
-        return view('PengajuanJemaat.ubah_baptis', [
-            'title' => 'Ubah Pengajuan Baptis',
-            'baptis' => $baptis
-        ]);
-    }
-    public function AddBaptis(Request $request)
-    {
-        // dd($request->all());
-        $request->validate([
-            'akta' => 'nullable|file|mimes:pdf',
-        ]);
-        $id_pengajuan = PengajuanJemaat::generateNextId();
-        // tambah pengajuan jemaat
-        $pengajuanjemaat = new PengajuanJemaat();
-        $pengajuanjemaat->id_pengajuan = $id_pengajuan;
-        $pengajuanjemaat->id_jemaat = Auth::user()->jemaat->id_jemaat;
-        $pengajuanjemaat->jenis_pengajuan = 'Baptis';
-        $pengajuanjemaat->tanggal_pengajuan = now();
-        $pengajuanjemaat->save();
-
-        // tambah baptis
-        $baptis = new Baptis();
-        $baptis->id_baptis = $id_pengajuan;
-        $baptis->preferensi_nama_baptis = $request->preferensi_nama;
-        $baptis->id_pengajar = $request->id_pelayan;
-        if ($request->hasFile('akta')) {
-            $file = $request->file('akta');
-            $originalName = $file->getClientOriginalName();
-            $targetDir = 'baptis';
-
-            // Prevent filename collisions by prefixing with a timestamp if file exists
-            $storagePath = storage_path("app/public/{$targetDir}/{$originalName}");
-            if (file_exists($storagePath)) {
-                $filenameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
-                $extension = $file->getClientOriginalExtension();
-                $originalName = $filenameWithoutExt . '_' . time() . '.' . $extension;
-            }
-
-            // Store the file with its (possibly modified) original name
-            $path = $file->storeAs($targetDir, $originalName, 'public');
-            $baptis->akta_kelahiran = $path; // Save the relative path as a string
-        }
-        $baptis->save();
-
-        return redirect()->route('PengajuanJemaat.baptis');
-    }
-    public function UpdateBaptis(Request $request, Baptis $baptis)
-    {
-        // Update data baptis
-        $baptis->preferensi_nama_baptis = $request->preferensi_nama;
-        $baptis->id_pengajar = $request->id_pelayan;
-        $baptis->save();
-
-        // Mengembalikan verifikasi pengajuan ke 0 (Menunggu Verifikasi)
-        $pengajuanjemaat = PengajuanJemaat::where('id_pengajuan', $baptis->id_baptis)->first();
-        $pengajuanjemaat->verifikasi_pengajuan = 0;
-        $pengajuanjemaat->save();
-
-        return redirect()->route('PengajuanJemaat.baptis');
-    }
     public function ViewPernikahan(): View
     {
         $jemaat = Auth::user()->jemaat;
@@ -128,11 +59,27 @@ class PengajuanJemaatController extends Controller
             'pasangan' => $pasangan,
         ]);
     }
+
+    public function TambahBaptis(): View
+    {
+        return view('PengajuanJemaat.tambah_baptis', [
+            'title' => "Tambah Pengajuan Baptis",
+            'id_baptis' => PengajuanJemaat::generateNextId(),
+        ]);
+    }
     public function TambahPernikahan(): View
     {
         return view('PengajuanJemaat.tambah_pernikahan', [
             'title' => "Tambah Pengajuan Pernikahan",
             'id_pernikahan' => PengajuanJemaat::generateNextId(),
+        ]);
+    }
+
+    public function UbahBaptis(Baptis $baptis): View
+    {
+        return view('PengajuanJemaat.ubah_baptis', [
+            'title' => 'Ubah Pengajuan Baptis',
+            'baptis' => $baptis
         ]);
     }
     public function UbahPernikahan(Pernikahan $pernikahan): View
@@ -142,6 +89,31 @@ class PengajuanJemaatController extends Controller
             // 'jenis_kelamin' => Auth::user(),
             'pernikahan' => $pernikahan,
         ]);
+    }
+
+    public function AddBaptis(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'akta' => 'nullable|file|mimes:pdf',
+        ]);
+        $id_pengajuan = PengajuanJemaat::generateNextId();
+        // tambah pengajuan jemaat
+        $pengajuanjemaat = new PengajuanJemaat();
+        $pengajuanjemaat->id_pengajuan = $id_pengajuan;
+        $pengajuanjemaat->id_jemaat = Auth::user()->jemaat->id_jemaat;
+        $pengajuanjemaat->jenis_pengajuan = 'Baptis';
+        $pengajuanjemaat->tanggal_pengajuan = now();
+        $pengajuanjemaat->save();
+
+        // tambah baptis
+        $baptis = new Baptis();
+        $baptis->id_baptis = $id_pengajuan;
+        $baptis->preferensi_nama_baptis = $request->preferensi_nama;
+        $baptis->id_pengajar = $request->id_pelayan;
+        $baptis->save();
+
+        return redirect()->route('PengajuanJemaat.baptis');
     }
     public function AddPernikahan(Request $request)
     {
@@ -171,12 +143,45 @@ class PengajuanJemaatController extends Controller
         }
         $pernikahan->tgl_pernikahan = $request->tanggal_jam_pernikahan;
         $pernikahan->tempat_pernikahan = $request->tempat_pernikahan;
+        if ($request->hasFile('berkas')) {
+            $file = $request->file('berkas');
+            $originalName = $file->getClientOriginalName();
+            $targetDir = 'pernikahan';
+
+            // Prevent filename collisions by prefixing with a timestamp if file exists
+            $storagePath = storage_path("app/public/{$targetDir}/{$originalName}");
+            if (file_exists($storagePath)) {
+                $filenameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $originalName = $filenameWithoutExt . '_' . time() . '.' . $extension;
+            }
+
+            // Store the file with its (possibly modified) original name
+            $path = $file->storeAs($targetDir, $originalName, 'public');
+            $pernikahan->berkas_pernikahan = $path; // Save the relative path as a string
+        }
         $pernikahan->save();
 
         return redirect()->route('PengajuanJemaat.pernikahan');
     }
+
+    public function UpdateBaptis(Request $request, Baptis $baptis)
+    {
+        // Update data baptis
+        $baptis->preferensi_nama_baptis = $request->preferensi_nama;
+        $baptis->id_pengajar = $request->id_pelayan;
+        $baptis->save();
+
+        // Mengembalikan verifikasi pengajuan ke 0 (Menunggu Verifikasi)
+        $pengajuanjemaat = PengajuanJemaat::where('id_pengajuan', $baptis->id_baptis)->first();
+        $pengajuanjemaat->verifikasi_pengajuan = 0;
+        $pengajuanjemaat->save();
+
+        return redirect()->route('PengajuanJemaat.baptis');
+    }
     public function UpdatePernikahan(Request $request, Pernikahan $pernikahan)
     {
+        dd($request->all());
         $jemaat = Auth::user()->jemaat;
         $id_pasangan = $request->id_jemaat;
 
@@ -191,6 +196,23 @@ class PengajuanJemaatController extends Controller
         }
         $pernikahan->tgl_pernikahan = $request->tanggal_jam_pernikahan;
         $pernikahan->tempat_pernikahan = $request->tempat_pernikahan;
+        if ($request->hasFile('berkas')) {
+            $file = $request->file('berkas');
+            $originalName = $file->getClientOriginalName();
+            $targetDir = 'pernikahan';
+
+            // Prevent filename collisions by prefixing with a timestamp if file exists
+            $storagePath = storage_path("app/public/{$targetDir}/{$originalName}");
+            if (file_exists($storagePath)) {
+                $filenameWithoutExt = pathinfo($originalName, PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $originalName = $filenameWithoutExt . '_' . time() . '.' . $extension;
+            }
+
+            // Store the file with its (possibly modified) original name
+            $path = $file->storeAs($targetDir, $originalName, 'public');
+            $pernikahan->berkas_pernikahan = $path; // Save the relative path as a string
+        }
         $pernikahan->save();
 
         return redirect()->route('PengajuanJemaat.pernikahan');

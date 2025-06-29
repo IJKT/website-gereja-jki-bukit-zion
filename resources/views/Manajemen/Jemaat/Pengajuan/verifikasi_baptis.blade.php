@@ -1,4 +1,9 @@
 <!-- TODO: buat biar bisa dilihat lagi setelah di verif, tapi tidak usah bisa dibuat bisa diverif lagi -->
+<!-- TODO: apabila sudah diverif, langkah selanjutnya yang bisa dilakukan adalah dicetak -->
+<!-- TODO: setelah diberikan, hal yang bisa dilakukan adalah untuk melihat saja -->
+<!-- ROADMAP
+Verifikasi   -> Dicetak     -> Diberikan
+-->
 
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
@@ -37,11 +42,6 @@
                                 disabled>
                         </div>
                     </div>
-                    {{-- <div>
-                        <label class="block font-semibold mb-1">PEKERJAAN</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->jemaat->pekerjaan_jemaat }}"
-                            class="w-full p-2 rounded bg-gray-100" placeholder="Belum/Tidak Bekerja" disabled>
-                    </div> --}}
                     <div>
                         <label class="block font-semibold mb-1">ALAMAT</label>
                         <input type="text" value="{{ $pengajuan_jemaat->jemaat->alamat_jemaat }}"
@@ -77,14 +77,16 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
-                onclick="showAlertVerify()">
-                VERIFIKASI
-            </button>
-            <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
-                onclick="showAlertDecline()">
-                TOLAK
-            </button>
+            @if ($pengajuan_jemaat->verifikasi_pengajuan != 1)
+                <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
+                    onclick="showAlertVerify()">
+                    VERIFIKASI
+                </button>
+                <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
+                    onclick="showAlertDecline()">
+                    TOLAK
+                </button>
+            @endif
             <a href="{{ route('Manajemen.Jemaat.Pengajuan.viewall') }}">
                 <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL

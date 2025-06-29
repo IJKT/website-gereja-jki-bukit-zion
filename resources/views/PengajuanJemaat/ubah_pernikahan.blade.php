@@ -1,8 +1,11 @@
+<!--TODO: tambahin field untuk zip file-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- main content --}}
     <div class="flex-1 bg-white p-10">
-        <form id="pengajuanForm" action="{{ route('PengajuanJemaat.update_pernikahan', $pernikahan) }}" method="POST">
+        <form id="pengajuanForm" action="{{ route('PengajuanJemaat.update_pernikahan', $pernikahan) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
@@ -43,6 +46,19 @@
                             value="{{ \Carbon\Carbon::parse($pernikahan->tgl_pernikahan)->format('Y-m-d\TH:i') }}"
                             min="{{ now()->format('Y-m-d\TH:i') }}" required>
                     </div>
+                    <div>
+                        <label class="block font-semibold mb-1">BERKAS PERNIKAHAN</label>
+                        <div class="relative">
+                            <input type="file" name="berkas" id="berkas" accept=".zip, .rar" class="hidden"
+                                onchange="updateBerkasLabel()">
+                            <label for="berkas" id="berkas-label"
+                                class="w-full p-2 rounded bg-white cursor-pointer block ">
+                                {{ \Illuminate\Support\Str::after($pernikahan->berkas_pernikahan ?? '', 'pernikahan/') }}
+                            </label>
+                        </div>
+                        <span id="berkas-filename" class="block text-sm text-gray-700 mt-1"></span>
+                        <span class="block text-sm text-gray-700 mt-1">Maksimal 10MB</span>
+                    </div>
                 </div>
             </div>
         </form>
@@ -65,6 +81,40 @@
     </div>
     @stack('scripts')
     <script>
+        // Update label file input
+        window.updateBerkasLabel = function() {
+            const input = document.getElementById('berkas');
+            const label = document.getElementById('berkas-label');
+            const filenameSpan = document.getElementById('berkas-filename');
+
+            if (input.files && input.files.length > 0) {
+                const file = input.files[0];
+                if (file.size > 10 * 1024 * 1024) { // 10MB in bytes
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'File tidak boleh lebih dari 10MB',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    input.value = '';
+                    label.textContent =
+                        '{{ \Illuminate\Support\Str::after($pernikahan->berkas_pernikahan ?? '', 'pernikahan/') }}';
+                    label.classList.add('text-gray-500');
+                    return;
+                }
+                label.textContent = file.name;
+                label.classList.remove('text-gray-500');
+                label.classList.add('text-black');
+            } else {
+                filenameSpan.textContent = '';
+                label.textContent =
+                    '{{ \Illuminate\Support\Str::after($pernikahan->berkas_pernikahan ?? '', 'pernikahan/') }}';
+                label.classList.add('text-gray-500');
+            }
+
+            checkRequiredFields(); // Recheck on file change
+        };
+
         const jk_user = '{{ auth()->user()->jemaat->jk_jemaat }}';
 
         document.addEventListener('DOMContentLoaded', function() {

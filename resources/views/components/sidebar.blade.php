@@ -1,4 +1,4 @@
-<div class="w-1/5 bg-[#424242] text-white p-4 h-screen" x-data="{ openSub1: false, openSub2: false, openSub3: false }">
+<div class="w-1/5 bg-[#424242] text-white p-4 min-h-screen max-h-[300vh]" x-data="{ openSub1: false, openSub2: false, openSub3: false }">
     <ul class="space-y-2 relative">
         <a href="{{ route('Dashboard.index') }}">
             <li

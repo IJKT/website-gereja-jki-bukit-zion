@@ -1,3 +1,10 @@
+<!-- TODO: buat biar bisa dilihat lagi setelah di verif, tapi tidak usah bisa dibuat bisa diverif lagi -->
+<!-- TODO: apabila sudah diverif, langkah selanjutnya yang bisa dilakukan adalah dicetak -->
+<!-- TODO: setelah diberikan, hal yang bisa dilakukan adalah untuk melihat saja -->
+<!-- ROADMAP
+Verifikasi   -> Dicetak     -> Diberikan
+-->
+
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     {{-- Main Content --}}
@@ -11,33 +18,33 @@
                 <div class="grid grid-cols-2 gap-x-10 gap-y-2">
                     <div>
                         <label class="block font-semibold mb-1">ID PENGAJUAN</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->id_pernikahan }}"
+                        <input type="text" value="{{ $pengajuan_jemaat->id_pengajuan }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
 
                     <div>
                         <label class="block font-semibold mb-1">NAMA PENGAJU</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->pengajuan_jemaat->jemaat->nama_jemaat }}"
+                        <input type="text" value="{{ $pengajuan_jemaat->jemaat->nama_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">CALON SUAMI</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->jemaat_pria->nama_jemaat }}"
+                        <input type="text" value="{{ $detail_pernikahan->jemaat_pria->nama_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">CALON ISTRI</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->jemaat_wanita->nama_jemaat }}"
+                        <input type="text" value="{{ $detail_pernikahan->jemaat_wanita->nama_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TEMPAT & TANGGAL LAHIR SUAMI</label>
                         <div class="grid grid-cols-2 gap-x-5">
                             <input type="text" name="tmpt_lahir_jemaat"
-                                value="{{ $pengajuan_jemaat->jemaat_pria->tmpt_lahir_jemaat }}"
+                                value="{{ $detail_pernikahan->jemaat_pria->tmpt_lahir_jemaat }}"
                                 class="w-full p-2 rounded bg-gray-100" disabled>
                             <input type="date" class="w-full p-2 rounded bg-gray-100" name="tgl_lahir_jemaat"
-                                value="{{ \Carbon\Carbon::parse($pengajuan_jemaat->jemaat_pria->tgl_lahir_jemaat)->format('Y-m-d') }}"
+                                value="{{ \Carbon\Carbon::parse($detail_pernikahan->jemaat_pria->tgl_lahir_jemaat)->format('Y-m-d') }}"
                                 disabled>
                         </div>
                     </div>
@@ -45,49 +52,76 @@
                         <label class="block font-semibold mb-1">TEMPAT & TANGGAL LAHIR ISTRI</label>
                         <div class="grid grid-cols-2 gap-x-5">
                             <input type="text" name="tmpt_lahir_jemaat"
-                                value="{{ $pengajuan_jemaat->jemaat_wanita->tmpt_lahir_jemaat }}"
+                                value="{{ $detail_pernikahan->jemaat_wanita->tmpt_lahir_jemaat }}"
                                 class="w-full p-2 rounded bg-gray-100" disabled>
                             <input type="date" class="w-full p-2 rounded bg-gray-100" name="tgl_lahir_jemaat"
-                                value="{{ \Carbon\Carbon::parse($pengajuan_jemaat->jemaat_wanita->tgl_lahir_jemaat)->format('Y-m-d') }}"
+                                value="{{ \Carbon\Carbon::parse($detail_pernikahan->jemaat_wanita->tgl_lahir_jemaat)->format('Y-m-d') }}"
                                 disabled>
                         </div>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">ALAMAT SUAMI</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->jemaat_pria->alamat_jemaat }}"
+                        <input type="text" value="{{ $detail_pernikahan->jemaat_pria->alamat_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">ALAMAT ISTRI</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->jemaat_wanita->alamat_jemaat }}"
+                        <input type="text" value="{{ $detail_pernikahan->jemaat_wanita->alamat_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">NOMOR TELEPON SUAMI</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->jemaat_pria->telp_jemaat }}"
+                        <input type="text" value="{{ $detail_pernikahan->jemaat_pria->telp_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">NOMOR TELEPON ISTRI</label>
-                        <input type="text" value="{{ $pengajuan_jemaat->jemaat_wanita->telp_jemaat }}"
+                        <input type="text" value="{{ $detail_pernikahan->jemaat_wanita->telp_jemaat }}"
                             class="w-full p-2 rounded bg-gray-100" disabled>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TANGGAL & JAM PERNIKAHAN</label>
                         <div class="grid grid-cols-2 gap-x-5">
                             <input type="text" name="tmpt_lahir_jemaat"
-                                value=" {{ \Carbon\Carbon::parse($pengajuan_jemaat->tgl_pernikahan)->format('d M Y') }} "
+                                value=" {{ \Carbon\Carbon::parse($detail_pernikahan->tgl_pernikahan)->format('d M Y') }} "
                                 class="w-full p-2 rounded bg-gray-100" disabled>
                             <input type="text" class="w-full p-2 rounded bg-gray-100" name="tgl_lahir_jemaat"
-                                value=" {{ \Carbon\Carbon::parse($pengajuan_jemaat->tgl_pernikahan)->format('H:i') }} "
+                                value=" {{ \Carbon\Carbon::parse($detail_pernikahan->tgl_pernikahan)->format('H:i') }} "
                                 disabled>
                         </div>
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TEMPAT PERNIKAHAN</label>
                         <input type="text" name="tmpt_lahir_jemaat"
-                            value=" {{ $pengajuan_jemaat->tempat_pernikahan }} " class="w-full p-2 rounded bg-gray-100"
-                            disabled>
+                            value=" {{ $detail_pernikahan->tempat_pernikahan }} "
+                            class="w-full p-2 rounded bg-gray-100" disabled>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">BERKAS PERNIKAHAN</label>
+                        <div class="relative">
+                            <input type="file" name="berkas" id="berkas" accept=".zip, .rar" class="hidden"
+                                disabled>
+                            <label for="berkas" id="berkas-label" class="w-full p-2 rounded bg-gray-100 block">
+                                {{ \Illuminate\Support\Str::after($detail_pernikahan->berkas_pernikahan ?? '', 'pernikahan/') }}
+                            </label>
+                        </div>
+                        <span id="berkas-filename" class="block text-sm text-gray-700 mt-1"></span>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <a href="{{ asset('storage/' . $detail_pernikahan->berkas_pernikahan) }}" download
+                                class="px-3 py-1 bg-[#215773] text-white rounded hover:bg-[#1a4a60]">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"
+                                    enable-background="new 0 0 32 32" xml:space="preserve" class="h-5 w-5 font-bold">
+                                    <line fill="none" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"
+                                        x1="25" y1="28" x2="7" y2="28" />
+                                    <line fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-miterlimit="10" x1="16" y1="23" x2="16"
+                                        y2="4" />
+                                    <polyline fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-miterlimit="10" points="9,16 16,23 23,16 " />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 {{-- untuk mendapatkan komentar dan verifikasi --}}
@@ -98,16 +132,19 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
-                onclick="showAlertVerify()">
-                VERIFIKASI
-            </button>
-            <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
-                onclick="showAlertDecline()">
-                TOLAK
-            </button>
+            @if ($pengajuan_jemaat->verifikasi_pengajuan != 1)
+                <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
+                    onclick="showAlertVerify()">
+                    VERIFIKASI
+                </button>
+                <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
+                    onclick="showAlertDecline()">
+                    TOLAK
+                </button>
+            @endif
             <a href="{{ route('Manajemen.Jemaat.Pengajuan.viewall') }}">
-                <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                <button type="button"
+                    class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
                 </button>
             </a>

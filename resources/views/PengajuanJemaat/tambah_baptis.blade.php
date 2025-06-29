@@ -27,8 +27,8 @@
                     <div class="relative">
                         <label class="block font-semibold mb-1">PENGAJAR KELAS BAPTIS</label>
                         <input type="text" id="nama_pengajar" name="nama_pengajar"
-                            class="w-full p-2 rounded bg-white" placeholder="Tambahkan Nama Pengajar Kelas Pembaptis"
-                            autocomplete="off" required>
+                            class="w-full p-2 rounded bg-white"
+                            placeholder="Kontak Nomor Dibawah Untuk Nama Kelas Pengajar" autocomplete="off" required>
                         <div id="pengajar_suggestions"
                             class="absolute z-10 w-full bg-white border mt-1 rounded-md hidden max-h-60 overflow-auto">
                             <!-- Suggestions will appear here -->
@@ -36,7 +36,6 @@
                         <!-- Hidden input to store pelayan ID -->
                         <input type="hidden" id="id_pelayan" name="id_pelayan" required />
                         <span class="text-sm">
-                            Kontak PIC terlebih dahulu untuk mendapatkan kelas pengajar <br>
                             <a href="https://wa.me/6285176831891" class="hover:underline" target="blank ">Sari:
                                 (notelp)</a>
                         </span>

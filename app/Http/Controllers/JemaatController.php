@@ -55,7 +55,6 @@ class JemaatController extends Controller
         );
     }
 
-
     public function unduh(Request $request)
     {
         $jemaat = Jemaat::orderBy('nama_jemaat')->get();
@@ -67,7 +66,6 @@ class JemaatController extends Controller
 
         return $pdf->download('Daftar Jemaat JKI Bukit Zion.pdf');
     }
-
     public function pengajuanViewall(Request $request): View
     {
         $pengajuan_jemaat = PengajuanJemaat::with('jemaat');
@@ -99,13 +97,17 @@ class JemaatController extends Controller
             ]
         );
     }
-    public function pengajuanVerifikasiPernikahan(Pernikahan $pengajuan_jemaat): View
+    public function pengajuanVerifikasiPernikahan(PengajuanJemaat $pengajuan_jemaat): View
     {
+        $data_pernikahan = $pengajuan_jemaat::where('id_jemaat', $pengajuan_jemaat->id_jemaat)
+            ->where('jenis_pengajuan', 'Pernikahan')
+            ->first();
         return view(
             'Manajemen.Jemaat.Pengajuan.verifikasi_pernikahan',
             [
                 'title' => 'Verifikasi Pengajuan Pernikahan',
-                'pengajuan_jemaat' => $pengajuan_jemaat
+                'pengajuan_jemaat' => $data_pernikahan,
+                'detail_pernikahan' => Pernikahan::where('id_pernikahan', $data_pernikahan->id_pengajuan)->first(),
             ]
         );
     }
