@@ -10,7 +10,7 @@
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
                 <h2 class="font-bold mb-4">TAMBAH DATA PEMBUKUAN</h2>
-                <div class="grid grid-cols-2 gap-x-10 gap-y-2">
+                <div class="grid grid-cols-2 gap-x-10 gap-y-2" x-data="{ tipe: 'Uang Masuk' }">
                     <div>
                         <label class="block font-semibold mb-1">ID PEMBUKUAN</label>
                         <input type="text" name="id_pembukuan" value="{{ $id_pembukuan }}"
@@ -32,13 +32,26 @@
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TIPE</label>
-                        <select name="jenis_pembukuan" class="w-full p-2 rounded bg-white">
+                        <select name="jenis_pembukuan" class="w-full p-2 rounded bg-white" x-model="tipe">
                             <option value="Uang Masuk">Uang Masuk</option>
                             <option value="Uang Keluar">Uang Keluar</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block font-semibold mb-1" :class="tipe ? 'required' : ''">KATEGORI UANG
+                            MASUK</label>
+                        <select name="jenis_pemasukan" id="jenis_pemasukan"
+                            class="w-full p-2 rounded bg-white disabled:bg-gray-100" :disabled="tipe !== 'Uang Masuk'"
+                            :required="tipe === 'Uang Masuk'">
+                            <option value="Persembahan Ibadah Raya">Persembahan Ibadah Raya</option>
+                            <option value="Persembahan Perpuluhan">Persembahan Perpuluhan</option>
+                            <option value="Persembahan Misi">Persembahan Misi</option>
+                            <option value="Persembahan Outreach">Persembahan Outreach</option>
+                            <option value="Persembahan Rumah Asuhan">Persembahan Rumah Asuhan</option>
+                            <option value="Persembahan Donasi">Persembahan Donasi</option>
+                        </select>
+                    </div>
                 </div>
-
                 <div>
                     <label class="block font-semibold mb-1">DESKRIPSI</label>
                     <textarea class="w-full p-2 rounded bg-white resize-y min-h-[80px] max-h-[50vh]" name="deskripsi_pembukuan"

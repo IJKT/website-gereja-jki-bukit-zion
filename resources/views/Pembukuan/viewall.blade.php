@@ -10,7 +10,7 @@
             <div>
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-4">
-                    <label class="font-semibold">PEMBUKUAN</label>
+                    <label class="font-semibold">{{ $label_periode }}</label>
                     {{-- filter button --}}
                     <x-filter-dropdown>
                         <form method="GET" action="{{ route('Pembukuan.viewall') }}">
@@ -97,22 +97,24 @@
                                 function showAlert{{ $_pembukuan['id_pembukuan'] }}() {
                                     Swal.fire({
                                         title: 'DESKRIPSI',
-                                        html: `<strong>Deskripsi:</strong> {{ $_pembukuan->deskripsi_pembukuan }}<br> 
-                                        <strong>Komentar:</strong> {{ empty($_pembukuan->catatan_pembukuan) ? 'Tidak ada komentar' : $_pembukuan['catatan_pembukuan'] }}`,
+                                        html: `
+                                            <strong>Deskripsi:</strong> {{ $_pembukuan->deskripsi_pembukuan }}<br>
+                                            @if ($_pembukuan->verifikasi_pembukuan != 1 && !empty($_pembukuan->catatan_pembukuan))
+                                                <strong>Komentar:</strong> {{ $_pembukuan->catatan_pembukuan }}<br>
+                                            @endif
+                                            @if ($_pembukuan->jenis_pembukuan == 'Uang Masuk')
+                                                <strong>Jenis Uang Masuk:</strong> {{ $_pembukuan->jenis_pemasukan ?? 'Tidak ada jenis' }}<br>
+                                            @endif
+                                        `,
                                         icon: 'info',
                                         confirmButtonText: 'OK'
-                                    })
+                                    });
                                 }
                             </script>
                         @endforeach
                     </tbody>
                 </table>
-                <?php
-                $result = \DB::table('pembukuan')->selectRaw("SUM(CASE WHEN jenis_pembukuan = 'Uang Masuk' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pemasukan, SUM(CASE WHEN jenis_pembukuan = 'Uang Keluar' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pengeluaran")->first();
-                
-                $total_pemasukan = $result->total_pemasukan;
-                $total_pengeluaran = $result->total_pengeluaran;
-                ?>
+
                 <div class="mt-2 flex justify-between">
                     <div class="flex font-semibold">Pemasukan:
                         <div class="font-normal">Rp. {{ number_format($total_pemasukan, 0, ',', '.') }}</div>
@@ -122,7 +124,7 @@
                     </div>
                     <div class="flex font-semibold">Total Sisa:
                         <div class="font-normal">Rp.
-                            {{ number_format($total_pemasukan - $total_pengeluaran, 0, ',', '.') }}</div>
+                            {{ number_format($total_sisa, 0, ',', '.') }}</div>
                     </div>
                 </div>
             </div>

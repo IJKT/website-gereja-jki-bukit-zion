@@ -10,7 +10,7 @@
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
                 <h2 class="font-bold mb-4">UBAH DATA PEMBUKUAN</h2>
-                <div class="grid grid-cols-2 gap-x-10 gap-y-2">
+                <div class="grid grid-cols-2 gap-x-10 gap-y-2" x-data="{ tipe: '{{ $pembukuan->jenis_pembukuan }}' }">
                     <div>
                         <label class="block font-semibold mb-1">ID PEMBUKUAN</label>
                         <input type="text" name="id_pembukuan" value="{{ $pembukuan->id_pembukuan }}"
@@ -32,13 +32,39 @@
                     </div>
                     <div>
                         <label class="block font-semibold mb-1">TIPE</label>
-                        <select name="jenis_pembukuan" class="w-full p-2 rounded bg-white">
+                        <select name="jenis_pembukuan" class="w-full p-2 rounded bg-white" x-model="tipe">
                             <option value="Uang Masuk"
                                 {{ $pembukuan->jenis_pembukuan == 'Uang Masuk' ? 'selected' : '' }}>
                                 Uang Masuk</option>
                             <option value="Uang Keluar"
                                 {{ $pembukuan->jenis_pembukuan == 'Uang Keluar' ? 'selected' : '' }}>Uang Keluar
                             </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1" :class="tipe ? 'required' : ''">KATEGORI UANG
+                            MASUK</label>
+                        <select name="jenis_pemasukan" id="jenis_pemasukan"
+                            class="w-full p-2 rounded bg-white disabled:bg-gray-100" :disabled="tipe !== 'Uang Masuk'"
+                            :required="tipe === 'Uang Masuk'">
+                            <option value="Persembahan Ibadah Raya"
+                                {{ $pembukuan->jenis_pemasukan == 'Persembahan Ibadah Raya' ? 'selected' : '' }}>
+                                Persembahan Ibadah Raya</option>
+                            <option value="Persembahan Perpuluhan"
+                                {{ $pembukuan->jenis_pemasukan == 'Persembahan Perpuluhan' ? 'selected' : '' }}>
+                                Persembahan Perpuluhan</option>
+                            <option value="Persembahan Misi"
+                                {{ $pembukuan->jenis_pemasukan == 'Persembahan Misi' ? 'selected' : '' }}>
+                                Persembahan Misi</option>
+                            <option value="Persembahan Outreach"
+                                {{ $pembukuan->jenis_pemasukan == 'Persembahan Outreach' ? 'selected' : '' }}>
+                                Persembahan Outreach</option>
+                            <option value="Persembahan Rumah Asuhan"
+                                {{ $pembukuan->jenis_pemasukan == 'Persembahan Rumah Asuhan' ? 'selected' : '' }}>
+                                Persembahan Rumah Asuhan</option>
+                            <option value="Persembahan Donasi"
+                                {{ $pembukuan->jenis_pemasukan == 'Persembahan Donasi' ? 'selected' : '' }}>
+                                Persembahan Donasi</option>
                         </select>
                     </div>
                 </div>
@@ -53,15 +79,15 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
+            <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
+                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+                SIMPAN
+            </button>
             <a href="{{ route('Pembukuan.viewall') }}">
                 <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
                 </button>
             </a>
-            <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
-                SIMPAN
-            </button>
         </div>
     </div>
     </div>

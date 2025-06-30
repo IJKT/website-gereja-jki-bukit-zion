@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pembukuan', function (Blueprint $table) {
             $table->string('id_pembukuan', 10)->primary();
             $table->string('jenis_pembukuan', 15);
+            $table->string('jenis_pemasukan', 40)->nullable();
             $table->integer('nominal_pembukuan')->default(0);
             $table->date('tgl_pembukuan');
             $table->text('deskripsi_pembukuan');
