@@ -1,5 +1,3 @@
-<!-- TODO: apakah ini mau ditambahin untuk "PERNAH BAPTIS" dan "CARA BAPTIS"?-->
-{{-- @dd($jadwal) --}}
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="flex-1 bg-gray-100 p-5">
@@ -49,13 +47,39 @@
             @endif
 
             <!-- Pengajuanku -->
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h2 class="text-lg font-semibold mb-2">Pengajuan Saya</h2>
-                <ul class="list-disc list-inside">
-                    <li>Status Baptis - <b>Menunggu Verifikasi</b></li>
-                    <li>Status Pernikahan - <b>Belum Mengajukan</b></li>
-                </ul>
-            </div>
+            @php
+                $baptis =
+                    Auth::user()->jemaat->pengajuan_jemaat->where('jenis_pengajuan', 'Baptis')->first()
+                        ?->verifikasi_pengajuan ?? 'Belum Mengajukan';
+
+                $pernikahan =
+                    Auth::user()->jemaat->pengajuan_jemaat->where('jenis_pengajuan', 'Pernikahan')->first()
+                        ?->verifikasi_pengajuan ?? 'Belum Mengajukan';
+            @endphp
+
+            @if (Auth::user()->verifikasi_user == 1)
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h2 class="text-lg font-semibold mb-2">Pengajuan Saya</h2>
+                    <ul class="list-disc list-inside">
+                        @if ($baptis != 'Belum Mengajukan')
+                            <li>Status Baptis -
+                                <b
+                                    class="{{ ['text-yellow-500', 'text-green-500', 'text-red-500', 'text-black', 'text-black'][$baptis] }}">
+                                    {{ ['Menunggu Verifikasi', 'Diverifikasi', 'Ditolak', 'Dicetak', 'Diberikan'][$baptis] }}
+                                </b>
+                            </li>
+                        @endif
+                        @if ($pernikahan != 'Belum Mengajukan')
+                            <li>Status Pernikahan -
+                                <b
+                                    class="{{ ['text-yellow-500', 'text-green-500', 'text-red-500', 'text-black', 'text-black'][$pernikahan] }}">
+                                    {{ ['Menunggu Verifikasi', 'Diverifikasi', 'Ditolak', 'Dicetak', 'Diberikan'][$pernikahan] }}
+                                </b>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            @endif
 
             <!-- Pemberitahuan -->
             <div class="bg-white p-4 rounded-lg shadow-md md:col-span-3">
@@ -68,7 +92,7 @@
                             {{ $_rangkuman_firman->tipe_rangkuman }}:
                             <a href="{{ route('Home.single_post', $_rangkuman_firman->slug_rangkuman) }}"
                                 class="hover:underline">
-                                <strong>{{ Str::limit($_rangkuman_firman->judul_rangkuman, 30) }}</strong>
+                                <strong>{{ Str::limit($_rangkuman_firman->judul_rangkuman, 100) }}</strong>
                             </a>
                         </li>
                     @endforeach

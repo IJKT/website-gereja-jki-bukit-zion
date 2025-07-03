@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use App\Models\Pernikahan;
 use Illuminate\Http\Request;
 use App\Models\PengajuanJemaat;
+use App\Models\RevisiPengajuan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -88,12 +89,15 @@ class JemaatController extends Controller
         $data_baptis = $pengajuan_jemaat::where('id_jemaat', $pengajuan_jemaat->id_jemaat)
             ->where('jenis_pengajuan', 'Baptis')
             ->first();
+        $detail_baptis = Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first();
+        $data_revisi = RevisiPengajuan::where('id_revisi', $data_baptis->id_pengajuan)->orderByDesc('tgl_revisi')->paginate(3);
         return view(
             'Manajemen.Jemaat.Pengajuan.verifikasi_baptis',
             [
                 'title' => 'Verifikasi Pengajuan Baptis',
                 'pengajuan_jemaat' => $data_baptis,
-                'detail_baptis' => Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first(),
+                'detail_baptis' => $detail_baptis,
+                'data_revisi' => $data_revisi,
             ]
         );
     }
@@ -102,12 +106,15 @@ class JemaatController extends Controller
         $data_pernikahan = $pengajuan_jemaat::where('id_jemaat', $pengajuan_jemaat->id_jemaat)
             ->where('jenis_pengajuan', 'Pernikahan')
             ->first();
+        $detail_pernikahan = Pernikahan::where('id_pernikahan', $data_pernikahan->id_pengajuan)->first();
+        $data_revisi = RevisiPengajuan::where('id_revisi', $data_pernikahan->id_pengajuan)->orderByDesc('tgl_revisi')->paginate(3);
         return view(
             'Manajemen.Jemaat.Pengajuan.verifikasi_pernikahan',
             [
                 'title' => 'Verifikasi Pengajuan Pernikahan',
                 'pengajuan_jemaat' => $data_pernikahan,
-                'detail_pernikahan' => Pernikahan::where('id_pernikahan', $data_pernikahan->id_pengajuan)->first(),
+                'detail_pernikahan' => $detail_pernikahan,
+                'data_revisi' => $data_revisi,
             ]
         );
     }
@@ -172,7 +179,7 @@ class JemaatController extends Controller
     public function pengajuanVerifyBaptis(Request $request, Baptis $baptis)
     {
         $baptis->update([
-            'komentar_baptis' => $request->catatan_pengajuan,
+            // 'komentar_baptis' => $request->catatan_pengajuan,
             'id_pembaptis' => $request->id_pembaptis,
             'tgl_baptis' => $request->tgl_baptis
         ]);
@@ -188,8 +195,8 @@ class JemaatController extends Controller
             Riwayat::logChange(4, $baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan);
         } else {
             // apabila verifikasi ditolak
-            // TODO: tambahkan alasan penolakan di detail riwayat
             Riwayat::logChange(5, $baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan);
+            RevisiPengajuan::addRevision($baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan,  $request->catatan_pengajuan);
         }
         // Redirect back with a success message
         return redirect()->route('Manajemen.Jemaat.Pengajuan.viewall');
@@ -198,7 +205,7 @@ class JemaatController extends Controller
     {
         // dd([$request->catatan_pengajuan, $request->id_pendeta, $request->verifikasi_pengajuan]);
         $pernikahan->update([
-            'komentar_pernikahan' => $request->catatan_pengajuan,
+            // 'komentar_pernikahan' => $request->catatan_pengajuan,
             'id_pendeta' => $request->id_pendeta
         ]);
 
@@ -214,8 +221,8 @@ class JemaatController extends Controller
             Riwayat::logChange(4, $pernikahan->id_pernikahan, Auth::user()->jemaat->pelayan->id_pelayan);
         } else {
             // apabila verifikasi ditolak
-            // TODO: tambahkan alasan penolakan di detail riwayat
             Riwayat::logChange(5, $pernikahan->id_pernikahan, Auth::user()->jemaat->pelayan->id_pelayan);
+            RevisiPengajuan::addRevision($pernikahan->id_pernikahan, Auth::user()->jemaat->pelayan->id_pelayan,  $request->catatan_pengajuan);
         }
 
         // Redirect back with a success message

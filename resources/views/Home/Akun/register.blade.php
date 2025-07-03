@@ -16,28 +16,28 @@
                 <div class="flex flex-col w-1/2 space-y-2">
                     <label for="username" class="font-semibold mb-1">Username</label>
                     <input type="text" name="username" id="username" placeholder="Masukkan Username Anda"
-                        class="p-2 rounded-md border-2 bg-white focus:border-[#215773]" autocomplete="off" required
-                        pattern="^\S+$" x-model="username" @input.debounce.500ms="cekUsername"
-                        :class="usernameError ? 'border-red-500' : 'border-white'"
+                        tabindex="1" class="p-2 rounded-md border-2 bg-white focus:border-[#215773]"
+                        autocomplete="off" required pattern="^\S+$" x-model="username"
+                        @input.debounce.500ms="cekUsername" :class="usernameError ? 'border-red-500' : 'border-white'"
                         oninvalid="this.setCustomValidity('Username tidak boleh kosong atau mengandung spasi')"
                         oninput="this.setCustomValidity(''); this.value = this.value.replace(/\s/g, '')">
                     <span x-show="usernameError" class="text-red-600 text-sm mt-1">Username sudah digunakan</span>
 
                     <label for="password" class="font-semibold mb-1">Password</label>
                     <input type="password" name="password" id="password" placeholder="Masukkan Password Anda"
-                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" autocomplete="off"
-                        required minlength="8" x-model="password"
+                        tabindex="3" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
+                        autocomplete="off" required minlength="8" x-model="password"
                         oninvalid="this.setCustomValidity('Password belum diisi atau kurang dari 8 karakter')"
                         oninput="this.setCustomValidity('')">
 
                     <label for="nama_lengkap" class="font-semibold mb-1">Nama Lengkap</label>
                     <input type="text" name="nama_lengkap" id="nama_lengkap" placeholder="Masukkan Nama Lengkap Anda"
-                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" autocomplete="off"
-                        required oninvalid="this.setCustomValidity('Nama lengkap belum diisi')"
+                        tabindex="5" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
+                        autocomplete="off" required oninvalid="this.setCustomValidity('Nama lengkap belum diisi')"
                         oninput="this.setCustomValidity('')">
 
                     <label for="nik" class="font-semibold mb-1">NIK</label>
-                    <input type="text" name="nik" id="nik" placeholder="Masukkan NIK Anda"
+                    <input type="text" name="nik" id="nik" placeholder="Masukkan NIK Anda" tabindex="7"
                         class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" autocomplete="off"
                         required pattern="[0-9]{16}"
                         oninvalid="this.setCustomValidity('NIK harus terdiri dari 16 angka')"
@@ -46,9 +46,10 @@
                     <label class="font-semibold mb-2 block">Tempat & Tanggal Lahir</label>
                     <div class="flex justify-between gap-[10px]">
                         <input type="text" name="tempat_lahir" id="tempat_lahir" placeholder="Kota lahir"
+                            tabindex="9"
                             class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]"
                             autocomplete="off">
-                        <input type="date" name="tgl_lahir" id="tgl_lahir"
+                        <input type="date" name="tgl_lahir" id="tgl_lahir" tabindex="10"
                             class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]"
                             max="{{ date('Y-m-d') }}">
                     </div>
@@ -57,7 +58,7 @@
                 {{-- RIGHT --}}
                 <div class="flex flex-col w-1/2 space-y-2">
                     <label for="email" class="font-semibold mb-1">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Masukkan Email Anda"
+                    <input type="email" name="email" id="email" placeholder="Masukkan Email Anda" tabindex="2"
                         class="p-2 rounded-md border-2 bg-white focus:border-[#215773]" autocomplete="off" required
                         x-model="email" @input.debounce.500ms="cekEmail"
                         :class="emailError ? 'border-red-500' : 'border-white'"
@@ -65,7 +66,7 @@
                     <span x-show="emailError" class="text-red-600 text-sm mt-1">Email sudah digunakan</span>
 
                     <label for="konfirmasi_password" class="font-semibold mb-1">Konfirmasi Password</label>
-                    <input type="password" name="konfirmasi_password" id="konfirmasi_password"
+                    <input type="password" name="konfirmasi_password" id="konfirmasi_password" tabindex="4"
                         placeholder="Konfirmasi password anda"
                         class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
                         x-model="konfirmasi_password"
@@ -74,14 +75,14 @@
 
                     <label for="alamat" class="font-semibold mb-1">Alamat</label>
                     <input type="text" name="alamat" id="alamat" placeholder="Masukkan Alamat Anda"
-                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                        autocomplete="off" oninvalid="this.setCustomValidity('Alamat belum diisi')"
+                        tabindex="6" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
+                        required autocomplete="off" oninvalid="this.setCustomValidity('Alamat belum diisi')"
                         oninput="this.setCustomValidity('')">
 
                     <label for="telepon" class="font-semibold mb-1">Telepon</label>
                     <input type="text" name="telepon" id="telepon" placeholder="Masukkan Nomor Telepon Anda"
-                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                        autocomplete="off" minlength="8" pattern="\d*" inputmode="numeric"
+                        tabindex="8" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
+                        required autocomplete="off" minlength="8" pattern="\d*" inputmode="numeric"
                         oninvalid="this.setCustomValidity('Nomor telepon tidak boleh kosong')"
                         oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9]/g, '')">
 
@@ -89,11 +90,13 @@
                         <label class="font-semibold block mb-4">Jenis Kelamin</label>
                         <div class="flex items-center space-x-6">
                             <label class="flex items-center space-x-2">
-                                <input type="radio" name="gender" @click="gender = 'Pria'" value="P">
+                                <input type="radio" name="gender" @click="gender = 'Pria'" value="P"
+                                    tabindex="11">
                                 <span :class="gender == 'Pria' ? 'font-semibold' : 'font-normal'">Pria</span>
                             </label>
                             <label class="flex items-center space-x-2">
-                                <input type="radio" name="gender" @click="gender = 'Wanita'" value="W">
+                                <input type="radio" name="gender" @click="gender = 'Wanita'" value="W"
+                                    tabindex="12">
                                 <span :class="gender == 'Wanita' ? 'font-semibold' : 'font-normal'">Wanita</span>
                             </label>
                         </div>

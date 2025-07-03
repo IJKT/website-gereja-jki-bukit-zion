@@ -9,27 +9,25 @@ use Illuminate\View\View;
 use App\Models\Pernikahan;
 use Illuminate\Http\Request;
 use App\Models\PengajuanJemaat;
+use App\Models\RevisiPengajuan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class PengajuanJemaatController extends Controller
+class  PengajuanJemaatController extends Controller
 {
     public function ViewBaptis(): View
     {
         $data_baptis = PengajuanJemaat::where('id_jemaat', Auth::user()->jemaat->id_jemaat)->where('jenis_pengajuan', 'Baptis')->first();
-
-        if (!$data_baptis) {
-            return view('PengajuanJemaat.baptis', [
-                'title' => "Pengajuan Baptis",
-                'data_baptis' => null,
-                'detail_baptis' => null,
-            ]);
+        if ($data_baptis != null) {
+            $data_revisi = RevisiPengajuan::where('id_revisi', $data_baptis->id_pengajuan)->orderByDesc('tgl_revisi')->paginate(3);
+            $detail_baptis = Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first();
         }
 
         return view('PengajuanJemaat.baptis', [
             'title' => "Pengajuan Baptis",
             'data_baptis' => $data_baptis,
-            'detail_baptis' => Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first()
+            'detail_baptis' => $detail_baptis ?? null,
+            'data_revisi' => $data_revisi ?? null,
         ]);
     }
     public function ViewPernikahan(): View
@@ -50,12 +48,16 @@ class PengajuanJemaatController extends Controller
             })
             ->first();
 
+        if ($data_pernikahan != null) {
+            $detail_pernikahan = Pernikahan::where('id_pernikahan', $data_pernikahan->id_pengajuan)->first();
+            $data_revisi = RevisiPengajuan::where('id_revisi', $data_pernikahan->id_pengajuan)->orderByDesc('tgl_revisi')->paginate(3);
+        }
+
         return view('PengajuanJemaat.pernikahan', [
             'title' => "Pengajuan Pernikahan",
             'data_pernikahan' => $data_pernikahan,
-            'detail_pernikahan' => $data_pernikahan
-                ? Pernikahan::where('id_pernikahan', $data_pernikahan->id_pengajuan)->first()
-                : null,
+            'detail_pernikahan' => $detail_pernikahan ?? null,
+            'data_revisi' => $data_revisi ?? null,
             'pasangan' => $pasangan,
         ]);
     }

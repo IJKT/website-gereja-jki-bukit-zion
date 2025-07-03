@@ -75,4 +75,8 @@ class Pelayan extends Model
     {
         return $this->hasMany(detail_jadwal::class, 'id_pelayan', 'id_pelayan');
     }
+    public function RevisiPengajuan(): HasMany
+    {
+        return $this->HasMany(RevisiPengajuan::class, 'id_pengomentar', 'id_pelayan');
+    }
 }

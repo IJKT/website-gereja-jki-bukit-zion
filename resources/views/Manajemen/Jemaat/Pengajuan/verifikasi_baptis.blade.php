@@ -75,9 +75,39 @@ Verifikasi   -> Dicetak     -> Diberikan
                 <input type="hidden" name="verifikasi_pengajuan" id="verifikasi_pengajuan">
         </form>
 
+        <!-- Revision Table -->
+        <div>
+            <label class="block font-semibold mb-2">REVISI SEBELUMNYA</label>
+            <table class="w-full border-collapse ">
+                <thead>
+                    <tr class="bg-white text-sm font-semibold">
+                        <th class="border border-gray-300 px-4 py-2">TANGGAL REVISI</th>
+                        <th class="border border-gray-300 px-4 py-2">PENGOMENTAR</th>
+                        <th class="border border-gray-300 px-4 py-2">KOMENTAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Add dynamic rows here -->
+                    @foreach ($data_revisi as $item)
+                        <tr class="bg-white text-sm text-center">
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ \Carbon\Carbon::parse($item->tgl_revisi)->translatedFormat('l, d F Y') }}
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2 text-left">
+                                {{ $item->pengomentar->jemaat->nama_jemaat }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $item->komentar }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="mt-4">
+                {{ $data_revisi->links() }}
+            </div>
+        </div>
+
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            @if ($pengajuan_jemaat->verifikasi_pengajuan != 1)
+            @if ($pengajuan_jemaat->verifikasi_pengajuan == 0)
                 <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
                     onclick="showAlertVerify()">
                     VERIFIKASI

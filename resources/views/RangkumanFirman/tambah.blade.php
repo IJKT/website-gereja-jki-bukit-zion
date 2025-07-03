@@ -28,6 +28,7 @@
                     <div>
                         <label class="block font-semibold mb-1">GAMBAR RANGKUMAN</label>
                         <div class="relative">
+                            <!--TODO: ganti accept menjadi "image"-->
                             <input type="file" name="gambar_rangkuman" id="gambar_rangkuman"
                                 accept=".jpg, .jpeg, .png" class="hidden" onchange="updateGambarLabel()">
                             <label for="gambar_rangkuman" id="gambar_rangkuman-label"

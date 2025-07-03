@@ -39,11 +39,31 @@ class PembukuanController extends Controller
         $pembukuan = (clone $query)->latest('tgl_pembukuan')->paginate(5)->withQueryString();
 
         // ✅ Total pemasukan & pengeluaran hanya untuk data terfilter
-        $resultFiltered = (clone $query)
+        $resultFiltered = Pembukuan::query()
+            ->when($request->filled('tanggal_awal') && $request->filled('tanggal_akhir'), function ($q) use ($request) {
+                $q->whereBetween('tgl_pembukuan', [$request->tanggal_awal, $request->tanggal_akhir]);
+            })
+            ->when($request->filled('tanggal_awal') && !$request->filled('tanggal_akhir'), function ($q) use ($request) {
+                $q->where('tgl_pembukuan', '>=', $request->tanggal_awal);
+            })
+            ->when($request->filled('tanggal_akhir') && !$request->filled('tanggal_awal'), function ($q) use ($request) {
+                $q->where('tgl_pembukuan', '<=', $request->tanggal_akhir);
+            })
+            ->when(!$request->filled('tanggal_awal') && !$request->filled('tanggal_akhir'), function ($q) {
+                $q->whereBetween('tgl_pembukuan', [
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ]);
+            })
+            ->when($request->filled('jenis_pembukuan'), function ($q) use ($request) {
+                $q->where('jenis_pembukuan', $request->jenis_pembukuan);
+            })
             ->selectRaw("
-        SUM(CASE WHEN jenis_pembukuan = 'Uang Masuk' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pemasukan,
-        SUM(CASE WHEN jenis_pembukuan = 'Uang Keluar' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pengeluaran")
+                SUM(CASE WHEN jenis_pembukuan = 'Uang Masuk' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pemasukan,
+                SUM(CASE WHEN jenis_pembukuan = 'Uang Keluar' AND verifikasi_pembukuan = 1 THEN nominal_pembukuan ELSE 0 END) as total_pengeluaran
+            ")
             ->first();
+
 
         $total_pemasukan = $resultFiltered->total_pemasukan ?? 0;
         $total_pengeluaran = $resultFiltered->total_pengeluaran ?? 0;

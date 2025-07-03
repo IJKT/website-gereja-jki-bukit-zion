@@ -6,7 +6,7 @@
     <div class="flex-1 bg-white p-10">
         <div class="bg-gray-200 p-6 rounded-md">
 
-            <!-- Marriage Info -->
+            <!-- Baptism Info -->
             <div class="mb-4">
                 <label class="block font-semibold mb-1">TANGGAL BAPTIS</label>
                 <input type="text" placeholder="Tanggal Baptis Tidak Ditemukan"
@@ -17,14 +17,13 @@
             </div>
 
             <!-- Submission Table -->
-            <div>
+            <div class="mb-4">
                 <label class="block font-semibold mb-2">PENGAJUAN SAYA</label>
                 <table class="w-full border-collapse ">
                     <thead>
                         <tr class="bg-white text-sm font-semibold">
                             <th class="border border-gray-300 px-4 py-2">TANGGAL PENGAJUAN</th>
                             <th class="border border-gray-300 px-4 py-2">STATUS</th>
-                            <th class="border border-gray-300 px-4 py-2">KOMENTAR</th>
                             <th class="border border-gray-300 px-4 py-2">AKSI</th>
                         </tr>
                     </thead>
@@ -33,18 +32,20 @@
                         @if ($data_baptis != null)
                             <tr class="bg-white text-sm text-center">
                                 <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($data_baptis->tanggal_pengajuan)->isoFormat('dddd, DD MMMM Y') }}
+                                    {{ \Carbon\Carbon::parse($data_baptis->tanggal_pengajuan)->translatedFormat('l, d F Y') }}
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
-                                    @if ($data_baptis->verifikasi_pengajuan == 0)
-                                        <div class="font-bold text-yellow-500">Menunggu Verifikasi</div>
-                                    @elseif ($data_baptis->verifikasi_pengajuan == 1)
-                                        <div class="font-bold text-green-500">Diverifikasi</div>
-                                    @elseif ($data_baptis->verifikasi_pengajuan == 2)
-                                        <div class="font-bold text-red-500">Ditolak</div>
-                                    @endif
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $detail_baptis->komentar_baptis }}
+                                    @php
+                                        $statusPengajuan = [
+                                            0 => ['class' => 'text-yellow-500', 'text' => 'Menunggu Verifikasi'],
+                                            1 => ['class' => 'text-green-500', 'text' => 'Diverifikasi'],
+                                            2 => ['class' => 'text-red-500', 'text' => 'Ditolak'],
+                                        ];
+                                    @endphp
+                                    <div
+                                        class="font-bold {{ $statusPengajuan[$data_baptis->verifikasi_pengajuan]['class'] }}">
+                                        {{ $statusPengajuan[$data_baptis->verifikasi_pengajuan]['text'] }}
+                                    </div>
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">
                                     <a href="{{ route('PengajuanJemaat.ubah_baptis', $data_baptis) }}">
@@ -57,6 +58,37 @@
                     </tbody>
                 </table>
             </div>
+            <!-- Revision Table -->
+            @if ($data_baptis != null)
+                <div>
+                    <label class="block font-semibold mb-2">REVISI SAYA</label>
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">TANGGAL REVISI</th>
+                                <th class="border border-gray-300 px-4 py-2">PENGOMENTAR</th>
+                                <th class="border border-gray-300 px-4 py-2">KOMENTAR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Add dynamic rows here -->
+                            @foreach ($data_revisi as $item)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ \Carbon\Carbon::parse($item->tgl_revisi)->translatedFormat('l, d F Y') }}
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $item->pengomentar->jemaat->nama_jemaat }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{ $item->komentar }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="mt-4">
+                        {{ $data_revisi->links() }}
+                    </div>
+                </div>
+            @endif
         </div>
 
         <!-- Button -->

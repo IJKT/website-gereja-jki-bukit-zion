@@ -62,4 +62,8 @@ class PengajuanJemaat extends Model
     {
         return $this->hasMany((Pernikahan::class), 'id_pernikahan', 'id_pengajuan');
     }
+    public function RevisiPengajuan(): HasMany
+    {
+        return $this->hasMany((RevisiPengajuan::class), 'id_revisi', 'id_pengajuan');
+    }
 }

@@ -1,4 +1,4 @@
-<div class="w-1/5 bg-[#424242] text-white p-4 min-h-screen max-h-[300vh]" x-data="{ openSub1: false, openSub2: false, openSub3: false }">
+<div class="w-1/5 bg-[#424242] text-white p-4 min-h-screen" x-data="{ openSub1: false, openSub2: false, openSub3: false }">
     <ul class="space-y-2 relative">
         <a href="{{ route('Dashboard.index') }}">
             <li
@@ -113,32 +113,32 @@
                         Sermons & Articles</li>
                 </a>
             @endif
-            <!-- Pengaturan -->
-            <li class="font-bold text-md rounded-md px-2 py-1 -mb-0.5 relative hover:bg-[#5d5d5d]
-        {{ request()->is('profil') ? 'bg-[#215773]' : '' }}"
-                @mouseenter="openSub3 = true" @mouseleave="openSub3 = false">
-                Pengaturan
-
-                <span class="text right float-right">
-                    <svg class="h-4 w-4 mt-1" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
-                    </svg>
-                </span>
-                <ul x-cloak class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg"
-                    :aria-checked="openSub3" :class="{ 'block': openSub3, 'hidden': !openSub3 }">
-                    <a href="{{ route('Profil.profil') }}">
-                        <li class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]">
-                            Profil
-                        </li>
-                    </a>
-                    <a href="{{ route('logout') }}">
-                        <li class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]">
-                            Logout
-                        </li>
-                    </a>
-                </ul>
-            </li>
         @endif
+        <!-- Pengaturan -->
+        <li class="font-bold text-md rounded-md px-2 py-1 -mb-0.5 relative hover:bg-[#5d5d5d]
+        {{ request()->is('profil') ? 'bg-[#215773]' : '' }}"
+            @mouseenter="openSub3 = true" @mouseleave="openSub3 = false">
+            Pengaturan
+
+            <span class="text right float-right">
+                <svg class="h-4 w-4 mt-1" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 7.5L4 0V15L12 7.5Z" fill="#ffffff" />
+                </svg>
+            </span>
+            <ul x-cloak class="absolute top-0 left-full bg-[#424242] w-40 rounded-md shadow-lg" :aria-checked="openSub3"
+                :class="{ 'block': openSub3, 'hidden': !openSub3 }">
+                <a href="{{ route('Profil.profil') }}">
+                    <li class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]">
+                        Profil
+                    </li>
+                </a>
+                <a href="{{ route('logout') }}">
+                    <li class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d]">
+                        Logout
+                    </li>
+                </a>
+            </ul>
+        </li>
     </ul>
 </div>
 

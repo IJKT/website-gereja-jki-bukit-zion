@@ -88,7 +88,7 @@
                                     <a href="{{ route('Pembukuan.verifikasi', $_pembukuan) }}">
                                         <button
                                             class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
-                                            @if (in_array($_pembukuan['verifikasi_pembukuan'], [1, 2])) hidden @endif">VERIF</button>
+                                            @if (in_array($_pembukuan['verifikasi_pembukuan'], [1, 2])) hidden @endif">VERIFIKASI</button>
                                     </a>
                                 </td>
                             </tr>

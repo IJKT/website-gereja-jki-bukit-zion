@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('preferensi_nama_baptis', 20)->nullable();
             $table->string('id_pengajar', 10);
             $table->foreign('id_pengajar', 'baptis_pengajar_id')->references('id_pelayan')->on('pelayan')->onDelete('cascade');
-            $table->text('komentar_baptis')->nullable();
             $table->dateTime('tgl_baptis')->nullable();
             $table->integer('nomor_cetak')->nullable();
             $table->unique(['id_baptis'], 'unique_pernikahan');

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('berkas_pernikahan', 100);
             $table->integer('nomor_cetak')->nullable();
             $table->foreign('id_pendeta', 'pernikahan_pelayan_id')->references('id_pelayan')->on('pelayan');
-            $table->text('komentar_pernikahan')->nullable();
+            // $table->text('komentar_pernikahan')->nullable();
             $table->unique(['id_pernikahan', 'id_jemaat_p', 'id_jemaat_w'], 'unique_pernikahan');
         });
     }

@@ -57,7 +57,8 @@
                             </label>
                         </div>
                         <span id="berkas-filename" class="block text-sm text-gray-700 mt-1"></span>
-                        <span class="block text-sm text-gray-700 mt-1">Maksimal 10MB</span>
+                        <span class="block text-sm text-gray-700 mt-1">Tambahkan berkas N1-N5, kartu keluarga, KTP dan
+                            foto kedua mempelai dalam format .zip/.rar (Maksimal 20MB)</span>
                     </div>
                 </div>
             </div>
@@ -89,10 +90,10 @@
 
             if (input.files && input.files.length > 0) {
                 const file = input.files[0];
-                if (file.size > 10 * 1024 * 1024) { // 10MB in bytes
+                if (file.size > 20 * 1024 * 1024) { // 10MB in bytes
                     Swal.fire({
                         title: 'Error!',
-                        text: 'File tidak boleh lebih dari 10MB',
+                        text: 'File tidak boleh lebih dari 20MB',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
