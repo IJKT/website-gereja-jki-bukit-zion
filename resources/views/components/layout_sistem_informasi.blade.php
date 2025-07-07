@@ -25,11 +25,34 @@
     {{-- Navbar --}}
     <x-navbar></x-navbar>
 
-    {{-- Main Content --}}
-    <div class="flex">
-        <x-sidebar></x-sidebar>
-        {{ $slot }}
+    <div x-data="{ sidebarOpen: false }">
+
+        <!-- Tombol buka sidebar -->
+        <button @click="sidebarOpen = true"
+            class="bg-[#31333B] text-white px-4 py-3 w-full flex items-center justify-between shadow-md">
+            <span class="font-bold">☰ Menu</span>
+        </button>
+
+        <!-- Overlay Blur (klik untuk menutup) -->
+        <div x-show="sidebarOpen" x-transition.opacity @click="sidebarOpen = false" class="fixed inset-0 z-40">
+        </div>
+
+        <!-- Sidebar -->
+        <div x-show="sidebarOpen" x-transition:enter="transform transition duration-300"
+            x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+            x-transition:leave="transform transition duration-300" x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="-translate-x-full" x-cloak
+            class="fixed inset-y-0 left-0 w-64 bg-[#31333B] text-white z-50 shadow-lg">
+            <x-sidebar />
+        </div>
+
+        <!-- Main content -->
+        <div class="p-4">
+            {{ $slot }}
+        </div>
     </div>
+
+
 
     {{-- SweetAlert2 --}}
     @include('sweetalert2::index')

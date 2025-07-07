@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Mail\ResetPasswordMail;
+use App\Models\Kontak;
 use App\Models\PengajuanJemaat;
 use App\Models\rangkuman_firman;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,12 @@ class   HomeController extends Controller
                 ->paginate(10)
         ]);
     }
+    public function Contact(): View
+    {
+        return view('Home.contacts', [
+            'title' => "Halaman Kontak",
+        ]);
+    }
     public function devotions(): View
     {
         return view('Home.posts', [
@@ -77,6 +84,26 @@ class   HomeController extends Controller
             'title' => $rangkuman->judul_rangkuman,
             'rangkuman' => $rangkuman
         ]);
+    }
+
+    public function ContactSend(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'category' => 'required|string',
+            'message' => 'required|string',
+        ]);
+
+        $contact_send = new Kontak();
+        $contact_send->id_kontak = Kontak::generateNextId();
+        $contact_send->nama = $validated['name'];
+        $contact_send->email = $validated['email'];
+        $contact_send->kategori = $validated['category'];
+        $contact_send->pesan = $validated['message'];
+        $contact_send->save();
+
+        return back()->with('success', 'Pesan Anda berhasil dikirim!');
     }
 
     // AUTHENTICATION

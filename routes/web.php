@@ -15,6 +15,7 @@ use SweetAlert2\Laravel\Swal;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelayanController;
 use App\Http\Controllers\JemaatController;
+use App\Http\Controllers\KontakController;
 use App\Http\Controllers\LaguPujianController;
 use App\Http\Controllers\PembukuanController;
 use App\Http\Controllers\PengajuanJemaatController;
@@ -231,6 +232,16 @@ Route::middleware(['auth'])->group(function () {
                 Route::put('add', [LaguPujianController::class, 'add'])->name('.add');
             }
         );
+    Route::prefix('kontak')
+        ->name('Kontak')
+        ->group(
+            function () {
+                Route::get('', [KontakController::class, 'Index'])->name('.index');
+                Route::get('{kontak}', [KontakController::class, 'Balas'])->name('.balas');
+
+                Route::put('{kontak}', [KontakController::class, 'Send'])->name('.Send');
+            }
+        );
 });
 
 Route::prefix('/')
@@ -242,17 +253,15 @@ Route::prefix('/')
 
             Route::get('sermons', [HomeController::class, 'sermons'])->name('.sermons');
             Route::get('sermons/{kategori}', [HomeController::class, 'sermons_categories'])->name('.sermons_categories');
-
             Route::get('articles', [HomeController::class, 'articles'])->name('.articles');
-
             Route::get('devotions', [HomeController::class, 'devotions'])->name('.devotions');
-
+            Route::get('contact', [HomeController::class, 'Contact'])->name('.contact');
 
             Route::get('register', [HomeController::class, 'register'])->name('.Akun.register');
             Route::post('register/authenticate', [HomeController::class, 'register_authenticate'])->name('.Akun.register_authenticate');
             Route::post('/cek-username', [HomeController::class, 'cekUsername'])->name('.cek_username');
             Route::post('/cek-email', [HomeController::class, 'cekEmail'])->name('.cek_email');
-
+            Route::post('contact', [HomeController::class, 'ContactSend'])->name('.contact_send');
 
             Route::get('{slug}', [HomeController::class, 'single_post'])->name('.single_post');
         }

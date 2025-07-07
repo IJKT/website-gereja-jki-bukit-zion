@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\detail_jadwal;
 use App\Models\Jemaat;
+use App\Models\Kontak;
 use App\Models\Pelayan;
 use App\Models\Pembukuan;
 use App\Models\PengajuanJemaat;
@@ -29,6 +30,7 @@ class DashboardController extends Controller
             'jemaat' => Jemaat::where('status_jemaat', 1)->get(),
             'pelayan' => Pelayan::where('status_pelayan', 1)->get(),
             'pembukuan' => Pembukuan::where('verifikasi_pembukuan', 0)->get(),
+            'kontak' => Kontak::where('status', 0)->get(),
             'pengajuan_jemaat' => PengajuanJemaat::where('verifikasi_pengajuan', 0)->get(),
             'rangkuman_firman' => rangkuman_firman::OrderBy('id_rangkuman_firman', 'desc')->limit(3)->get(),
             'jadwal' => $jadwal,

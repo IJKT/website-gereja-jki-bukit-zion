@@ -107,7 +107,6 @@ class PelayanController extends Controller
         Riwayat::logChange(1, $request->id_pelayan, Auth::user()->jemaat->pelayan->id_pelayan);
         return redirect()->route('Manajemen.Pelayan.viewall');
     }
-
     // ETC:
     public function search(Request $request)
     {

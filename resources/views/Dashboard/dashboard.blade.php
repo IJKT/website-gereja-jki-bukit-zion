@@ -1,9 +1,9 @@
 <x-layout_sistem_informasi>
     <x-slot:title>{{ $title }}</x-slot:title>
     <div class="flex-1 bg-gray-100 p-5">
-        <div class="pl-4 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 h-fit">
-            <!-- Statistik -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             @if (Auth::user()->jemaat->hak_akses_jemaat == 'Pelayan')
+                <!-- Statistik -->
                 @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
                         Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Koordinator' ||
                         Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator')
@@ -21,10 +21,8 @@
                         </div>
                     </div>
                 @endif
-            @endif
 
-            <!-- Verifikasi -->
-            @if (Auth::user()->jemaat->hak_akses_jemaat == 'Pelayan')
+                <!-- Verifikasi -->
                 @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
                         Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Koordinator' ||
                         Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator')
@@ -44,65 +42,24 @@
                         </div>
                     </div>
                 @endif
-            @endif
 
-            <!-- Pengajuanku -->
-            @php
-                $baptis =
-                    Auth::user()->jemaat->pengajuan_jemaat->where('jenis_pengajuan', 'Baptis')->first()
-                        ?->verifikasi_pengajuan ?? 'Belum Mengajukan';
+                <!-- Kontak -->
+                @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
+                        Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Koordinator' ||
+                        Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator')
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        <h2 class="text-lg font-semibold mb-4">Kontak Jemaat</h2>
+                        <div class="text-center">
+                            <div>
+                                <p class="text-md font-bold">{{ count($kontak) }}</p>
+                                <a href="{{ route('Kontak.index') }}"
+                                    class="text-sm text-gray-600 hover:underline">Belum Dibalas</a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
-                $pernikahan =
-                    Auth::user()->jemaat->pengajuan_jemaat->where('jenis_pengajuan', 'Pernikahan')->first()
-                        ?->verifikasi_pengajuan ?? 'Belum Mengajukan';
-            @endphp
-
-            @if (Auth::user()->verifikasi_user == 1)
-                <div class="bg-white p-4 rounded-lg shadow-md">
-                    <h2 class="text-lg font-semibold mb-2">Pengajuan Saya</h2>
-                    <ul class="list-disc list-inside">
-                        @if ($baptis != 'Belum Mengajukan')
-                            <li>Status Baptis -
-                                <b
-                                    class="{{ ['text-yellow-500', 'text-green-500', 'text-red-500', 'text-black', 'text-black'][$baptis] }}">
-                                    {{ ['Menunggu Verifikasi', 'Diverifikasi', 'Ditolak', 'Dicetak', 'Diberikan'][$baptis] }}
-                                </b>
-                            </li>
-                        @endif
-                        @if ($pernikahan != 'Belum Mengajukan')
-                            <li>Status Pernikahan -
-                                <b
-                                    class="{{ ['text-yellow-500', 'text-green-500', 'text-red-500', 'text-black', 'text-black'][$pernikahan] }}">
-                                    {{ ['Menunggu Verifikasi', 'Diverifikasi', 'Ditolak', 'Dicetak', 'Diberikan'][$pernikahan] }}
-                                </b>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            @endif
-
-            <!-- Pemberitahuan -->
-            <div class="bg-white p-4 rounded-lg shadow-md md:col-span-3">
-                <h2 class="text-lg font-semibold mb-2">Pemberitahuan</h2>
-                <ul class="list-disc list-inside">
-                    @foreach ($rangkuman_firman as $_rangkuman_firman)
-                        <li>
-                            ({{ \Carbon\Carbon::parse($_rangkuman_firman->tgl_rangkuman)->isoFormat('DD MMMM Y') }})
-                            -
-                            {{ $_rangkuman_firman->tipe_rangkuman }}:
-                            <a href="{{ route('Home.single_post', $_rangkuman_firman->slug_rangkuman) }}"
-                                class="hover:underline">
-                                <strong>{{ Str::limit($_rangkuman_firman->judul_rangkuman, 100) }}</strong>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-
-
-
-            <!-- Jadwal -->
-            @if (Auth::user()->jemaat->hak_akses_jemaat == 'Pelayan')
+                <!-- Jadwal -->
                 <div class="bg-white p-4 rounded-lg shadow-md md:col-span-3">
                     <h2 class="text-lg font-semibold mb-4">Jadwal</h2>
                     <div class="overflow-x-auto">
@@ -155,6 +112,61 @@
                     </div>
                 </div>
             @endif
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Pengajuanku -->
+            @php
+                $baptis =
+                    Auth::user()->jemaat->pengajuan_jemaat->where('jenis_pengajuan', 'Baptis')->first()
+                        ?->verifikasi_pengajuan ?? 'Belum Mengajukan';
+
+                $pernikahan =
+                    Auth::user()->jemaat->pengajuan_jemaat->where('jenis_pengajuan', 'Pernikahan')->first()
+                        ?->verifikasi_pengajuan ?? 'Belum Mengajukan';
+            @endphp
+
+            @if (Auth::user()->verifikasi_user == 1)
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h2 class="text-lg font-semibold mb-2">Pengajuan Saya</h2>
+                    <ul class="list-disc list-inside">
+                        @if ($baptis != 'Belum Mengajukan')
+                            <li>Status Baptis -
+                                <b
+                                    class="{{ ['text-yellow-500', 'text-green-500', 'text-red-500', 'text-black', 'text-black'][$baptis] }}">
+                                    {{ ['Menunggu Verifikasi', 'Diverifikasi', 'Ditolak', 'Dicetak', 'Diberikan'][$baptis] }}
+                                </b>
+                            </li>
+                        @endif
+                        @if ($pernikahan != 'Belum Mengajukan')
+                            <li>Status Pernikahan -
+                                <b
+                                    class="{{ ['text-yellow-500', 'text-green-500', 'text-red-500', 'text-black', 'text-black'][$pernikahan] }}">
+                                    {{ ['Menunggu Verifikasi', 'Diverifikasi', 'Ditolak', 'Dicetak', 'Diberikan'][$pernikahan] }}
+                                </b>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+            @endif
+
+            <!-- Pemberitahuan -->
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold mb-2">Pemberitahuan</h2>
+                <ul class="list-disc list-inside">
+                    @foreach ($rangkuman_firman as $_rangkuman_firman)
+                        <li>
+                            ({{ \Carbon\Carbon::parse($_rangkuman_firman->tgl_rangkuman)->isoFormat('DD MMMM Y') }})
+                            -
+                            {{ $_rangkuman_firman->tipe_rangkuman }}:
+                            <a href="{{ route('Home.single_post', $_rangkuman_firman->slug_rangkuman) }}"
+                                class="hover:underline">
+                                <strong>{{ Str::limit($_rangkuman_firman->judul_rangkuman, 50) }}</strong>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
     </div>
     </div>

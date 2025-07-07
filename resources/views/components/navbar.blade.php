@@ -13,6 +13,7 @@
             <a href="{{ route('Home.sermons') }}" class="hover:text-blue-400">SERMONS</a>
             <a href="{{ route('Home.articles') }}" class="hover:text-blue-400">ARTICLE</a>
             <a href="{{ route('Home.devotions') }}" class="hover:text-blue-400">DEVOTION</a>
+            <a href="{{ route('Home.contact') }}" class="hover:text-blue-400">CONTACT</a>
             @auth
                 <a href="{{ route('Dashboard.index') }}" class="hover:text-blue-400">MY ACCOUNT</a>
             @else
@@ -47,7 +48,7 @@
 
 
     {{-- mobile view --}}
-    <div class="lg:hidden" x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"
+    <div class="lg:hidden" x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform" x-cloak
         x-transition:leave="transition ease-in duration-75 transform" role="dialog" aria-modal="true">
         <div class="fixed inset-0 z-10"></div>
         <div
@@ -77,6 +78,9 @@
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">ARTICLE</a>
                             <a href="{{ route('Home.devotions') }}"
                                 class="hover:text-blue-400 block rounded-lg px-3 py-2">DEVOTION</a>
+                            <a href="{{ route('Home.contact') }}"
+                                class="hover:text-blue-400 block rounded-lg px-3 py-2">CONTACT</a>
+
                         </div>
                         <div class="py-6">
                             @auth
