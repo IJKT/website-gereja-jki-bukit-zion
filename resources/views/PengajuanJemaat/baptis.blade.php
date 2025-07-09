@@ -10,7 +10,7 @@
             <div class="mb-4">
                 <label class="block font-semibold mb-1">TANGGAL BAPTIS</label>
                 <input type="text" placeholder="Tanggal Baptis Tidak Ditemukan"
-                    value="@if ($data_baptis != null) @if ($data_baptis->verifikasi_pengajuan == 1) {{ \Carbon\Carbon::parse($detail_baptis->tgl_baptis)->isoFormat('dddd, DD MMMM Y HH:mm') }}
+                    value="@if ($data_baptis != null) @if ($data_baptis->verifikasi_pengajuan == 1 || $data_baptis->verifikasi_pengajuan == 3) {{ \Carbon\Carbon::parse($detail_baptis->tgl_baptis)->isoFormat('dddd, DD MMMM Y HH:mm') }}
                     @else Baptis Belum Diverifikasi @endif
                 @endif"
                     class="w-full p-2 rounded bg-white border border-gray-300" disabled>
@@ -40,6 +40,7 @@
                                             0 => ['class' => 'text-yellow-500', 'text' => 'Menunggu Verifikasi'],
                                             1 => ['class' => 'text-green-500', 'text' => 'Diverifikasi'],
                                             2 => ['class' => 'text-red-500', 'text' => 'Ditolak'],
+                                            3 => ['class' => 'text-black', 'text' => 'Dicetak'],
                                         ];
                                     @endphp
                                     <div

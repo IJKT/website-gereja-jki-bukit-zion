@@ -18,18 +18,23 @@ class PembukuanController extends Controller
         // =============== Query terfilter untuk list & subtotal ===============
         $query = Pembukuan::query()->OrderBy('verifikasi_pembukuan');
 
-        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
-            $query->whereBetween('tgl_pembukuan', [$request->tanggal_awal, $request->tanggal_akhir]);
-        } elseif ($request->filled('tanggal_awal')) {
-            $query->where('tgl_pembukuan', '>=', $request->tanggal_awal);
-        } elseif ($request->filled('tanggal_akhir')) {
-            $query->where('tgl_pembukuan', '<=', $request->tanggal_akhir);
-        } else {
-            $query->whereBetween('tgl_pembukuan', [
-                Carbon::now()->startOfMonth(),
-                Carbon::now()->endOfMonth()
-            ]);
-        }
+        $query->where(function ($q) use ($request) {
+            $q->where('verifikasi_pembukuan', 1);
+
+            if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
+                $q->whereBetween('tgl_pembukuan', [$request->tanggal_awal, $request->tanggal_akhir]);
+            } elseif ($request->filled('tanggal_awal')) {
+                $q->where('tgl_pembukuan', '>=', $request->tanggal_awal);
+            } elseif ($request->filled('tanggal_akhir')) {
+                $q->where('tgl_pembukuan', '<=', $request->tanggal_akhir);
+            } else {
+                $q->whereBetween('tgl_pembukuan', [
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ]);
+            }
+        })->orWhereIn('verifikasi_pembukuan', [0, 2]);
+
 
         if ($request->filled('jenis_pembukuan')) {
             $query->where('jenis_pembukuan', $request->jenis_pembukuan);
@@ -196,6 +201,49 @@ class PembukuanController extends Controller
         } else {
             $label_periode = 'Laporan Pembukuan ' . Carbon::now()->translatedFormat('F Y');
         }
+
+        // return view('Exports.pembukuan_file', compact('pembukuan', 'total_pemasukan', 'total_pengeluaran', 'total_sisa', 'label_periode'));
+
+        // Generate PDF
+        $pdf = Pdf::loadView('Exports.pembukuan_file', [
+            'pembukuan' => $pembukuan,
+            'total_pemasukan' => $total_pemasukan,
+            'total_pengeluaran' => $total_pengeluaran,
+            'total_sisa' => $total_sisa,
+            'label_periode' => $label_periode
+        ]);
+
+        return $pdf->download('Laporan Pembukuan JKI Bukit Zion.pdf');
+    }
+    public function UnduhTahunan(Request $request)
+    {
+        // Query dasar: hanya yang sudah diverifikasi
+        $query = Pembukuan::where('verifikasi_pembukuan', 1)
+            ->whereBetween('tgl_pembukuan', [
+                Carbon::now()->startOfYear()->toDateString(),
+                Carbon::now()->startOfYear()->toDateString()
+            ]);
+
+        // Ambil hasil
+        $pembukuan = $query->orderBy('tgl_pembukuan')->get();
+
+        // Hitung subtotal (hanya data terfilter)
+        $total_pemasukan = $pembukuan->where('jenis_pembukuan', 'Uang Masuk')->sum('nominal_pembukuan');
+        $total_pengeluaran = $pembukuan->where('jenis_pembukuan', 'Uang Keluar')->sum('nominal_pembukuan');
+
+        // Hitung saldo total (semua data terverifikasi - tidak terfilter)
+        $resultAll = Pembukuan::where('verifikasi_pembukuan', 1)
+            ->selectRaw("
+            SUM(CASE WHEN jenis_pembukuan = 'Uang Masuk' THEN nominal_pembukuan ELSE 0 END) as total_pemasukan,
+            SUM(CASE WHEN jenis_pembukuan = 'Uang Keluar' THEN nominal_pembukuan ELSE 0 END) as total_pengeluaran
+        ")->first();
+
+        $total_semua_pemasukan = $resultAll->total_pemasukan ?? 0;
+        $total_semua_pengeluaran = $resultAll->total_pengeluaran ?? 0;
+        $total_sisa = $total_semua_pemasukan - $total_semua_pengeluaran;
+
+        // Buat label periode
+        $label_periode = 'Laporan Pembukuan Tahun ' . Carbon::now()->translatedFormat('Y');
 
         // Generate PDF
         $pdf = Pdf::loadView('Exports.pembukuan_file', [

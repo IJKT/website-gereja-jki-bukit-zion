@@ -38,33 +38,35 @@
                             </div>
                     </x-filter-dropdown>
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">TIPE IBADAH</th>
-                            <th class="border border-gray-300 px-4 py-2">TANGGAL IBADAH</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($jadwal as $_jadwal)
-                            {{-- @dd($_jadwal->jenis_ibadah) --}}
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_jadwal->jenis_ibadah }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_jadwal->tgl_ibadah)->isoFormat(' dddd, DD MMMM Y HH:mm') }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a href="{{ route('Jadwal.ubah', $_jadwal->id_jadwal) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">TIPE IBADAH</th>
+                                <th class="border border-gray-300 px-4 py-2">TANGGAL IBADAH</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($jadwal as $_jadwal)
+                                {{-- @dd($_jadwal->jenis_ibadah) --}}
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_jadwal->jenis_ibadah }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ \Carbon\Carbon::parse($_jadwal->tgl_ibadah)->isoFormat(' dddd, DD MMMM Y HH:mm') }}
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a href="{{ route('Jadwal.ubah', $_jadwal->id_jadwal) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

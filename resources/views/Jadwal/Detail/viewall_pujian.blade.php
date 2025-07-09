@@ -18,49 +18,52 @@
                         {{ $pendeta->nama_pendeta_undangan }}
                     @endif
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">URUTAN</th>
-                            <th class="border border-gray-300 px-4 py-2">JUDUL LAGU</th>
-                            <th class="border border-gray-300 px-4 py-2">LINK LAGU</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($urutan_lagu as $_urutan_lagu)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_urutan_lagu->urutan_lagu }}</td>
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_urutan_lagu->lagu_pujian->nama_lagu }}</td>
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    <a class="hover:underline" href="{{ $_urutan_lagu->lagu_pujian->link_lagu }}"
-                                        target="_blank">
-                                        {{ $_urutan_lagu->lagu_pujian->link_lagu }}
-                                </td>
-                                </a>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a
-                                        href="{{ route('Jadwal.ubah_pujian', [$jadwal->id_jadwal, $_urutan_lagu->id_lagu]) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                    <form id="form-hapus-{{ $_urutan_lagu->id_lagu }}"
-                                        action="{{ route('Jadwal.hapus_pujian', [$jadwal->id_jadwal, $_urutan_lagu->id_lagu]) }}"
-                                        method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" onclick="confirmDelete('{{ $_urutan_lagu->id_lagu }}')"
-                                            class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">
-                                            HAPUS
-                                        </button>
-                                    </form>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">URUTAN</th>
+                                <th class="border border-gray-300 px-4 py-2">JUDUL LAGU</th>
+                                <th class="border border-gray-300 px-4 py-2">LINK LAGU</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($urutan_lagu as $_urutan_lagu)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ $_urutan_lagu->urutan_lagu }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_urutan_lagu->lagu_pujian->nama_lagu }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        <a class="hover:underline" href="{{ $_urutan_lagu->lagu_pujian->link_lagu }}"
+                                            target="_blank">
+                                            {{ $_urutan_lagu->lagu_pujian->link_lagu }}
+                                    </td>
+                                    </a>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a
+                                            href="{{ route('Jadwal.ubah_pujian', [$jadwal->id_jadwal, $_urutan_lagu->id_lagu]) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                        <form id="form-hapus-{{ $_urutan_lagu->id_lagu }}"
+                                            action="{{ route('Jadwal.hapus_pujian', [$jadwal->id_jadwal, $_urutan_lagu->id_lagu]) }}"
+                                            method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button"
+                                                onclick="confirmDelete('{{ $_urutan_lagu->id_lagu }}')"
+                                                class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">
+                                                HAPUS
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

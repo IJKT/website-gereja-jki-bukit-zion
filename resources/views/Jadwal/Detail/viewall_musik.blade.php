@@ -18,56 +18,58 @@
                         {{ $pendeta->nama_pendeta_undangan }}
                     @endif
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
-                            <th class="border border-gray-300 px-4 py-2">PERAN PELAYAN</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pelayan_musik as $_pelayan_musik)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_pelayan_musik->pelayan->jemaat->nama_jemaat }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    @if ($_pelayan_musik->peran_pelayan == 2)
-                                        Worship Leader
-                                    @elseif($_pelayan_musik->peran_pelayan == 3)
-                                        Singer
-                                    @elseif($_pelayan_musik->peran_pelayan == 4)
-                                        Keyboard
-                                    @elseif($_pelayan_musik->peran_pelayan == 5)
-                                        Drum
-                                    @elseif($_pelayan_musik->peran_pelayan == 6)
-                                        Bass
-                                    @elseif($_pelayan_musik->peran_pelayan == 7)
-                                        Guitar
-                                    @endif
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a
-                                        href="{{ route('Jadwal.ubah_musik', [$jadwal->id_jadwal, $_pelayan_musik->id_pelayan]) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                    <form id="form-hapus-{{ $_pelayan_musik->id_pelayan }}"
-                                        action="{{ route('Jadwal.hapus_musik', [$jadwal->id_jadwal, $_pelayan_musik->id_pelayan]) }}"
-                                        method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button"
-                                            onclick="confirmDelete('{{ $_pelayan_musik->id_pelayan }}')"
-                                            class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">
-                                            HAPUS
-                                        </button>
-                                    </form>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
+                                <th class="border border-gray-300 px-4 py-2">PERAN PELAYAN</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($pelayan_musik as $_pelayan_musik)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_pelayan_musik->pelayan->jemaat->nama_jemaat }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        @if ($_pelayan_musik->peran_pelayan == 2)
+                                            Worship Leader
+                                        @elseif($_pelayan_musik->peran_pelayan == 3)
+                                            Singer
+                                        @elseif($_pelayan_musik->peran_pelayan == 4)
+                                            Keyboard
+                                        @elseif($_pelayan_musik->peran_pelayan == 5)
+                                            Drum
+                                        @elseif($_pelayan_musik->peran_pelayan == 6)
+                                            Bass
+                                        @elseif($_pelayan_musik->peran_pelayan == 7)
+                                            Guitar
+                                        @endif
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a
+                                            href="{{ route('Jadwal.ubah_musik', [$jadwal->id_jadwal, $_pelayan_musik->id_pelayan]) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                        <form id="form-hapus-{{ $_pelayan_musik->id_pelayan }}"
+                                            action="{{ route('Jadwal.hapus_musik', [$jadwal->id_jadwal, $_pelayan_musik->id_pelayan]) }}"
+                                            method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button"
+                                                onclick="confirmDelete('{{ $_pelayan_musik->id_pelayan }}')"
+                                                class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">
+                                                HAPUS
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

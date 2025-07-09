@@ -1,5 +1,3 @@
-<!-- TODO: buat biar bisa dilihat lagi setelah di verif, tapi tidak usah bisa dibuat bisa diverif lagi -->
-<!-- TODO: apabila sudah diverif, langkah selanjutnya yang bisa dilakukan adalah dicetak -->
 <!-- TODO: setelah diberikan, hal yang bisa dilakukan adalah untuk melihat saja -->
 <!-- ROADMAP
 Verifikasi   -> Dicetak     -> Diberikan
@@ -10,7 +8,7 @@ Verifikasi   -> Dicetak     -> Diberikan
     {{-- Main Content --}}
     <div class="flex-1 bg-white p-10">
         <form id="verifikasiForm" action="{{ route('Manajemen.Jemaat.Pengajuan.verify_baptis', $pengajuan_jemaat) }}"
-            method="POST">
+            method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="bg-gray-200 p-6 rounded-md">
@@ -73,6 +71,7 @@ Verifikasi   -> Dicetak     -> Diberikan
                 <input type="hidden" name="catatan_pengajuan" id="catatan_pengajuan">
                 <input type="hidden" name="tgl_baptis" id="tgl_baptis">
                 <input type="hidden" name="verifikasi_pengajuan" id="verifikasi_pengajuan">
+                <input type="hidden" name="nama_baptis" id="nama_baptis_hidden">
         </form>
 
         <!-- Revision Table -->
@@ -117,6 +116,17 @@ Verifikasi   -> Dicetak     -> Diberikan
                     TOLAK
                 </button>
             @endif
+            @if ($pengajuan_jemaat->verifikasi_pengajuan == 1)
+                {{-- <a href="{{ route('Manajemen.Jemaat.Pengajuan.preview_baptis', $pengajuan_jemaat) }}">
+                    <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                        PREVIEW CETAK
+                    </button>
+                </a> --}}
+                <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
+                    onclick="showAlertCetak()">
+                    CETAK
+                </button>
+            @endif
             <a href="{{ route('Manajemen.Jemaat.Pengajuan.viewall') }}">
                 <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
@@ -126,6 +136,99 @@ Verifikasi   -> Dicetak     -> Diberikan
     </div>
 
     <script>
+        function showAlertCetak() {
+            Swal.fire({
+                title: 'Persiapan Cetak Sertifikat',
+                html: `
+                <div class="text-left">
+                    <label for="swal-nama-baptis" class="swal2-label">Nama Baptis</label>
+                    {{-- Menggunakan preferensi nama baptis sebagai nilai default --}}
+                    <input id="swal-nama-baptis" type="text" class="swal2-input" placeholder="Masukkan nama baptis">
+
+                    <label for="swal-foto-baptis" class="swal2-label mt-4">Upload Foto Jemaat </label>
+                    <input id="swal-foto-baptis" type="file" class="swal2-file" accept="image/*">
+                    
+                    <div class="mt-4 flex justify-center">
+                        <img id="swal-image-preview" src="#" alt="Pratinjau Gambar" class="rounded-md" style="max-height: 200px; display: none;">
+                    </div>
+                </div>
+            `,
+                confirmButtonText: 'Lanjutkan & Cetak',
+                showCancelButton: true,
+                cancelButtonText: 'Batal',
+                customClass: {
+                    file: 'w-full border p-2 rounded-md'
+                },
+                didOpen: () => {
+                    const fileInput = document.getElementById('swal-foto-baptis');
+                    const imagePreview = document.getElementById('swal-image-preview');
+
+                    fileInput.addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                imagePreview.src = e.target.result;
+                                imagePreview.style.display = 'block';
+                            }
+                            reader.readAsDataURL(file);
+                        } else {
+                            imagePreview.src = '#';
+                            imagePreview.style.display = 'none';
+                        }
+                    });
+                },
+                preConfirm: () => {
+                    const namaBaptis = document.getElementById('swal-nama-baptis').value;
+                    if (!namaBaptis) {
+                        Swal.showValidationMessage('Nama Baptis tidak boleh kosong!');
+                        return false;
+                    }
+                    return {
+                        namaBaptis: namaBaptis,
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.getElementById('verifikasiForm');
+                    const fileInput = document.getElementById('swal-foto-baptis');
+
+                    // 1. HAPUS input _method=PUT agar form menjadi POST murni
+                    const methodInput = form.querySelector('input[name="_method"]');
+                    if (methodInput) {
+                        methodInput.remove();
+                    }
+
+                    // 2. Set action, target, dan values
+                    form.action = "{{ route('Manajemen.Jemaat.Pengajuan.cetak_baptis', $pengajuan_jemaat) }}";
+                    document.getElementById('nama_baptis_hidden').value = result.value.namaBaptis;
+                    if (fileInput.files.length > 0) {
+                        fileInput.name = 'foto_baptis';
+                        form.appendChild(fileInput);
+                    }
+
+                    // 3. Submit form
+                    form.submit();
+
+                    // 4. Kembalikan form ke keadaan semula
+                    setTimeout(() => {
+                        // Buat kembali input _method=PUT menggunakan JavaScript
+                        if (!form.querySelector('input[name="_method"]')) {
+                            const putInput = document.createElement('input');
+                            putInput.type = 'hidden';
+                            putInput.name = '_method';
+                            putInput.value = 'PUT';
+                            form.prepend(putInput);
+                        }
+                        form.action =
+                            "{{ route('Manajemen.Jemaat.Pengajuan.verify_baptis', $pengajuan_jemaat) }}";
+                        form.target = '_self';
+                    }, 500);
+                }
+            });
+        }
+
+
         function showAlertDecline() {
             Swal.fire({
                 title: "Tolak verifikasi?",

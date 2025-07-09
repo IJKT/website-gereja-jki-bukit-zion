@@ -145,6 +145,50 @@ class JemaatController extends Controller
         return $pdf->download('Daftar Pengajuan Jemaat JKI Bukit Zion.pdf');
     }
 
+    public function PengajuanCetakBaptis(Request $request, PengajuanJemaat $pengajuan_jemaat)
+    {
+        // 1. Validasi request
+        $request->validate([
+            'nama_baptis' => 'required|string|max:255',
+            'foto_baptis' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // foto opsional, maks 2MB
+        ]);
+
+        // 2. Ambil data dari request
+        $namaBaptis = $request->input('nama_baptis');
+        $fotoPath = null;
+        $fotoBase64 = null;
+
+        if ($request->hasFile('foto_baptis')) {
+            $file = $request->file('foto_baptis');
+
+            // Opsi 1: Simpan file dan kirim path-nya
+            // $fotoPath = $file->store('public/foto_sertifikat'); 
+
+            // Opsi 2: Encode gambar ke Base64 untuk langsung ditampilkan di HTML tanpa menyimpan
+            $fotoData = file_get_contents($file->getRealPath());
+            $fotoBase64 = 'data:image/' . $file->getClientOriginalExtension() . ';base64,' . base64_encode($fotoData);
+        }
+
+        // 3. Siapkan data lain yang dibutuhkan untuk sertifikat
+        $data_baptis = $pengajuan_jemaat::where('id_jemaat', $pengajuan_jemaat->id_jemaat)
+            ->where('jenis_pengajuan', 'Baptis')
+            ->first();
+        $detail_baptis = Baptis::where('id_baptis', $data_baptis->id_pengajuan)->first();
+
+        $pdf = Pdf::loadView('Exports.cetak_baptis_file', [
+            'data_baptis' => $data_baptis,
+            'detail_baptis' => $detail_baptis,
+            'nama_baptis' => $namaBaptis,
+            'foto_base64' => $fotoBase64, // Kirim data gambar Base64
+        ])->setPaper('a4', 'landscape');
+
+        $data_baptis->verifikasi_pengajuan = 3;
+        $data_baptis->save();
+        Riwayat::logChange(6, $detail_baptis->id_baptis, Auth::user()->jemaat->pelayan->id_pelayan);
+
+        return $pdf->download('Sertifikat Baptis ' . $data_baptis->jemaat->nama_jemaat . '.pdf');
+    }
+
     // UNTUK SEMUA PUT FUNCTION
     public function update(Request $request, Jemaat $jemaat)
     {

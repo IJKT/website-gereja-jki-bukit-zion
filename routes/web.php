@@ -114,6 +114,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('', [JemaatController::class, 'pengajuanViewall'])->name('.viewall');
                 Route::get('unduh', [JemaatController::class, 'pengajuanUnduh'])->name('.unduh');
                 Route::get('baptis/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiBaptis'])->name('.verifikasi_baptis');
+                // Route::get('baptis/{pengajuan_jemaat}/preview-cetak', [JemaatController::class, 'PengajuanPreviewBaptis'])->name('.preview_baptis');
+                Route::post('baptis/{pengajuan_jemaat}/cetak', [JemaatController::class, 'PengajuanCetakBaptis'])->name('.cetak_baptis');
                 Route::get('pernikahan/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiPernikahan'])->name('.verifikasi_pernikahan');
                 Route::get('registrasi/{pengajuan_jemaat}', [JemaatController::class, 'pengajuanVerifikasiRegistrasi'])->name('.verifikasi_registrasi');
                 Route::put('verify/baptis/{baptis}', [JemaatController::class, 'pengajuanVerifyBaptis'])->name('.verify_baptis');
@@ -161,6 +163,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('tambah', [PembukuanController::class, 'tambah'])->name('.tambah');
                 Route::get('verifikasi/{pembukuan}', [PembukuanController::class, 'verifikasi'])->name('.verifikasi');
                 Route::get('unduh', [PembukuanController::class, 'unduh'])->name('.unduh');
+                // Route::get('unduh-tahunan', [PembukuanController::class, 'UnduhTahunan'])->name('.unduh_tahunan');
                 Route::put('add', [PembukuanController::class, 'add'])->name('.add');
                 Route::put('update/{pembukuan}', [PembukuanController::class, 'update'])->name('.update');
                 Route::put('verify/{pembukuan}', [PembukuanController::class, 'verify'])->name('.verify');

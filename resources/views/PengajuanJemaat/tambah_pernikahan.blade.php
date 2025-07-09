@@ -44,14 +44,12 @@
                         <div class="relative">
                             <input type="file" name="berkas" id="berkas" accept=".zip, .rar" class="hidden"
                                 onchange="updateBerkasLabel()" required>
-                            <label for="berkas" id="berkas-label"
+                            <label id="berkas-label"
                                 class="w-full p-2 rounded bg-white cursor-pointer block text-gray-500 ">
                                 Tambahkan Berkas Pernikahan
                             </label>
                         </div>
                         <span id="berkas-filename" class="block text-sm text-gray-700 mt-1"></span>
-                        <span class="block text-sm text-gray-700 mt-1">Tambahkan berkas N1-N5, kartu keluarga, KTP dan
-                            foto kedua mempelai dalam format .zip/.rar (Maksimal 20MB)</span>
                     </div>
                 </div>
             </div>
@@ -218,6 +216,35 @@
             });
 
             checkRequiredFields(); // Awal
+
+            // menambahkan konfirmasi di input file
+            document.getElementById('berkas-label').addEventListener('click', function(e) {
+                e.preventDefault(); // prevent default label click
+
+                Swal.fire({
+                    title: 'Konfirmasi Upload Berkas',
+                    html: `
+                        <p>Pastikan file <strong>.zip</strong> atau <strong>.rar</strong> yang akan Anda unggah sudah mencakup dokumen-dokumen berikut:</p>
+                        <ul style="text-align: left; margin-top: 10px;">
+                            <li>- Berkas Pernikahan N1 sampai N5</li>
+                            <li>- Kartu Keluarga kedua mempelai</li>
+                            <li>- KTP kedua mempelai</li>
+                            <li>- Foto kedua mempelai</li>
+                        </ul>
+                        <p style="margin-top: 10px;">
+                            <strong>Catatan:</strong> Ukuran file tidak boleh lebih dari <strong>20 MB</strong>.
+                        </p>
+                    `,
+                    icon: 'warning',
+                    showDenyButton: true,
+                    confirmButtonText: 'Ya, Pilih File',
+                    denyButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('berkas').click(); // buka file picker manual
+                    }
+                });
+            });
 
             // Konfirmasi sebelum simpan
             window.showAlertSave = function() {

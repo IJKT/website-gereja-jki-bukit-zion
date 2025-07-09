@@ -18,7 +18,7 @@ class KontakController extends Controller
             'Kontak.index',
             [
                 'title' => 'Halaman Kontak',
-                'kontak' => Kontak::query()->paginate(5)
+                'kontak' => Kontak::where('status', 0)->paginate(5)
             ]
         );
     }
@@ -36,8 +36,6 @@ class KontakController extends Controller
     // PUT FUNCTION
     public function Send(Request $request, Kontak $kontak)
     {
-        // dd($request->all());
-
         $kontak->status = 1;
         $kontak->save();
 

@@ -71,6 +71,7 @@ detail revisi baptis, detail revisi pernikahan, dll-->
                                             'PL' => 'PELAYAN',
                                             'JM' => 'JEMAAT',
                                             'PJ' => 'PENGAJUAN JEMAAT',
+                                            'KN' => 'KONTAK JEMAAT',
                                         ];
 
                                         $label = $labelMap[$prefix] ?? 'UNKNOWN';
@@ -87,6 +88,7 @@ detail revisi baptis, detail revisi pernikahan, dll-->
                                             3 => 'Hapus',
                                             4 => 'Verifikasi',
                                             5 => 'Penolakan',
+                                            6 => 'Cetak',
                                         ];
 
                                         $labelJenis = $jenisMap[$_riwayat->jenis_perubahan] ?? 'Unknown';

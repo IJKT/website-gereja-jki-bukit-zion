@@ -29,8 +29,8 @@
         </div>
 
         <p style="margin-bottom: 16px;">
-            Apabila terdapat hal lain yang ingin Anda tanyakan atau klarifikasi lebih lanjut, jangan ragu untuk membalas
-            email ini atau menghubungi kami melalui kontak resmi yang tersedia.
+            Apabila terdapat hal lain yang ingin Anda tanyakan atau klarifikasi lebih lanjut, jangan ragu untuk mengirim
+            pesan kembali atau menghubungi kami melalui kontak resmi yang tersedia.
         </p>
 
         <p style="margin-top: 32px;">Salam hormat,<br><strong>Tim JKI Bukit Zion</strong></p>

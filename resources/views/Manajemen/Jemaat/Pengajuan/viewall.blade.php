@@ -51,6 +51,8 @@
                                         <div class="text-green-600">Diverifikasi</div>
                                     @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 2)
                                         <div class="text-red-600">Ditolak</div>
+                                    @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 3)
+                                        <div>Dicetak</div>
                                     @endif
                                 </td>
                                 <td class="border border-gray-300 px-4 py-2">

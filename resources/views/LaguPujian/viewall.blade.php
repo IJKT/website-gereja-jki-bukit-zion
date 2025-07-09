@@ -9,34 +9,36 @@
                 <div class="flex justify-between items-center mb-4">
                     <label class="font-semibold">LAGU IBADAH</label>
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">NAMA LAGU</th>
-                            <th class="border border-gray-300 px-4 py-2">LINK LAGU</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($lagu as $_lagu)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_lagu['nama_lagu'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    <a href="{{ $_lagu->link_lagu }}" class="hover:underline" target="_blank">
-                                        {{ $_lagu->link_lagu }}
-                                    </a>
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a href="{{ route('LaguPujian.ubah', $_lagu) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">NAMA LAGU</th>
+                                <th class="border border-gray-300 px-4 py-2">LINK LAGU</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($lagu as $_lagu)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_lagu['nama_lagu'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        <a href="{{ $_lagu->link_lagu }}" class="hover:underline" target="_blank">
+                                            {{ $_lagu->link_lagu }}
+                                        </a>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a href="{{ route('LaguPujian.ubah', $_lagu) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <div class="mt-2">
                     <div>
                         {{ $lagu->links() }}

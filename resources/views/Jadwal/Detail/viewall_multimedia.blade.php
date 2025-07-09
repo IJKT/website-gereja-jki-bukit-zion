@@ -18,53 +18,55 @@
                         {{ $pendeta->nama_pendeta_undangan }}
                     @endif
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
-                            <th class="border border-gray-300 px-4 py-2">PERAN PELAYAN</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pelayan_multimedia as $_pelayan_multimedia)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_pelayan_multimedia->pelayan->jemaat->nama_jemaat }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    @if ($_pelayan_multimedia->peran_pelayan == 8)
-                                        Video
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 9)
-                                        Photo
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 10)
-                                        Live Stream
-                                    @elseif($_pelayan_multimedia->peran_pelayan == 11)
-                                        Lyrics
-                                    @endif
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a
-                                        href="{{ route('Jadwal.ubah_multimedia', [$jadwal->id_jadwal, $_pelayan_multimedia->id_pelayan]) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                    <form id="form-hapus-{{ $_pelayan_multimedia->id_pelayan }}"
-                                        action="{{ route('Jadwal.hapus_multimedia', [$jadwal->id_jadwal, $_pelayan_multimedia->id_pelayan]) }}"
-                                        method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button"
-                                            onclick="confirmDelete('{{ $_pelayan_multimedia->id_pelayan }}')"
-                                            class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">
-                                            HAPUS
-                                        </button>
-                                    </form>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
+                                <th class="border border-gray-300 px-4 py-2">PERAN PELAYAN</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($pelayan_multimedia as $_pelayan_multimedia)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_pelayan_multimedia->pelayan->jemaat->nama_jemaat }}
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        @if ($_pelayan_multimedia->peran_pelayan == 8)
+                                            Video
+                                        @elseif($_pelayan_multimedia->peran_pelayan == 9)
+                                            Photo
+                                        @elseif($_pelayan_multimedia->peran_pelayan == 10)
+                                            Live Stream
+                                        @elseif($_pelayan_multimedia->peran_pelayan == 11)
+                                            Lyrics
+                                        @endif
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a
+                                            href="{{ route('Jadwal.ubah_multimedia', [$jadwal->id_jadwal, $_pelayan_multimedia->id_pelayan]) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                        <form id="form-hapus-{{ $_pelayan_multimedia->id_pelayan }}"
+                                            action="{{ route('Jadwal.hapus_multimedia', [$jadwal->id_jadwal, $_pelayan_multimedia->id_pelayan]) }}"
+                                            method="POST" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button"
+                                                onclick="confirmDelete('{{ $_pelayan_multimedia->id_pelayan }}')"
+                                                class="bg-red-600 text-white font-semibold px-4 py-2 rounded hover:bg-red-700">
+                                                HAPUS
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

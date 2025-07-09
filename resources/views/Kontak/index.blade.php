@@ -7,7 +7,7 @@
             <div>
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-4">
-                    <label class="font-semibold">JADWAL</label>
+                    <label class="font-semibold">KONTAK</label>
 
                     {{-- filter button --}}
                     {{-- <x-filter-dropdown>
@@ -38,32 +38,39 @@
                             </div>
                     </x-filter-dropdown> --}}
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">NAMA</th>
-                            <th class="border border-gray-300 px-4 py-2">KATEGORI</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($kontak as $item)
-                            {{-- @dd($_jadwal->jenis_ibadah) --}}
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $item->nama }}</td>
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $item->kategori }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a href="{{ route('Kontak.balas', $item->id_kontak) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">NAMA</th>
+                                <th class="border border-gray-300 px-4 py-2">KATEGORI</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($kontak as $item)
+                                {{-- @dd($_jadwal->jenis_ibadah) --}}
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $item->nama }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $item->kategori }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a href="{{ route('Kontak.balas', $item->id_kontak) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-2">
+                    <div>
+                        {{ $kontak->links() }}
+                    </div>
+                </div>
             </div>
         </div>
 

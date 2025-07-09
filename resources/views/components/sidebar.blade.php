@@ -9,8 +9,8 @@
                     Dashboard</li>
             </a>
             @if (Auth::user()->verifikasi_user == 1)
-                <li class="font-bold text-md rounded-md px-2 py-1 relative hover:bg-[#5d5d5d] {{ request()->is('pengajuan/*') ? 'bg-[#215773]' : '' }}"
-                    @mouseenter="openSub1 = true" @mouseleave="openSub1 = false">
+                <li class="font-bold text-md rounded-md px-2 py-1 relative {{ request()->is('pengajuan/*') ? 'bg-[#215773]' : '' }}"
+                    @click="openSub1 = !openSub1" :class="{ 'bg-[#424242]': openSub1 }" style="cursor: pointer;">
                     Pengajuan
                     <span class="float-right">
                         <svg class="h-4 w-4 mt-1 transform" :class="{ 'rotate-90': openSub1 }" viewBox="0 0 15 15"
@@ -24,13 +24,13 @@
                         :class="{ 'max-h-96': openSub1 }">
                         <a href="{{ route('PengajuanJemaat.baptis') }}">
                             <li
-                                class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#215773] {{ request()->is('pengajuan/baptis') ? 'bg-[#215773]' : '' }}">
+                                class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is('pengajuan/baptis') ? 'bg-[#215773]' : '' }}">
                                 Baptis
                             </li>
                         </a>
                         <a href="{{ route('PengajuanJemaat.pernikahan') }}">
                             <li
-                                class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#215773] {{ request()->is('pengajuan/pernikahan') ? 'bg-[#215773]' : '' }}">
+                                class="font-bold text-md rounded-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is('pengajuan/pernikahan') ? 'bg-[#215773]' : '' }}">
                                 Pernikahan
                             </li>
                         </a>
@@ -42,8 +42,9 @@
                 @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator' ||
                         Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Koordinator' ||
                         Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin')
-                    <li class="font-bold text-md rounded-md px-2 py-1 relative hover:bg-[#5d5d5d] {{ request()->is('manajemen/*') ? 'bg-[#215773]' : '' }}"
-                        @mouseenter="openSub2 = true" @mouseleave="openSub2 = false"> Manajemen
+                    <li class="font-bold text-md rounded-md px-2 py-1 relative {{ request()->is('manajemen/*') ? 'bg-[#215773]' : '' }}"
+                        @click="openSub2 = !openSub2" :class="{ 'bg-[#424242]': openSub2 }" style="cursor: pointer;">
+                        Manajemen
                         <span class="text right float-right">
                             <svg class="h-4 w-4 mt-1 transform" :class="{ 'rotate-90': openSub2 }" viewBox="0 0 15 15"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -102,8 +103,7 @@
                 <!-- jadwal -->
                 <a href="{{ route('Jadwal.viewall') }}">
                     <li
-                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is(['jadwal', 'jadwal/*']) ? 'bg-[#215773]' : '' }}
-">
+                        class="font-bold rounded-md text-md px-2 py-1 hover:bg-[#5d5d5d] {{ request()->is(['jadwal', 'jadwal/*']) ? 'bg-[#215773]' : '' }}">
                         Jadwal</li>
                 </a>
 
@@ -131,9 +131,9 @@
 
 
             <!-- Pengaturan -->
-            <li class="font-bold text-md rounded-md px-2 py-1 relative hover:bg-[#5d5d5d]
+            <li class="font-bold text-md rounded-md px-2 py-1 relative
         {{ request()->is('profil') ? 'bg-[#215773]' : '' }}"
-                @mouseenter="openSub3 = true" @mouseleave="openSub3 = false">
+                @click="openSub3 = !openSub3" :class="{ 'bg-[#424242]': openSub3 }" style="cursor: pointer;">
                 Pengaturan
 
                 <span class="text right float-right">

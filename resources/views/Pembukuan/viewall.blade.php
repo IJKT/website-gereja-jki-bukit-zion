@@ -38,66 +38,67 @@
                             </div>
                     </x-filter-dropdown>
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">TANGGAL</th>
-                            <th class="border border-gray-300 px-4 py-2">NOMINAL</th>
-                            <th class="border border-gray-300 px-4 py-2">JENIS</th>
-                            <th class="border border-gray-300 px-4 py-2">DESKRIPSI</th>
-                            <th class="border border-gray-300 px-4 py-2">STATUS</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pembukuan as $_pembukuan)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_pembukuan['tgl_pembukuan'])->isoFormat('dddd, DD MMMM Y') }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ 'Rp. ' . number_format($_pembukuan['nominal_pembukuan'], 0, ',', '.') }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_pembukuan['jenis_pembukuan'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <button
-                                        class="bg-[#215773] text-white font-semibold px-2 py-2 rounded hover:bg-[#1a4a60]"
-                                        onclick="showAlert{{ $_pembukuan['id_pembukuan'] }}()">
-                                        <svg fill="#ffffff" class="h-5 w-5 font-bold" viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2 font-bold">
-                                    @if ($_pembukuan['verifikasi_pembukuan'] == 1)
-                                        <div class="text-green-600">Diverifikasi</div>
-                                    @elseif($_pembukuan['verifikasi_pembukuan'] == 0)
-                                        <div class="text-yellow-600">Menunggu Verifikasi</div>
-                                    @elseif($_pembukuan['verifikasi_pembukuan'] == 2)
-                                        <div class="text-red-600">Ditolak</div>
-                                    @endif
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a href="{{ route('Pembukuan.ubah', $_pembukuan) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
-                                            @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
-                                    </a>
-                                    <a href="{{ route('Pembukuan.verifikasi', $_pembukuan) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
-                                            @if (in_array($_pembukuan['verifikasi_pembukuan'], [1, 2])) hidden @endif">VERIFIKASI</button>
-                                    </a>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">TANGGAL</th>
+                                <th class="border border-gray-300 px-4 py-2">NOMINAL</th>
+                                <th class="border border-gray-300 px-4 py-2">JENIS</th>
+                                <th class="border border-gray-300 px-4 py-2">DESKRIPSI</th>
+                                <th class="border border-gray-300 px-4 py-2">STATUS</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pembukuan as $_pembukuan)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ \Carbon\Carbon::parse($_pembukuan['tgl_pembukuan'])->isoFormat('dddd, DD MMMM Y') }}
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ 'Rp. ' . number_format($_pembukuan['nominal_pembukuan'], 0, ',', '.') }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ $_pembukuan['jenis_pembukuan'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <button
+                                            class="bg-[#215773] text-white font-semibold px-2 py-2 rounded hover:bg-[#1a4a60]"
+                                            onclick="showAlert{{ $_pembukuan['id_pembukuan'] }}()">
+                                            <svg fill="#ffffff" class="h-5 w-5 font-bold" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z" />
+                                            </svg>
+                                        </button>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 font-bold">
+                                        @if ($_pembukuan['verifikasi_pembukuan'] == 1)
+                                            <div class="text-green-600">Diverifikasi</div>
+                                        @elseif($_pembukuan['verifikasi_pembukuan'] == 0)
+                                            <div class="text-yellow-600">Menunggu Verifikasi</div>
+                                        @elseif($_pembukuan['verifikasi_pembukuan'] == 2)
+                                            <div class="text-red-600">Ditolak</div>
+                                        @endif
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a href="{{ route('Pembukuan.ubah', $_pembukuan) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
+                                            @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
+                                        </a>
+                                        <a href="{{ route('Pembukuan.verifikasi', $_pembukuan) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
+                                            @if (in_array($_pembukuan['verifikasi_pembukuan'], [1, 2])) hidden @endif">VERIFIKASI</button>
+                                        </a>
+                                    </td>
+                                </tr>
 
-                            <script>
-                                function showAlert{{ $_pembukuan['id_pembukuan'] }}() {
-                                    Swal.fire({
-                                        title: 'DESKRIPSI',
-                                        html: `
+                                <script>
+                                    function showAlert{{ $_pembukuan['id_pembukuan'] }}() {
+                                        Swal.fire({
+                                            title: 'DESKRIPSI',
+                                            html: `
                                             <strong>Deskripsi:</strong> {{ $_pembukuan->deskripsi_pembukuan }}<br>
                                             @if ($_pembukuan->verifikasi_pembukuan != 1 && !empty($_pembukuan->catatan_pembukuan))
                                                 <strong>Komentar:</strong> {{ $_pembukuan->catatan_pembukuan }}<br>
@@ -106,27 +107,28 @@
                                                 <strong>Jenis Uang Masuk:</strong> {{ $_pembukuan->jenis_pemasukan ?? 'Tidak ada jenis' }}<br>
                                             @endif
                                         `,
-                                        icon: 'info',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }
-                            </script>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <div class="mt-2 flex justify-between">
-                    <div class="flex font-semibold">Pemasukan:
-                        <div class="font-normal">Rp. {{ number_format($total_pemasukan, 0, ',', '.') }}</div>
+                                            icon: 'info',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+                                </script>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="flex items-center justify-center font-semibold">Pemasukan:
+                        <i> Rp. {{ number_format($total_pemasukan, 0, ',', '.') }}</i>
                     </div>
-                    <div class="flex font-semibold">Pengeluaran:
-                        <div class="font-normal">Rp. {{ number_format($total_pengeluaran, 0, ',', '.') }}</div>
+                    <div class="flex items-center justify-center font-semibold">Pengeluaran:
+                        <i> Rp. {{ number_format($total_pengeluaran, 0, ',', '.') }}</i>
                     </div>
-                    <div class="flex font-semibold">Total Sisa:
-                        <div class="font-normal">Rp.
-                            {{ number_format($total_sisa, 0, ',', '.') }}</div>
+                    <div class="flex items-center justify-center font-semibold">Total Saldo:
+                        <i> Rp.
+                            {{ number_format($total_sisa, 0, ',', '.') }}</i>
                     </div>
                 </div>
+
             </div>
             <div class="mt-2">
                 <div>
@@ -149,7 +151,6 @@
                 </button>
             </a>
         </div>
-    </div>
     </div>
 
     <script>

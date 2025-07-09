@@ -51,8 +51,7 @@
                         <div class="relative">
                             <input type="file" name="berkas" id="berkas" accept=".zip, .rar" class="hidden"
                                 onchange="updateBerkasLabel()">
-                            <label for="berkas" id="berkas-label"
-                                class="w-full p-2 rounded bg-white cursor-pointer block ">
+                            <label id="berkas-label" class="w-full p-2 rounded bg-white cursor-pointer block ">
                                 {{ \Illuminate\Support\Str::after($pernikahan->berkas_pernikahan ?? '', 'pernikahan/') }}
                             </label>
                         </div>
@@ -90,7 +89,7 @@
 
             if (input.files && input.files.length > 0) {
                 const file = input.files[0];
-                if (file.size > 20 * 1024 * 1024) { // 10MB in bytes
+                if (file.size > 20 * 1024 * 1024) { // 20MB in bytes
                     Swal.fire({
                         title: 'Error!',
                         text: 'File tidak boleh lebih dari 20MB',
@@ -228,6 +227,24 @@
             });
 
             checkRequiredFields(); // Awal
+
+            // menambahkan konfirmasi di input file
+            document.getElementById('berkas-label').addEventListener('click', function(e) {
+                e.preventDefault(); // prevent default label click
+
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Mengunggah file baru akan menggantikan berkas sebelumnya. Lanjutkan?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Pilih File',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('berkas').click(); // buka file picker manual
+                    }
+                });
+            });
 
             // Konfirmasi sebelum simpan
             window.showAlertSave = function() {
