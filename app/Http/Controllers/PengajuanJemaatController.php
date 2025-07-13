@@ -183,7 +183,7 @@ class  PengajuanJemaatController extends Controller
     }
     public function UpdatePernikahan(Request $request, Pernikahan $pernikahan)
     {
-        dd($request->all());
+        // dd($request->all());
         $jemaat = Auth::user()->jemaat;
         $id_pasangan = $request->id_jemaat;
 
@@ -216,6 +216,10 @@ class  PengajuanJemaatController extends Controller
             $pernikahan->berkas_pernikahan = $path; // Save the relative path as a string
         }
         $pernikahan->save();
+
+        $pengajuanjemaat = PengajuanJemaat::where('id_pengajuan', $pernikahan->id_pernikahan)->first();
+        $pengajuanjemaat->verifikasi_pengajuan = 0;
+        $pengajuanjemaat->save();
 
         return redirect()->route('PengajuanJemaat.pernikahan');
     }

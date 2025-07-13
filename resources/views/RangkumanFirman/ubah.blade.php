@@ -182,17 +182,19 @@
 
         function showAlertSave() {
             Swal.fire({
-                title: "Simpan perubahan?",
+                title: "Simpan Perubahan Data?",
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
                 denyButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire("Perubahan disimpan", "", "success");
-                    document.getElementById('rangkumanForm').submit();
+                    Swal.fire("Perubahan Data Disimpan", "", "success");
+                    setTimeout(() => {
+                        document.getElementById('rangkumanForm').submit();
+                    }, 1000); // Wait for 1 seconds
                 } else if (result.isDenied) {
-                    Swal.fire("Perubahan dibatalkan", "", "error");
+                    Swal.fire("Perubahan Tidak Disimpan", "", "error");
                 }
             });
         }

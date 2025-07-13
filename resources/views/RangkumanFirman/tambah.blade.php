@@ -28,7 +28,6 @@
                     <div>
                         <label class="block font-semibold mb-1">GAMBAR RANGKUMAN</label>
                         <div class="relative">
-                            <!--TODO: ganti accept menjadi "image"-->
                             <input type="file" name="gambar_rangkuman" id="gambar_rangkuman"
                                 accept=".jpg, .jpeg, .png" class="hidden" onchange="updateGambarLabel()">
                             <label for="gambar_rangkuman" id="gambar_rangkuman-label"
@@ -43,20 +42,20 @@
                         <div class="flex items-center space-x-6">
                             <label class="flex items-center space-x-2">
                                 <input type="radio" name="tipe_rangkuman" @click="tipe_rangkuman = 'Sermons'"
-                                    @click="kategoriSermonsRequired = true" @click=class="form-radio text-[#215773]"
+                                    @click="kategoriSermonsRequired = true" class="form-radio text-[#215773]"
                                     value="Sermons" required>
                                 <span
                                     :class="tipe_rangkuman == 'Sermons' ? 'font-semibold' : 'font-normal'">Sermons</span>
                             </label>
                             <label class="flex items-center space-x-2">
                                 <input type="radio" name="tipe_rangkuman" @click="tipe_rangkuman = 'Articles'"
-                                    value="Articles" class="form-radio text-[#215773]">
+                                    value="Articles" class="form-radio text-[#215773]" required>
                                 <span
                                     :class="tipe_rangkuman == 'Articles' ? 'font-semibold' : 'font-normal'">Articles</span>
                             </label>
                             <label class="flex items-center space-x-2">
                                 <input type="radio" name="tipe_rangkuman" @click="tipe_rangkuman = 'Devotions'"
-                                    value="Deviotions" class="form-radio text-[#215773]">
+                                    value="Devotions" class="form-radio text-[#215773]" required>
                                 <span
                                     :class="tipe_rangkuman == 'Devotions' ? 'font-semibold' : 'font-normal'">Devotions</span>
                             </label>
@@ -87,16 +86,15 @@
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
             <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+                class="bg-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
                 SIMPAN
             </button>
             <a href="{{ route('RangkumanFirman.viewall') }}">
-                <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                <button type="button" class="text-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
                 </button>
             </a>
         </div>
-    </div>
     </div>
 
     {{-- untuk ngehilangin koma pas udah submit --}}
@@ -127,7 +125,8 @@
         function checkRequiredFields() {
             let allFilled = true;
             requiredFields.forEach(field => {
-                if (!field.value.trim()) {
+                if (!field.value.trim() || (field.type === 'radio' && !form.querySelector(
+                        'input[name="tipe_rangkuman"]:checked'))) {
                     allFilled = false;
                 }
             });
@@ -160,17 +159,19 @@
 
         function showAlertSave() {
             Swal.fire({
-                title: "Simpan perubahan?",
+                title: "Simpan Data Baru?",
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
                 denyButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire("Perubahan disimpan", "", "success");
-                    document.getElementById('rangkumanForm').submit();
+                    Swal.fire("Data Baru Tersimpan", "", "success");
+                    setTimeout(() => {
+                        document.getElementById('rangkumanForm').submit();
+                    }, 1000); // Wait for 1 seconds
                 } else if (result.isDenied) {
-                    Swal.fire("Perubahan dibatalkan", "", "error");
+                    Swal.fire("Data Tidak Disimpan", "", "error");
                 }
             });
         }

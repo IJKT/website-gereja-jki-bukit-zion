@@ -177,17 +177,19 @@
             // Konfirmasi sebelum simpan
             window.showAlertSave = function() {
                 Swal.fire({
-                    title: "Simpan perubahan?",
+                    title: "Simpan Perubahan Data?",
                     icon: 'warning',
                     showDenyButton: true,
                     confirmButtonText: "Simpan",
                     denyButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire("Perubahan disimpan", "", "success");
-                        form.submit();
+                        Swal.fire("Perubahan Disimpan", "", "success");
+                        setTimeout(() => {
+                            form.submit();
+                        }, 1000); // Wait for 1 seconds
                     } else if (result.isDenied) {
-                        Swal.fire("Perubahan tidak disimpan", "", "info");
+                        Swal.fire("Perubahan Tidak Disimpan", "", "error");
                     }
                 });
             };

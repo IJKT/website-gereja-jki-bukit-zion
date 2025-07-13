@@ -79,20 +79,21 @@
     </div>
     <!-- Button -->
     <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-        @if ($pengajuan_jemaat->jemaat->user->status_user == 0)
-            <a href="{{ route('Manajemen.Jemaat.Pengajuan.viewall') }}">
-                <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
-                    onclick="showAlertVerify()">
-                    VERIFIKASI
-                </button>
-                <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
-                    onclick="showAlertDecline()">
-                    TOLAK
-                </button>
-                <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
-                    BATAL
-                </button>
-            </a>
+        @if ($pengajuan_jemaat->verifikasi_pengajuan == 0)
+            <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
+                onclick="showAlertVerify()">
+                VERIFIKASI
+            </button>
+            <button type="button" class="bg-red-700  px-6 py-2 rounded-md hover:bg-red-800"
+                onclick="showAlertDecline()">
+                TOLAK
+            </button>
+        @endif
+        <a href="{{ route('Manajemen.Jemaat.Pengajuan.viewall') }}">
+            <button type="button" class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
+                BATAL
+            </button>
+        </a>
     </div>
     <script>
         function showAlertDecline() {

@@ -136,7 +136,7 @@
 
         function showAlertSave() {
             Swal.fire({
-                title: "Simpan perubahan?",
+                title: "Simpan Data Baru?",
                 icon: 'warning',
                 showDenyButton: true,
                 confirmButtonText: "Simpan",
@@ -144,13 +144,15 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Remove commas before submit
-                    Swal.fire("Perubahan diubah", "", "success");
+                    Swal.fire("Data Baru Tersimpan", "", "success");
                     const input = document.getElementById('nominal_pembukuan');
                     input.value = input.value.replace(/,/g, '');
                     // Submit the form
-                    document.getElementById('pembukuanForm').submit();
+                    setTimeout(() => {
+                        document.getElementById('pembukuanForm').submit();
+                    }, 1000); // Wait for 1 seconds
                 } else if (result.isDenied) {
-                    Swal.fire("Perubahan tidak diubah", "", "error");
+                    Swal.fire("Data Baru Tidak Disimpan", "", "error");
                 }
             });
         }

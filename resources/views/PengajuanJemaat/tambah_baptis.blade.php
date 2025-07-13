@@ -37,7 +37,7 @@
                         <input type="hidden" id="id_pelayan" name="id_pelayan" required />
                         <span class="text-sm">
                             <a href="https://wa.me/6285176831891" class="hover:underline" target="blank ">Sari:
-                                (notelp)</a>
+                                (0851-7683-1891)</a>
                         </span>
                     </div>
 
@@ -62,26 +62,6 @@
 
     @stack('scripts')
     <script>
-        // // Update label file input
-        // window.updateAktaLabel = function() {
-        //     const input = document.getElementById('akta');
-        //     const label = document.getElementById('akta-label');
-        //     const filenameSpan = document.getElementById('akta-filename');
-
-        //     if (input.files && input.files.length > 0) {
-        //         label.textContent = input.files[0].name;
-        //         label.classList.remove('text-gray-500');
-        //         label.classList.add('text-black');
-        //     } else {
-        //         filenameSpan.textContent = '';
-        //         label.textContent = 'File Akta Kelahiran Belum Ditemukan';
-        //         label.classList.remove('text-black');
-        //         label.classList.add('text-gray-500');
-        //     }
-
-        //     checkRequiredFields(); // Recheck on file change
-        // };
-
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('pengajuanForm');
             const simpanBtn = document.getElementById('simpanBtn');
@@ -196,17 +176,19 @@
             // Konfirmasi sebelum simpan
             window.showAlertSave = function() {
                 Swal.fire({
-                    title: "Simpan perubahan?",
+                    title: "Simpan Data Baru?",
                     icon: 'warning',
                     showDenyButton: true,
                     confirmButtonText: "Simpan",
                     denyButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire("Perubahan disimpan", "", "success");
-                        form.submit();
+                        Swal.fire("Data Baru Tersimpan", "", "success");
+                        setTimeout(() => {
+                            form.submit();
+                        }, 1000); // Wait for 1 seconds
                     } else if (result.isDenied) {
-                        Swal.fire("Perubahan tidak disimpan", "", "info");
+                        Swal.fire("Data Baru Tidak Disimpan", "", "error");
                     }
                 });
             };

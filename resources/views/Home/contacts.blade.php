@@ -50,7 +50,7 @@
                         required>
                         <option value="" disabled selected>Pilih Kategori</option>
                         <option value="Umum">Umum</option>
-                        <option value="Pembaptisan">Pembaptisan</option>
+                        <option value="Baptisan">Baptisan</option>
                         <option value="Pernikahan">Pernikahan</option>
                         <option value="Persembahan">Persembahan</option>
                     </select>

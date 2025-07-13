@@ -184,7 +184,7 @@ Verifikasi   -> Dicetak     -> Diberikan
     <script>
         function showAlertDecline() {
             Swal.fire({
-                title: "Tolak verifikasi?",
+                title: "Tolak Verifikasi?",
                 input: 'text',
                 inputLabel: 'Alasan penolakan',
                 inputAttributes: {
@@ -202,7 +202,9 @@ Verifikasi   -> Dicetak     -> Diberikan
                     // Submit the form
                     document.getElementById('catatan_pengajuan').value = catatan_pengajuan;
                     document.getElementById('verifikasi_pengajuan').value = 2;
-                    document.getElementById('verifikasiForm').submit();
+                    setTimeout(() => {
+                        document.getElementById('verifikasiForm').submit();
+                    }, 1000); // Wait for 1 seconds
                 } else if (result.isDenied) {
                     Swal.fire("Data Tidak Ditolak", "", "error");
                 }
@@ -324,7 +326,7 @@ Verifikasi   -> Dicetak     -> Diberikan
                     idPembaptisInput.value = id_pendeta;
                     setTimeout(() => {
                         document.getElementById('verifikasiForm').submit();
-                    }, 2000);
+                    }, 1000);
                 } else if (result.isDenied) {
                     Swal.fire("Data Tidak Diverifikasi", "", "error");
                 }
