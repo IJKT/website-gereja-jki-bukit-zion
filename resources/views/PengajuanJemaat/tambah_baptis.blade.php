@@ -36,8 +36,8 @@
                         <!-- Hidden input to store pelayan ID -->
                         <input type="hidden" id="id_pelayan" name="id_pelayan" required />
                         <span class="text-sm">
-                            <a href="https://wa.me/6285176831891" class="hover:underline" target="blank ">Sari:
-                                (0851-7683-1891)</a>
+                            <a href="https://wa.me/6281230488948" class="hover:underline" target="blank ">Sari:
+                                (+62 812-3048-8948)</a>
                         </span>
                     </div>
 
