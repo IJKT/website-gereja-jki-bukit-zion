@@ -35,7 +35,7 @@
                         <label class="block font-semibold mb-1">GAMBAR RANGKUMAN</label>
                         <div class="relative">
                             <input type="file" name="gambar_rangkuman" id="gambar_rangkuman"
-                                accept=".jpg, .jpeg, .png" class="hidden" onchange="updateGambarLabel()">
+                                accept=".jpg, .jpeg, .png .webp" class="hidden" onchange="updateGambarLabel()">
                             <label for="gambar_rangkuman" id="gambar_rangkuman-label"
                                 class="w-full p-2 rounded bg-white cursor-pointer block text-gray-500 ">
                                 @if (isset($rangkuman->gambar_rangkuman))

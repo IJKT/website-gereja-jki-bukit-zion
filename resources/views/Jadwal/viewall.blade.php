@@ -67,6 +67,13 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="mt-2">
+                    <div>
+                        {{ $jadwal->links() }}
+                    </div>
+                </div>
+
             </div>
         </div>
 

@@ -19,7 +19,7 @@ class JadwalIbadahController extends Controller
     // GET FUNCTIONS
     public function viewall(Request $request): View
     {
-        $jadwal = jadwal_ibadah::query();
+        $jadwal = jadwal_ibadah::query()->orderBy('tgl_ibadah');
 
         // Filter by date range if both tanggal_awal and tanggal_akhir are present
         if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
