@@ -11,9 +11,9 @@
             action="{{ route('Home.Akun.register_authenticate') }}" method="POST" class="flex flex-col gap-4 mt-8">
             @csrf
 
-            <div class="flex justify-between gap-4">
-                {{-- LEFT --}}
-                <div class="flex flex-col w-1/2 space-y-2">
+            <div class="grid grid-cols-2 gap-4">
+
+                <div class="flex flex-col w-full space-y-2">
                     <label for="username" class="font-semibold mb-1">Username</label>
                     <input type="text" name="username" id="username" placeholder="Masukkan Username Anda"
                         tabindex="1" class="p-2 rounded-md border-2 bg-white focus:border-[#215773]"
@@ -22,27 +22,73 @@
                         oninvalid="this.setCustomValidity('Username tidak boleh kosong atau mengandung spasi')"
                         oninput="this.setCustomValidity(''); this.value = this.value.replace(/\s/g, '')">
                     <span x-show="usernameError" class="text-red-600 text-sm mt-1">Username sudah digunakan</span>
+                </div>
 
+                <div class="flex flex-col w-full space-y-2">
+                    <label for="email" class="font-semibold mb-1">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Masukkan Email Anda" tabindex="2"
+                        class="p-2 rounded-md border-2 bg-white focus:border-[#215773]" autocomplete="off" required
+                        x-model="email" @input.debounce.500ms="cekEmail"
+                        :class="emailError ? 'border-red-500' : 'border-white'"
+                        oninvalid="this.setCustomValidity('Email belum diisi')" oninput="this.setCustomValidity('')">
+                    <span x-show="emailError" class="text-red-600 text-sm mt-1">Email sudah digunakan</span>
+                </div>
+
+                <div class="flex flex-col w-full space-y-2">
                     <label for="password" class="font-semibold mb-1">Password</label>
                     <input type="password" name="password" id="password" placeholder="Masukkan Password Anda"
                         tabindex="3" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
                         autocomplete="off" required minlength="8" x-model="password"
                         oninvalid="this.setCustomValidity('Password belum diisi atau kurang dari 8 karakter')"
                         oninput="this.setCustomValidity('')">
+                </div>
 
+                <div class="flex flex-col w-full space-y-2">
+                    <label for="konfirmasi_password" class="font-semibold mb-1">Konfirmasi Password</label>
+                    <input type="password" name="konfirmasi_password" id="konfirmasi_password" tabindex="4"
+                        placeholder="Konfirmasi password anda"
+                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
+                        x-model="konfirmasi_password"
+                        oninvalid="this.setCustomValidity('Konfirmasi password belum diisi')"
+                        oninput="this.setCustomValidity('')">
+                </div>
+
+                <div class="flex flex-col w-full space-y-2">
                     <label for="nama_lengkap" class="font-semibold mb-1">Nama Lengkap</label>
                     <input type="text" name="nama_lengkap" id="nama_lengkap" placeholder="Masukkan Nama Lengkap Anda"
                         tabindex="5" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
                         autocomplete="off" required oninvalid="this.setCustomValidity('Nama lengkap belum diisi')"
                         oninput="this.setCustomValidity('')">
+                </div>
 
+                <div class="flex flex-col w-full space-y-2">
+                    <label for="alamat" class="font-semibold mb-1">Alamat</label>
+                    <input type="text" name="alamat" id="alamat" placeholder="Masukkan Alamat Anda"
+                        tabindex="6" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
+                        required autocomplete="off" oninvalid="this.setCustomValidity('Alamat belum diisi')"
+                        oninput="this.setCustomValidity('')">
+                </div>
+
+                <div class="flex flex-col w-full space-y-2">
                     <label for="nik" class="font-semibold mb-1">NIK</label>
                     <input type="text" name="nik" id="nik" placeholder="Masukkan NIK Anda" tabindex="7"
-                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" autocomplete="off"
-                        required pattern="[0-9]{16}"
+                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
+                        autocomplete="off" required pattern="[0-9]{16}"
                         oninvalid="this.setCustomValidity('NIK harus terdiri dari 16 angka')"
                         oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9]/g, '')">
 
+                </div>
+
+                <div class="flex flex-col w-full space-y-2">
+                    <label for="telepon" class="font-semibold mb-1">Telepon</label>
+                    <input type="text" name="telepon" id="telepon" placeholder="Masukkan Nomor Telepon Anda"
+                        tabindex="8" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
+                        required autocomplete="off" minlength="8" pattern="\d*" inputmode="numeric"
+                        oninvalid="this.setCustomValidity('Nomor telepon tidak boleh kosong')"
+                        oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+
+                <div class="flex flex-col w-full space-y-2">
                     <label class="font-semibold mb-2 block">Tempat & Tanggal Lahir</label>
                     <div class="flex justify-between gap-[10px]">
                         <input type="text" name="tempat_lahir" id="tempat_lahir" placeholder="Kota lahir"
@@ -55,37 +101,7 @@
                     </div>
                 </div>
 
-                {{-- RIGHT --}}
-                <div class="flex flex-col w-1/2 space-y-2">
-                    <label for="email" class="font-semibold mb-1">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Masukkan Email Anda" tabindex="2"
-                        class="p-2 rounded-md border-2 bg-white focus:border-[#215773]" autocomplete="off" required
-                        x-model="email" @input.debounce.500ms="cekEmail"
-                        :class="emailError ? 'border-red-500' : 'border-white'"
-                        oninvalid="this.setCustomValidity('Email belum diisi')" oninput="this.setCustomValidity('')">
-                    <span x-show="emailError" class="text-red-600 text-sm mt-1">Email sudah digunakan</span>
-
-                    <label for="konfirmasi_password" class="font-semibold mb-1">Konfirmasi Password</label>
-                    <input type="password" name="konfirmasi_password" id="konfirmasi_password" tabindex="4"
-                        placeholder="Konfirmasi password anda"
-                        class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]" required
-                        x-model="konfirmasi_password"
-                        oninvalid="this.setCustomValidity('Konfirmasi password belum diisi')"
-                        oninput="this.setCustomValidity('')">
-
-                    <label for="alamat" class="font-semibold mb-1">Alamat</label>
-                    <input type="text" name="alamat" id="alamat" placeholder="Masukkan Alamat Anda"
-                        tabindex="6" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
-                        required autocomplete="off" oninvalid="this.setCustomValidity('Alamat belum diisi')"
-                        oninput="this.setCustomValidity('')">
-
-                    <label for="telepon" class="font-semibold mb-1">Telepon</label>
-                    <input type="text" name="telepon" id="telepon" placeholder="Masukkan Nomor Telepon Anda"
-                        tabindex="8" class="p-2 rounded-md border-2 border-white bg-white focus:border-[#215773]"
-                        required autocomplete="off" minlength="8" pattern="\d*" inputmode="numeric"
-                        oninvalid="this.setCustomValidity('Nomor telepon tidak boleh kosong')"
-                        oninput="this.setCustomValidity(''); this.value = this.value.replace(/[^0-9]/g, '')">
-
+                <div class="flex flex-col w-full space-y-2">
                     <div class="mb-4" x-data="{ gender: '' }">
                         <label class="font-semibold block mb-4">Jenis Kelamin</label>
                         <div class="flex items-center space-x-6">

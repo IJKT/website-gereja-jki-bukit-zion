@@ -28,58 +28,61 @@
                             </div>
                     </x-filter-dropdown>
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
-                            <th class="border border-gray-300 px-4 py-2">JENIS PENGAJUAN</th>
-                            <th class="border border-gray-300 px-4 py-2">STATUS</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pengajuan_jemaat as $_pengajuan_jemaat)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_pengajuan_jemaat->jemaat->nama_jemaat }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_pengajuan_jemaat['jenis_pengajuan'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2 font-bold">
-                                    @if ($_pengajuan_jemaat['verifikasi_pengajuan'] == 0)
-                                        <div class="text-yellow-600">Menunggu Verifikasi</div>
-                                    @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 1)
-                                        <div class="text-green-600">Diverifikasi</div>
-                                    @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 2)
-                                        <div class="text-red-600">Ditolak</div>
-                                    @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 3)
-                                        <div>Dicetak</div>
-                                    @endif
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    @if ($_pengajuan_jemaat['jenis_pengajuan'] == 'Baptis')
-                                        <a
-                                            href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_baptis', $_pengajuan_jemaat->id_pengajuan) }}">
-                                            <button
-                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                        </a>
-                                    @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Pernikahan')
-                                        <a
-                                            href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_pernikahan', $_pengajuan_jemaat->id_pengajuan) }}">
-                                            <button
-                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                        </a>
-                                    @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Registrasi')
-                                        <a
-                                            href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_registrasi', $_pengajuan_jemaat->id_pengajuan) }}">
-                                            <button
-                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                        </a>
-                                    @endif
-                                </td>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
+                                <th class="border border-gray-300 px-4 py-2">JENIS PENGAJUAN</th>
+                                <th class="border border-gray-300 px-4 py-2">STATUS</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($pengajuan_jemaat as $_pengajuan_jemaat)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_pengajuan_jemaat->jemaat->nama_jemaat }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ $_pengajuan_jemaat['jenis_pengajuan'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2 font-bold">
+                                        @if ($_pengajuan_jemaat['verifikasi_pengajuan'] == 0)
+                                            <div class="text-yellow-600">Menunggu Verifikasi</div>
+                                        @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 1)
+                                            <div class="text-green-600">Diverifikasi</div>
+                                        @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 2)
+                                            <div class="text-red-600">Ditolak</div>
+                                        @elseif ($_pengajuan_jemaat['verifikasi_pengajuan'] == 3)
+                                            <div>Dicetak</div>
+                                        @endif
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        @if ($_pengajuan_jemaat['jenis_pengajuan'] == 'Baptis')
+                                            <a
+                                                href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_baptis', $_pengajuan_jemaat->id_pengajuan) }}">
+                                                <button
+                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                            </a>
+                                        @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Pernikahan')
+                                            <a
+                                                href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_pernikahan', $_pengajuan_jemaat->id_pengajuan) }}">
+                                                <button
+                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                            </a>
+                                        @elseif ($_pengajuan_jemaat['jenis_pengajuan'] == 'Registrasi')
+                                            <a
+                                                href="{{ route('Manajemen.Jemaat.Pengajuan.verifikasi_registrasi', $_pengajuan_jemaat->id_pengajuan) }}">
+                                                <button
+                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="mt-2">
                     <div>

@@ -72,11 +72,16 @@
 
         <!-- Button -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="{{ route('Jadwal.tambah') }}">
-                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                    TAMBAH
-                </button>
-            </a>
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Praise & Worship' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Multimedia')
+                <a href="{{ route('Jadwal.tambah') }}">
+                    <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                        TAMBAH
+                    </button>
+                </a>
+            @endif
         </div>
     </div>
     </div>

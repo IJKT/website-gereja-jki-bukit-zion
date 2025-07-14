@@ -81,16 +81,23 @@
                                         @endif
                                     </td>
                                     <td class="border border-gray-300 px-4 py-2">
-                                        <a href="{{ route('Pembukuan.ubah', $_pembukuan) }}">
-                                            <button
-                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
+                                        @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
+                                                Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Bendahara')
+                                            <a href="{{ route('Pembukuan.ubah', $_pembukuan) }}">
+                                                <button
+                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
                                             @if ($_pembukuan['verifikasi_pembukuan'] == 1) hidden @endif">LIHAT</button>
-                                        </a>
-                                        <a href="{{ route('Pembukuan.verifikasi', $_pembukuan) }}">
-                                            <button
-                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
+                                            </a>
+                                        @endif
+
+                                        @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
+                                                Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator')
+                                            <a href="{{ route('Pembukuan.verifikasi', $_pembukuan) }}">
+                                                <button
+                                                    class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]
                                             @if (in_array($_pembukuan['verifikasi_pembukuan'], [1, 2])) hidden @endif">VERIFIKASI</button>
-                                        </a>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
 
@@ -116,6 +123,7 @@
                         </tbody>
                     </table>
                 </div>
+
                 <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="flex items-center justify-center font-semibold">Pemasukan:
                         <i> Rp. {{ number_format($total_pemasukan, 0, ',', '.') }}</i>
@@ -140,16 +148,23 @@
         <!-- Button -->
         <!-- TODO: jangan lupa bikin report buat diunduh. sesuaikan dengan filter -->
         <div class="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold">
-            <a href="{{ route('Pembukuan.unduh', request()->query()) }}">
-                <button class="bg-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                    UNDUH
-                </button>
-            </a>
-            <a href=pembukuan/tambah>
-                <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
-                    TAMBAH
-                </button>
-            </a>
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator')
+                <a href="{{ route('Pembukuan.unduh', request()->query()) }}">
+                    <button class="bg-[#215773] px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                        UNDUH
+                    </button>
+                </a>
+            @endif
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Bendahara')
+                <a href=pembukuan/tambah>
+                    <button class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]">
+                        TAMBAH
+                    </button>
+                </a>
+            @endif
+
         </div>
     </div>
 

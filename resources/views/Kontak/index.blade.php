@@ -10,33 +10,20 @@
                     <label class="font-semibold">KONTAK</label>
 
                     {{-- filter button --}}
-                    {{-- <x-filter-dropdown>
-                        <form method="GET" action="{{ route('Jadwal.viewall') }}">
+                    <x-filter-dropdown>
+                        <form method="GET" action="{{ route('Kontak.index') }}">
                             <div class="mx-2 mt-2 mb-4">
-                                <label for="tanggal_awal" class="block text-sm font-medium text-gray-700">Tanggal
-                                    Awal</label>
-                                <input type="date" id="tanggal_awal" name="tanggal_awal"
-                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                    value="{{ request('tanggal_awal') }}"
-                                    class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                <label for="tanggal_akhir" class="block text-sm font-medium text-gray-700">Tanggal
-                                    Akhir</label>
-                                <input type="date" id="tanggal_akhir" name="tanggal_akhir"
-                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                    min="{{ request('tanggal_awal') }}" value="{{ request('tanggal_akhir') }}"
-                                    class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                                <label for="jenis_ibadah" class="block text-sm font-medium text-gray-700">Jenis
-                                    Ibadah</label>
-                                <select name="jenis_ibadah" id="jenis_ibadah"
+                                <label for="kategori" class="block text-sm font-medium text-gray-700">Kategori</label>
+                                <select name="kategori" id="kategori"
                                     class="bg-white mt-1 pl-2 block w-full rounded focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                                     <option value="">Semua</option>
-                                    <option value="Sunday Service">Sunday Service</option>
-                                    <option value="Sunday School">Sunday School</option>
-                                    <option value="Shabbat Fellowship">Shabbat Fellowship</option>
-                                    <option value="Shabbat Service">Shabbat Service</option>
+                                    <option value="Umum">Umum</option>
+                                    <option value="Baptisan">Baptisan</option>
+                                    <option value="Pernikahan">Pernikahan</option>
+                                    <option value="Persembahan">Persembahan</option>
                                 </select>
                             </div>
-                    </x-filter-dropdown> --}}
+                    </x-filter-dropdown>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full border-collapse ">

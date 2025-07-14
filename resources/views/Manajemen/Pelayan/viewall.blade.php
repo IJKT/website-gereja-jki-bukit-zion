@@ -30,44 +30,45 @@
                             </div>
                     </x-filter-dropdown>
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            {{-- <th class="border border-gray-300 px-4 py-2">USERNAME</th> --}}
-                            <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
-                            <th class="border border-gray-300 px-4 py-2">HAK AKSES</th>
-                            <th class="border border-gray-300 px-4 py-2">STATUS</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pelayan as $_pelayan)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_pelayan->jemaat->nama_jemaat }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_pelayan['hak_akses_pelayan'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <div class="font-semibold">
-                                        @if ($_pelayan['status_pelayan'] == 1)
-                                            AKTIF
-                                        @else
-                                            <div class="text-red-500"> NONAKTIF </div>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a href="{{ route('Manajemen.Pelayan.ubah', $_pelayan) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                {{-- <th class="border border-gray-300 px-4 py-2">USERNAME</th> --}}
+                                <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
+                                <th class="border border-gray-300 px-4 py-2">HAK AKSES</th>
+                                <th class="border border-gray-300 px-4 py-2">STATUS</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($pelayan as $_pelayan)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_pelayan->jemaat->nama_jemaat }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ $_pelayan['hak_akses_pelayan'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="font-semibold">
+                                            @if ($_pelayan['status_pelayan'] == 1)
+                                                AKTIF
+                                            @else
+                                                <div class="text-red-500"> NONAKTIF </div>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a href="{{ route('Manajemen.Pelayan.ubah', $_pelayan) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-                {{-- minta tolong pak david aja, ini cara ganti warna pagination sama ganti kata2 "Showing 1 to 5 of 6 results"nya" gimana --}}
                 <div class="mt-2">
                     {{ $pelayan->links() }}
                 </div>

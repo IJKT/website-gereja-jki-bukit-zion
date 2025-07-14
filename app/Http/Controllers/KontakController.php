@@ -12,13 +12,19 @@ use Illuminate\Support\Facades\Mail;
 
 class KontakController extends Controller
 {
-    public function Index(): View
+    public function Index(Request $request): View
     {
+        $kontak = Kontak::where('status', 0);
+
+        if ($request->filled('kategori')) {
+            $kontak->where('kategori', $request->kategori);
+        }
+
         return view(
             'Kontak.index',
             [
                 'title' => 'Halaman Kontak',
-                'kontak' => Kontak::where('status', 0)->paginate(5)
+                'kontak' =>  $kontak->paginate(5)->WithQueryString()
             ]
         );
     }

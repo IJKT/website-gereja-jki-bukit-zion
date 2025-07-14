@@ -36,71 +36,73 @@ detail revisi baptis, detail revisi pernikahan, dll-->
                                     <option value="1">Tambah</option>
                                     <option value="2">Ubah</option>
                                     <option value="3">Hapus</option>
-                                    <option value="3">Verifikasi</option>
-                                    <option value="3">Tolak</option>
+                                    <option value="4">Verifikasi</option>
+                                    <option value="5">Tolak</option>
                                 </select>
                             </div>
                     </x-filter-dropdown>
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">TANGGAL RIWAYAT</th>
-                            <th class="border border-gray-300 px-4 py-2">NAMA PELAYAN</th>
-                            <th class="border border-gray-300 px-4 py-2">NAMA TABEL YANG DIUBAH</th>
-                            <th class="border border-gray-300 px-4 py-2">JENIS RIWAYAT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($riwayat as $_riwayat)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ \Carbon\Carbon::parse($_riwayat->tgl_perubahan)->isoFormat(' dddd, DD MMMM Y HH:mm:ss') }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_riwayat->pelayan->jemaat->nama_jemaat }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    @php
-                                        $prefix = substr($_riwayat->id_tabel_ubah, 0, 2);
-
-                                        $labelMap = [
-                                            'LI' => 'LAGU',
-                                            'PG' => 'PEMBUKUAN',
-                                            'JI' => 'JADWAL',
-                                            'RF' => 'RANGKUMAN',
-                                            'PL' => 'PELAYAN',
-                                            'JM' => 'JEMAAT',
-                                            'PJ' => 'PENGAJUAN JEMAAT',
-                                            'KN' => 'KONTAK JEMAAT',
-                                        ];
-
-                                        $label = $labelMap[$prefix] ?? 'UNKNOWN';
-                                    @endphp
-
-                                    {{ $label }} - ({{ $_riwayat->id_tabel_ubah }})
-
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2 font-semibold">
-                                    @php
-                                        $jenisMap = [
-                                            1 => 'Tambah',
-                                            2 => 'Ubah',
-                                            3 => 'Hapus',
-                                            4 => 'Verifikasi',
-                                            5 => 'Penolakan',
-                                            6 => 'Cetak',
-                                        ];
-
-                                        $labelJenis = $jenisMap[$_riwayat->jenis_perubahan] ?? 'Unknown';
-                                    @endphp
-
-                                    {{ $labelJenis }}
-
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">TANGGAL RIWAYAT</th>
+                                <th class="border border-gray-300 px-4 py-2">NAMA PELAYAN</th>
+                                <th class="border border-gray-300 px-4 py-2">NAMA TABEL YANG DIUBAH</th>
+                                <th class="border border-gray-300 px-4 py-2">JENIS RIWAYAT</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($riwayat as $_riwayat)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ \Carbon\Carbon::parse($_riwayat->tgl_perubahan)->isoFormat(' dddd, DD MMMM Y HH:mm:ss') }}
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_riwayat->pelayan->jemaat->nama_jemaat }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        @php
+                                            $prefix = substr($_riwayat->id_tabel_ubah, 0, 2);
+
+                                            $labelMap = [
+                                                'LI' => 'LAGU',
+                                                'PG' => 'PEMBUKUAN',
+                                                'JI' => 'JADWAL',
+                                                'RF' => 'RANGKUMAN',
+                                                'PL' => 'PELAYAN',
+                                                'JM' => 'JEMAAT',
+                                                'PJ' => 'PENGAJUAN JEMAAT',
+                                                'KN' => 'KONTAK JEMAAT',
+                                            ];
+
+                                            $label = $labelMap[$prefix] ?? 'UNKNOWN';
+                                        @endphp
+
+                                        {{ $label }} - ({{ $_riwayat->id_tabel_ubah }})
+
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2 font-semibold">
+                                        @php
+                                            $jenisMap = [
+                                                1 => 'Tambah',
+                                                2 => 'Ubah',
+                                                3 => 'Hapus',
+                                                4 => 'Verifikasi',
+                                                5 => 'Penolakan',
+                                                6 => 'Cetak',
+                                            ];
+
+                                            $labelJenis = $jenisMap[$_riwayat->jenis_perubahan] ?? 'Unknown';
+                                        @endphp
+
+                                        {{ $labelJenis }}
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <div class="mt-2">
                     <div>
                         {{ $riwayat->links() }}

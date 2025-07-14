@@ -27,43 +27,46 @@
                             </div>
                     </x-filter-dropdown>
                 </div>
-                <table class="w-full border-collapse ">
-                    <thead>
-                        <tr class="bg-white text-sm font-semibold">
-                            <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
-                            <th class="border border-gray-300 px-4 py-2">HAK AKSES</th>
-                            <th class="border border-gray-300 px-4 py-2">NIK</th>
-                            <th class="border border-gray-300 px-4 py-2">STATUS</th>
-                            <th class="border border-gray-300 px-4 py-2">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($jemaat as $_jemaat)
-                            <tr class="bg-white text-sm text-center">
-                                <td class="border border-gray-300 px-4 py-2 text-left">
-                                    {{ $_jemaat['nama_jemaat'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_jemaat['hak_akses_jemaat'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $_jemaat['nik_jemaat'] }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <div class="font-semibold">
-                                        @if ($_jemaat['status_jemaat'] == 1)
-                                            AKTIF
-                                        @else
-                                            <div class="text-red-500"> NONAKTIF </div>
-                                        @endif
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <a href="{{ route('Manajemen.Jemaat.ubah', $_jemaat) }}">
-                                        <button
-                                            class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
-                                    </a>
-                                </td>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse ">
+                        <thead>
+                            <tr class="bg-white text-sm font-semibold">
+                                <th class="border border-gray-300 px-4 py-2">NAMA LENGKAP</th>
+                                <th class="border border-gray-300 px-4 py-2">HAK AKSES</th>
+                                <th class="border border-gray-300 px-4 py-2">NIK</th>
+                                <th class="border border-gray-300 px-4 py-2">STATUS</th>
+                                <th class="border border-gray-300 px-4 py-2">AKSI</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($jemaat as $_jemaat)
+                                <tr class="bg-white text-sm text-center">
+                                    <td class="border border-gray-300 px-4 py-2 text-left">
+                                        {{ $_jemaat['nama_jemaat'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ $_jemaat['hak_akses_jemaat'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        {{ $_jemaat['nik_jemaat'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <div class="font-semibold">
+                                            @if ($_jemaat['status_jemaat'] == 1)
+                                                AKTIF
+                                            @else
+                                                <div class="text-red-500"> NONAKTIF </div>
+                                            @endif
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a href="{{ route('Manajemen.Jemaat.ubah', $_jemaat) }}">
+                                            <button
+                                                class="bg-[#215773] text-white font-semibold px-4 py-2 rounded hover:bg-[#1a4a60]">LIHAT</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="mt-2">
                     <div>

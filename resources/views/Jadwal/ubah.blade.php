@@ -128,10 +128,15 @@
                     MULTIMEDIA
                 </button>
             </a>
-            <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
-                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
-                SIMPAN
-            </button>
+            @if (Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Super Admin' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Administrator' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Praise & Worship' ||
+                    Auth::user()->jemaat->pelayan->hak_akses_pelayan == 'Multimedia')
+                <button type="button" id="simpanBtn" onclick="showAlertSave()" disabled
+                    class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200">
+                    SIMPAN
+                </button>
+            @endif
             <a href="{{ route('Jadwal.viewall') }}">
                 <button type="button"
                     class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
