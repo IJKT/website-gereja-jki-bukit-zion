@@ -85,22 +85,44 @@
                 @method('PUT')
                 <input type="hidden" name="status_pelayan" value="{{ $pelayan->status_pelayan == 1 ? 0 : 1 }}">
             </form>
-            @if ($pelayan->status_pelayan == 1)
-                <button type="button" class="bg-red-500  px-6 py-2 rounded-md hover:bg-red-700"
-                    onclick="showAlertNonactivate()">
-                    NONAKTIF
-                </button>
-            @elseif ($pelayan->status_pelayan == 0)
-                <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
-                    onclick="showAlertActivate()">
-                    AKTIF
+
+            @php
+                $currentRole = Auth::user()->jemaat->pelayan->hak_akses_pelayan;
+                $targetRole = $pelayan->hak_akses_pelayan;
+
+                $canEdit = false;
+
+                if ($currentRole == 'Super Admin') {
+                    $canEdit = true;
+                } elseif ($currentRole == 'Administrator' && $targetRole != 'Super Admin') {
+                    $canEdit = true;
+                } elseif (
+                    $currentRole == 'Koordinator' &&
+                    $targetRole != 'Super Admin' &&
+                    $targetRole != 'Administrator'
+                ) {
+                    $canEdit = true;
+                }
+            @endphp
+
+            @if ($canEdit)
+                @if ($pelayan->status_pelayan == 1)
+                    <button type="button" class="bg-red-500  px-6 py-2 rounded-md hover:bg-red-700"
+                        onclick="showAlertNonactivate()">
+                        NONAKTIF
+                    </button>
+                @elseif ($pelayan->status_pelayan == 0)
+                    <button type="button" class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60]"
+                        onclick="showAlertActivate()">
+                        AKTIF
+                    </button>
+                @endif
+                <button
+                    class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200"
+                    onclick="showAlertSave()">
+                    SIMPAN
                 </button>
             @endif
-            <button
-                class="bg-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] disabled:bg-gray-400 disabled:text-gray-200"
-                onclick="showAlertSave()">
-                SIMPAN
-            </button>
             <a href="{{ route('Manajemen.Pelayan.viewall') }}">
                 <button class="text-[#215773]  px-6 py-2 rounded-md hover:bg-[#1a4a60] hover:text-white">
                     BATAL
