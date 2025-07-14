@@ -94,10 +94,10 @@
                         <input type="text" name="tempat_lahir" id="tempat_lahir" placeholder="Kota lahir"
                             tabindex="9"
                             class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]"
-                            autocomplete="off">
+                            autocomplete="off" required>
                         <input type="date" name="tgl_lahir" id="tgl_lahir" tabindex="10"
                             class="p-2 rounded-md w-1/2 border-2 border-white bg-white focus:border-[#215773]"
-                            max="{{ date('Y-m-d') }}">
+                            max="{{ date('Y-m-d') }}" required>
                     </div>
                 </div>
 
@@ -107,7 +107,7 @@
                         <div class="flex items-center space-x-6">
                             <label class="flex items-center space-x-2">
                                 <input type="radio" name="gender" @click="gender = 'Pria'" value="P"
-                                    tabindex="11">
+                                    tabindex="11" required>
                                 <span :class="gender == 'Pria' ? 'font-semibold' : 'font-normal'">Pria</span>
                             </label>
                             <label class="flex items-center space-x-2">

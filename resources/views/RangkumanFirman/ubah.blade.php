@@ -69,7 +69,7 @@
                             </label>
                             <label class="flex items-center space-x-2">
                                 <input type="radio" name="tipe_rangkuman" @click="tipe_rangkuman = 'Devotions'"
-                                    value="Deviotions" class="form-radio text-[#215773]"
+                                    value="Devotions" class="form-radio text-[#215773]"
                                     {{ $rangkuman->tipe_rangkuman === 'Devotions' ? 'checked' : '' }}>
                                 <span
                                     :class="tipe_rangkuman == 'Devotions' ? 'font-semibold' : 'font-normal'">Devotions</span>
